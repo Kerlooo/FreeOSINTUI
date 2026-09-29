@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /** Error thrown by fetchJson, with a message that can be shown in the UI. */
 export class FetchError extends Error {
 	/**
@@ -38,22 +40,22 @@ async function request(url, options, accept, parse) {
 		response = await fetchFn(url, { signal: combined, headers: { accept, ...headers } });
 	} catch (error) {
 		if (signal?.aborted) throw error;
-		if (timeout.aborted) throw new FetchError(`${host} did not answer in time.`);
-		throw new FetchError(`Could not reach ${host} (network error or blocked by the browser).`);
+		if (timeout.aborted) throw new FetchError(t('common.timeout', { host }));
+		throw new FetchError(t('common.networkError', { host }));
 	}
 
 	if (response.status === 404 && allowNotFound) return null;
 	if (response.status === 429) {
-		throw new FetchError(`${host} is rate limiting requests. Try again in a minute.`, 429);
+		throw new FetchError(t('common.rateLimited', { host }), 429);
 	}
 	if (!response.ok) {
-		throw new FetchError(`${host} answered with HTTP ${response.status}.`, response.status);
+		throw new FetchError(t('common.httpError', { host, status: response.status }), response.status);
 	}
 
 	try {
 		return await parse(response);
 	} catch {
-		throw new FetchError(`${host} returned an invalid response.`, response.status);
+		throw new FetchError(t('common.invalidResponse', { host }), response.status);
 	}
 }
 

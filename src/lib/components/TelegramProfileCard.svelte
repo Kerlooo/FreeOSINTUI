@@ -1,7 +1,8 @@
 <script>
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
 	import CopyButton from '$lib/components/CopyButton.svelte';
-	import { TYPE_LABELS } from '$lib/telegram/validate.js';
+	import { counterLabel, typeLabel } from '$lib/telegram/validate.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/**
 	 * @type {{ profile: { username: string, url: string, type: string, title: string, verified: boolean, description: string | null, image: string | null, extra: string[], counters: Record<string, string> } }}
@@ -9,12 +10,15 @@
 	let { profile } = $props();
 
 	let rows = $derived([
-		{ label: 'Type', value: TYPE_LABELS[profile.type] ?? profile.type },
-		{ label: 'Username', value: `@${profile.username}` },
-		{ label: 'Link', value: profile.url, href: profile.url },
-		...profile.extra.map((value, i) => ({ label: i ? `Info ${i + 1}` : 'Info', value })),
+		{ label: t('telegram.row.type'), value: typeLabel(profile.type) },
+		{ label: t('telegram.row.username'), value: `@${profile.username}` },
+		{ label: t('telegram.row.link'), value: profile.url, href: profile.url },
+		...profile.extra.map((value, i) => ({
+			label: i ? t('telegram.row.infoN', { n: i + 1 }) : t('telegram.row.info'),
+			value
+		})),
 		...Object.entries(profile.counters).map(([label, value]) => ({
-			label: label.charAt(0).toUpperCase() + label.slice(1),
+			label: counterLabel(label),
 			value
 		}))
 	]);
@@ -28,11 +32,11 @@
 		<div>
 			<h2>
 				{profile.title}
-				{#if profile.verified}<span class="verified" title="Verified by Telegram">✔</span>{/if}
+				{#if profile.verified}<span class="verified" title={t('telegram.verified')}>✔</span>{/if}
 			</h2>
 			<p class="handle">
 				@{profile.username}
-				<CopyButton value={profile.username} label="Copy username" />
+				<CopyButton value={profile.username} label={t('telegram.copyUsername')} />
 			</p>
 		</div>
 	</header>

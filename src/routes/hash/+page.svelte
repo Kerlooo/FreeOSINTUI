@@ -7,11 +7,12 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import { hashFile, hashText } from '$lib/hash/compute.js';
 	import { findMatches } from '$lib/hash/identify.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
-	const MODES = [
-		{ value: 'text', label: 'Text' },
-		{ value: 'file', label: 'File' }
-	];
+	let modes = $derived([
+		{ value: 'text', label: t('hash.mode.text') },
+		{ value: 'file', label: t('hash.mode.file') }
+	]);
 
 	let mode = $state('text');
 	let expected = $state('');
@@ -70,41 +71,35 @@
 </script>
 
 <svelte:head>
-	<title>Hash Checker — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Compute MD5, SHA-1, SHA-256, SHA-512, SHA-3, BLAKE and CRC32 hashes of text or files, identify and verify hashes. Runs in your browser."
-	/>
+	<title>{t('tools.hash.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('hash.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Hash Checker"
-	description="Compute the most common hashes of a text or a file, identify an unknown hash and check whether it matches. Everything runs locally: nothing leaves your browser."
-/>
+<ToolHeader title={t('tools.hash.name')} description={t('hash.intro')} />
 
 <div class="layout">
 	<section class="panel" aria-labelledby="input-heading">
 		<div class="panel-head">
-			<h2 id="input-heading">Input</h2>
-			<ModeSwitch bind:value={mode} options={MODES} label="Input type" />
+			<h2 id="input-heading">{t('hash.inputHeading')}</h2>
+			<ModeSwitch bind:value={mode} options={modes} label={t('hash.inputType')} />
 		</div>
 
 		{#if mode === 'text'}
-			<label class="visually-hidden" for="hash-text">Text to hash</label>
+			<label class="visually-hidden" for="hash-text">{t('hash.textLabel')}</label>
 			<textarea
 				id="hash-text"
 				bind:value={text}
 				rows="6"
-				placeholder="Type or paste text to hash…"
+				placeholder={t('hash.textPlaceholder')}
 				spellcheck="false"></textarea>
-			<p class="hint">Text is encoded as UTF-8. Hashes update as you type.</p>
+			<p class="hint">{t('hash.textHint')}</p>
 		{:else}
 			<FileDrop {file} onselect={selectFile} />
 			{#if hashingFile}
-				<ProgressBar value={fileProgress} label="Hashing file" />
+				<ProgressBar value={fileProgress} label={t('hash.hashingFile')} />
 			{/if}
 			{#if fileError}
-				<p class="error" role="alert">Could not read the file: {fileError}</p>
+				<p class="error" role="alert">{t('hash.fileError', { error: fileError })}</p>
 			{/if}
 		{/if}
 
@@ -112,14 +107,14 @@
 	</section>
 
 	<section class="panel" aria-labelledby="results-heading">
-		<h2 id="results-heading">Results</h2>
+		<h2 id="results-heading">{t('hash.resultsHeading')}</h2>
 		{#if digests}
 			<HashResults {digests} {matches} />
 		{:else if hashingFile}
-			<p class="hint">Hashing…</p>
+			<p class="hint">{t('hash.hashing')}</p>
 		{:else}
 			<p class="hint">
-				{mode === 'text' ? 'Enter some text' : 'Choose a file'} to compute its hashes.
+				{mode === 'text' ? t('hash.emptyText') : t('hash.emptyFile')}
 			</p>
 		{/if}
 	</section>

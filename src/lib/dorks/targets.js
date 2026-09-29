@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /** Removes double quotes, which would break a quoted Google search term. */
 const stripQuotes = (value) => value.replace(/"/g, '');
 
@@ -12,32 +14,38 @@ export const quote = (value) => `"${stripQuotes(value)}"`;
 export const TARGET_TYPES = [
 	{
 		id: 'username',
-		label: 'Username',
+		get label() {
+			return t('dorks.type.username');
+		},
 		placeholder: 'johndoe',
 		normalize(raw) {
 			const value = stripQuotes(raw.trim().replace(/^@/, '').replace(/\s+/g, ''));
-			if (!value) return { error: 'Enter a username.' };
+			if (!value) return { error: t('dorks.error.username') };
 			return { value, exact: quote(value) };
 		}
 	},
 	{
 		id: 'email',
-		label: 'Email',
+		get label() {
+			return t('dorks.type.email');
+		},
 		placeholder: 'john.doe@example.com',
 		normalize(raw) {
 			const value = stripQuotes(raw.trim().toLowerCase());
 			const match = value.match(/^([^\s@]+)@([^\s@]+\.[^\s@]+)$/);
-			if (!match) return { error: 'Enter a valid email address, e.g. name@example.com.' };
+			if (!match) return { error: t('dorks.error.email') };
 			return { value, exact: quote(value), local: match[1], domain: match[2] };
 		}
 	},
 	{
 		id: 'name',
-		label: 'Full name',
+		get label() {
+			return t('dorks.type.name');
+		},
 		placeholder: 'John Doe',
 		normalize(raw) {
 			const value = stripQuotes(raw.trim().replace(/\s+/g, ' '));
-			if (!value) return { error: 'Enter a first and last name.' };
+			if (!value) return { error: t('dorks.error.name') };
 			const words = value.split(' ');
 			// "Doe John" is common in lists and documents, so it is searched too.
 			const reversed = words.length === 2 ? `${words[1]} ${words[0]}` : null;
@@ -46,13 +54,15 @@ export const TARGET_TYPES = [
 	},
 	{
 		id: 'phone',
-		label: 'Phone',
+		get label() {
+			return t('dorks.type.phone');
+		},
 		placeholder: '+39 333 123 4567',
 		normalize(raw) {
 			const value = stripQuotes(raw.trim().replace(/\s+/g, ' '));
 			const digits = value.replace(/\D/g, '');
 			if (digits.length < 6 || /[^\d\s+().-]/.test(value)) {
-				return { error: 'Enter a phone number (digits, spaces, +, - and brackets only).' };
+				return { error: t('dorks.error.phone') };
 			}
 			// Pages write numbers in many formats: search both as typed and as bare digits.
 			const variants = [
@@ -64,7 +74,9 @@ export const TARGET_TYPES = [
 	},
 	{
 		id: 'domain',
-		label: 'Domain',
+		get label() {
+			return t('dorks.type.domain');
+		},
 		placeholder: 'example.com',
 		normalize(raw) {
 			const value = raw
@@ -74,7 +86,7 @@ export const TARGET_TYPES = [
 				.replace(/[/?#].*$/, '')
 				.replace(/^www\./, '');
 			if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(value)) {
-				return { error: 'Enter a domain, e.g. example.com.' };
+				return { error: t('dorks.error.domain') };
 			}
 			return { value, exact: quote(value) };
 		}

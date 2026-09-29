@@ -1,20 +1,26 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * @type {{ result: { name: string, status: string, url: string | null, http_status: number | null, reason: string, unreliable?: boolean } }}
 	 */
 	let { result } = $props();
 
-	const LABELS = { found: 'found', not_found: 'not found', unknown: 'unknown', error: 'error' };
+	const STATUSES = ['found', 'not_found', 'unknown', 'error'];
 </script>
 
 <li class="row">
 	<span class="name">
 		{result.name}
 		{#if result.unreliable}
-			<span class="flag" title="Behind bot protection: results may be unreliable">*</span>
+			<span class="flag" title={t('username.unreliable')}>*</span>
 		{/if}
 	</span>
-	<span class={`status ${result.status}`}>{LABELS[result.status] ?? result.status}</span>
+	<span class={`status ${result.status}`}
+		>{STATUSES.includes(result.status)
+			? t(`username.rowStatus.${result.status}`)
+			: result.status}</span
+	>
 	<span class="reason">{result.reason}</span>
 	{#if result.url}
 		<!-- External profile URL, so resolve() does not apply. -->
@@ -23,9 +29,9 @@
 			href={result.url}
 			target="_blank"
 			rel="noopener noreferrer"
-			aria-label={`Open ${result.name} profile`}
+			aria-label={t('username.openProfile', { name: result.name })}
 		>
-			open ↗
+			{t('username.open')}
 		</a>
 		<!-- eslint-enable svelte/no-navigation-without-resolve -->
 	{:else}

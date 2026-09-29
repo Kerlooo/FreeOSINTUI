@@ -1,5 +1,6 @@
 <script>
 	import { formatClock } from '$lib/clock/format.js';
+	import { getLocale } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {Date | null} */
 	let now = $state(null);
@@ -11,7 +12,7 @@
 		return () => clearInterval(timer);
 	});
 
-	const clock = $derived(now && formatClock(now));
+	const clock = $derived(now && formatClock(now, getLocale()));
 </script>
 
 {#if clock}

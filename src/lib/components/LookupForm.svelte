@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * Single-field search form used by lookup tools.
 	 * @type {{ value: string, label: string, placeholder?: string, buttonLabel?: string, busy?: boolean, onsubmit: (value: string) => void }}
@@ -7,7 +9,7 @@
 		value = $bindable(),
 		label,
 		placeholder = '',
-		buttonLabel = 'Look up',
+		buttonLabel,
 		busy = false,
 		onsubmit
 	} = $props();
@@ -24,7 +26,9 @@
 <form onsubmit={handleSubmit}>
 	<label class="visually-hidden" for={id}>{label}</label>
 	<input {id} type="text" bind:value {placeholder} autocomplete="off" spellcheck="false" />
-	<button type="submit" disabled={busy || !value.trim()}>{busy ? 'working…' : buttonLabel}</button>
+	<button type="submit" disabled={busy || !value.trim()}
+		>{busy ? t('common.working') : (buttonLabel ?? t('common.lookUp'))}</button
+	>
 </form>
 
 <style>

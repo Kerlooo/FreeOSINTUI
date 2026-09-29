@@ -1,3 +1,5 @@
+import { t as translate } from '$lib/i18n/i18n.svelte.js';
+
 const ALL = ['username', 'email', 'name', 'phone', 'domain'];
 
 /** Social platforms searched in the "Social" category. */
@@ -37,23 +39,41 @@ const MAIN_SOCIAL_EXCLUSIONS = [
 const scope = (target, type) => (type === 'domain' ? `site:${target.value}` : target.exact);
 
 const FILE_TYPES = [
-	{ id: 'pdf', label: 'PDF documents', filter: 'filetype:pdf' },
+	{
+		id: 'pdf',
+		get label() {
+			return translate('dorks.dork.pdf');
+		},
+		filter: 'filetype:pdf'
+	},
 	{
 		id: 'word',
-		label: 'Word / text documents',
+		get label() {
+			return translate('dorks.dork.word');
+		},
 		filter: '(filetype:doc OR filetype:docx OR filetype:odt OR filetype:rtf)'
 	},
 	{
 		id: 'sheet',
-		label: 'Spreadsheets',
+		get label() {
+			return translate('dorks.dork.sheet');
+		},
 		filter: '(filetype:xls OR filetype:xlsx OR filetype:csv OR filetype:ods)'
 	},
 	{
 		id: 'slides',
-		label: 'Presentations',
+		get label() {
+			return translate('dorks.dork.slides');
+		},
 		filter: '(filetype:ppt OR filetype:pptx OR filetype:odp)'
 	},
-	{ id: 'plain', label: 'Plain text and logs', filter: '(filetype:txt OR filetype:log)' }
+	{
+		id: 'plain',
+		get label() {
+			return translate('dorks.dork.plain');
+		},
+		filter: '(filetype:txt OR filetype:log)'
+	}
 ];
 
 const CODE_SITES = [
@@ -80,56 +100,90 @@ const PASTE_SITES = [
 export const CATEGORIES = [
 	{
 		id: 'general',
-		label: 'General',
-		description: 'Exact mentions of the target anywhere on the web.',
+		get label() {
+			return translate('dorks.category.general.label');
+		},
+		get description() {
+			return translate('dorks.category.general.description');
+		},
 		dorks: [
-			{ id: 'exact', label: 'Exact match', types: ALL, build: (t) => t.exact },
+			{
+				id: 'exact',
+				get label() {
+					return translate('dorks.dork.exact');
+				},
+				types: ALL,
+				build: (t) => t.exact
+			},
 			{
 				id: 'intitle',
-				label: 'In page title',
+				get label() {
+					return translate('dorks.dork.intitle');
+				},
 				types: ['username', 'email', 'name', 'domain'],
 				build: (t) => `intitle:${t.exact}`
 			},
-			{ id: 'intext', label: 'In page text', types: ALL, build: (t) => `intext:${t.exact}` },
+			{
+				id: 'intext',
+				get label() {
+					return translate('dorks.dork.intext');
+				},
+				types: ALL,
+				build: (t) => `intext:${t.exact}`
+			},
 			{
 				id: 'inurl',
-				label: 'In URL (profile pages)',
+				get label() {
+					return translate('dorks.dork.inurl');
+				},
 				types: ['username'],
 				build: (t) => `inurl:${t.value}`
 			},
 			{
 				id: 'reversed',
-				label: 'Surname first',
+				get label() {
+					return translate('dorks.dork.reversed');
+				},
 				types: ['name'],
 				build: (t) => (t.reversed ? `"${t.reversed}"` : null)
 			},
 			{
 				id: 'cv',
-				label: 'CV / resume',
+				get label() {
+					return translate('dorks.dork.cv');
+				},
 				types: ['name'],
 				build: (t) => `${t.exact} (CV OR resume OR curriculum)`
 			},
 			{
 				id: 'local-part',
-				label: 'Email username on other sites',
+				get label() {
+					return translate('dorks.dork.localPart');
+				},
 				types: ['email'],
 				build: (t) => `"${t.local}" -${t.exact}`
 			},
 			{
 				id: 'domain-emails',
-				label: 'Email addresses of the domain',
+				get label() {
+					return translate('dorks.dork.domainEmails');
+				},
 				types: ['domain'],
 				build: (t) => `"@${t.value}"`
 			},
 			{
 				id: 'outside',
-				label: 'Mentions on other sites',
+				get label() {
+					return translate('dorks.dork.outside');
+				},
 				types: ['domain'],
 				build: (t) => `${t.exact} -site:${t.value}`
 			},
 			{
 				id: 'no-social',
-				label: 'Outside the main social networks',
+				get label() {
+					return translate('dorks.dork.noSocial');
+				},
 				types: ['username', 'email', 'name', 'phone'],
 				build: (t) => `${t.exact} ${MAIN_SOCIAL_EXCLUSIONS}`
 			}
@@ -137,8 +191,12 @@ export const CATEGORIES = [
 	},
 	{
 		id: 'social',
-		label: 'Social',
-		description: 'Profiles, posts and comments on social networks, video and community platforms.',
+		get label() {
+			return translate('dorks.category.social.label');
+		},
+		get description() {
+			return translate('dorks.category.social.description');
+		},
 		dorks: SOCIAL_SITES.map(({ id, label, site }) => ({
 			id,
 			label,
@@ -148,19 +206,30 @@ export const CATEGORIES = [
 	},
 	{
 		id: 'documents',
-		label: 'Documents',
-		description: 'Indexed files that contain the target.',
-		dorks: FILE_TYPES.map(({ id, label, filter }) => ({
-			id,
-			label,
+		get label() {
+			return translate('dorks.category.documents.label');
+		},
+		get description() {
+			return translate('dorks.category.documents.description');
+		},
+		// Labels are getters, so they are copied as getters to follow the language.
+		dorks: FILE_TYPES.map((fileType) => ({
+			id: fileType.id,
+			get label() {
+				return fileType.label;
+			},
 			types: ALL,
-			build: (t, type) => `${scope(t, type)} ${filter}`
+			build: (target, type) => `${scope(target, type)} ${fileType.filter}`
 		}))
 	},
 	{
 		id: 'code',
-		label: 'Code & dev',
-		description: 'Repositories, snippets and developer Q&A.',
+		get label() {
+			return translate('dorks.category.code.label');
+		},
+		get description() {
+			return translate('dorks.category.code.description');
+		},
 		dorks: CODE_SITES.map(({ id, label, site }) => ({
 			id,
 			label,
@@ -170,8 +239,12 @@ export const CATEGORIES = [
 	},
 	{
 		id: 'pastes',
-		label: 'Pastes & leaks',
-		description: 'Paste sites and pages that mention the target together with leak keywords.',
+		get label() {
+			return translate('dorks.category.pastes.label');
+		},
+		get description() {
+			return translate('dorks.category.pastes.description');
+		},
 		dorks: [
 			...PASTE_SITES.map(({ id, label, site }) => ({
 				id,
@@ -181,7 +254,9 @@ export const CATEGORIES = [
 			})),
 			{
 				id: 'leak-words',
-				label: 'Leak keywords',
+				get label() {
+					return translate('dorks.dork.leakWords');
+				},
 				types: ALL,
 				build: (t) => `${t.exact} (leak OR dump OR breach OR password)`
 			}
@@ -189,44 +264,60 @@ export const CATEGORIES = [
 	},
 	{
 		id: 'exposure',
-		label: 'Site exposure',
-		description: 'What the domain exposes to search engines.',
+		get label() {
+			return translate('dorks.category.exposure.label');
+		},
+		get description() {
+			return translate('dorks.category.exposure.description');
+		},
 		dorks: [
 			{
 				id: 'indexed',
-				label: 'All indexed pages',
+				get label() {
+					return translate('dorks.dork.indexed');
+				},
 				types: ['domain'],
 				build: (t) => `site:${t.value}`
 			},
 			{
 				id: 'subdomains',
-				label: 'Subdomains',
+				get label() {
+					return translate('dorks.dork.subdomains');
+				},
 				types: ['domain'],
 				build: (t) => `site:*.${t.value} -site:www.${t.value}`
 			},
 			{
 				id: 'login',
-				label: 'Login and admin pages',
+				get label() {
+					return translate('dorks.dork.login');
+				},
 				types: ['domain'],
 				build: (t) =>
 					`site:${t.value} (inurl:login OR inurl:signin OR inurl:admin OR inurl:dashboard)`
 			},
 			{
 				id: 'index-of',
-				label: 'Directory listings',
+				get label() {
+					return translate('dorks.dork.indexOf');
+				},
 				types: ['domain'],
 				build: (t) => `site:${t.value} intitle:"index of"`
 			},
 			{
 				id: 'config',
-				label: 'Config, backup and database files',
+				get label() {
+					return translate('dorks.dork.config');
+				},
 				types: ['domain'],
 				build: (t) =>
 					`site:${t.value} (ext:env OR ext:sql OR ext:bak OR ext:conf OR ext:ini OR ext:cfg)`
 			},
 			{
 				id: 'errors',
-				label: 'Error pages',
+				get label() {
+					return translate('dorks.dork.errors');
+				},
 				types: ['domain'],
 				build: (t) => `site:${t.value} ("sql syntax" OR "stack trace" OR "fatal error")`
 			}

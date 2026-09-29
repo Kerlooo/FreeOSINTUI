@@ -1,4 +1,22 @@
 import { fetchJson } from '$lib/net.js';
+import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
+
+/**
+ * Summary row whose label (and optionally value) is translated when read, so it follows
+ * language changes.
+ * @param {string} labelKey
+ * @param {() => string} value
+ */
+function row(labelKey, value) {
+	return {
+		get label() {
+			return t(labelKey);
+		},
+		get value() {
+			return value();
+		}
+	};
+}
 
 /**
  * Labels Blockscout attaches to an address: ENS name, contract name, public tags.
@@ -61,17 +79,17 @@ export async function fetchEvmAddress(chain, address, options = {}) {
 	const extra = [];
 	if (info) {
 		const labels = addressLabels(info);
-		extra.push({ label: 'Account type', value: info.is_contract ? 'Contract' : 'Wallet (EOA)' });
-		if (labels.length) extra.push({ label: 'Labels', value: labels.join(', ') });
-		if (info.is_scam) extra.push({ label: 'Warning', value: 'Flagged as scam by Blockscout' });
+		extra.push(
+			row('crypto.row.accountType', () => t(info.is_contract ? 'crypto.contract' : 'crypto.wallet'))
+		);
+		if (labels.length) extra.push(row('crypto.row.labels', () => labels.join(', ')));
+		if (info.is_scam) extra.push(row('crypto.row.warning', () => t('crypto.scamFlag')));
 		if (info.creator_address_hash)
-			extra.push({ label: 'Created by', value: info.creator_address_hash });
+			extra.push(row('crypto.row.createdBy', () => info.creator_address_hash));
 	}
 	if (counters?.token_transfers_count && counters.token_transfers_count !== '0') {
-		extra.push({
-			label: 'Token transfers',
-			value: Number(counters.token_transfers_count).toLocaleString('en')
-		});
+		const transfers = Number(counters.token_transfers_count);
+		extra.push(row('crypto.row.tokenTransfers', () => formatNumber(transfers)));
 	}
 
 	return {

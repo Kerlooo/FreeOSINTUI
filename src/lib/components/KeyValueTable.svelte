@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * Two-column table of labelled values. Rows with an empty value are hidden.
 	 * @type {{ rows: { label: string, value: string | number | null | undefined, href?: string }[] }}
@@ -27,7 +29,7 @@
 		{/each}
 	</dl>
 {:else}
-	<p>No data.</p>
+	<p>{t('common.noData')}</p>
 {/if}
 
 <style>

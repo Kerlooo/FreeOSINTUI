@@ -5,6 +5,7 @@
 	import TelegramPostList from '$lib/components/TelegramPostList.svelte';
 	import { ApiError, BACKEND_START_COMMAND, apiGet } from '$lib/api.js';
 	import { normalizeTelegramUsername } from '$lib/telegram/validate.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	let input = $state('');
 	let busy = $state(false);
@@ -45,39 +46,33 @@
 </script>
 
 <svelte:head>
-	<title>Telegram OSINT — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Look up a public Telegram username: account type (channel, group, bot, user), name, bio, subscriber count and latest channel posts."
-	/>
+	<title>{t('tools.telegram.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('telegram.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Telegram OSINT"
-	description="Look up a Telegram username or t.me link and see what its public preview reveals: account type, name, bio, photo, subscribers or members and, for channels, the latest posts."
-/>
+<ToolHeader title={t('tools.telegram.name')} description={t('telegram.description')} />
 
 <section class="panel" aria-labelledby="telegram-heading">
-	<h2 id="telegram-heading">Username</h2>
+	<h2 id="telegram-heading">{t('telegram.heading')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="Telegram username or t.me link"
-		placeholder="e.g. durov or https://t.me/telegram"
+		label={t('telegram.inputLabel')}
+		placeholder={t('telegram.placeholder')}
 		{busy}
 		onsubmit={lookup}
 	/>
 	{#if backendDown}
 		<div class="notice" role="alert">
 			<p>
-				<strong>Backend not running.</strong> This tool needs the FreeOSINT-UI Python backend. Start it
-				with:
+				<strong>{t('backend.down')}</strong>
+				{t('backend.needed')}
 			</p>
 			<code>{BACKEND_START_COMMAND}</code>
 		</div>
 	{:else if error}
 		<p class="error" role="alert">{error}</p>
 	{:else}
-		<p>Only public information from t.me is shown. Private accounts show little or nothing.</p>
+		<p>{t('telegram.intro')}</p>
 	{/if}
 </section>
 
@@ -88,16 +83,19 @@
 			{#if profile.posts.length}
 				<TelegramPostList posts={profile.posts} />
 			{:else if profile.type === 'channel'}
-				<p class="muted">No public posts preview for this channel.</p>
+				<p class="muted">{t('telegram.noPosts')}</p>
 			{/if}
 		{:else}
 			<div class="panel">
 				<p>
-					<strong>@{profile.username}</strong> was not found on Telegram, or it has no public page.
+					<strong>@{profile.username}</strong>
+					{t('telegram.notFound')}
 				</p>
 				<!-- External t.me URL, so resolve() does not apply. -->
 				<!-- eslint-disable svelte/no-navigation-without-resolve -->
-				<a href={profile.url} target="_blank" rel="noopener noreferrer">Open {profile.url} ↗</a>
+				<a href={profile.url} target="_blank" rel="noopener noreferrer"
+					>{t('telegram.open', { url: profile.url })}</a
+				>
 				<!-- eslint-enable svelte/no-navigation-without-resolve -->
 			</div>
 		{/if}

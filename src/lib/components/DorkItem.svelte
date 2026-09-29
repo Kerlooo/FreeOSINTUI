@@ -1,5 +1,6 @@
 <script>
 	import CopyButton from '$lib/components/CopyButton.svelte';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ dork: { label: string, query: string, url: string } }} */
 	let { dork } = $props();
@@ -15,12 +16,12 @@
 			href={dork.url}
 			target="_blank"
 			rel="noopener noreferrer"
-			aria-label={`Search on Google: ${dork.label}`}
+			aria-label={t('dorks.searchLabel', { label: dork.label })}
 		>
-			search ↗
+			{t('dorks.search')}
 		</a>
 		<!-- eslint-enable svelte/no-navigation-without-resolve -->
-		<CopyButton value={dork.query} label={`Copy dork ${dork.label}`} />
+		<CopyButton value={dork.query} label={t('dorks.copyLabel', { label: dork.label })} />
 	</div>
 </li>
 

@@ -36,22 +36,22 @@ function makeDocx() {
 describe('parseOffice', () => {
 	it('reads core, app and custom properties and comment authors', () => {
 		const office = parseOffice(makeDocx());
-		expect(office?.kind).toBe('Word document');
+		expect(office?.kind).toBe('word');
 		expect(office?.core).toEqual({
-			Title: 'Q3 plan & budget',
-			'Author (creator)': 'Mario Rossi',
-			'Last modified by': 'Anna Bianchi',
-			Revision: '7',
-			Created: '2024-05-01 10:34:56 UTC',
-			Modified: '2024-05-02 08:00:00 UTC'
+			title: 'Q3 plan & budget',
+			creator: 'Mario Rossi',
+			lastModifiedBy: 'Anna Bianchi',
+			revision: '7',
+			created: '2024-05-01 10:34:56 UTC',
+			modified: '2024-05-02 08:00:00 UTC'
 		});
 		expect(office?.app).toMatchObject({
-			Application: 'Microsoft Office Word',
-			Company: 'ACME S.p.A.',
-			Template: 'Normal.dotm',
-			'Total editing time': '125 min (2 h 5 min)',
-			Pages: '3',
-			Words: '812'
+			application: 'Microsoft Office Word',
+			company: 'ACME S.p.A.',
+			template: 'Normal.dotm',
+			totalTime: '125 min (2 h 5 min)',
+			pages: '3',
+			words: '812'
 		});
 		expect(office?.custom).toEqual({ Client: 'Globex' });
 		expect(office?.commentAuthors).toEqual(['Luca Verdi']);
@@ -62,12 +62,12 @@ describe('parseOffice', () => {
 			'[Content_Types].xml': strToU8('<Types/>'),
 			'xl/workbook.xml': strToU8('<w/>')
 		});
-		expect(parseOffice(xlsx)?.kind).toBe('Excel workbook');
+		expect(parseOffice(xlsx)?.kind).toBe('excel');
 		const pptx = zipSync({
 			'[Content_Types].xml': strToU8('<Types/>'),
 			'ppt/presentation.xml': strToU8('<p/>')
 		});
-		expect(parseOffice(pptx)?.kind).toBe('PowerPoint presentation');
+		expect(parseOffice(pptx)?.kind).toBe('powerpoint');
 	});
 
 	it('returns null for a plain zip', () => {

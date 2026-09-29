@@ -3,6 +3,8 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { toolsByCategory } from '$lib/tools.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
+	import LanguageSwitch from './LanguageSwitch.svelte';
 	import NavbarClock from './NavbarClock.svelte';
 
 	const groups = toolsByCategory();
@@ -25,7 +27,7 @@
 />
 
 <header>
-	<nav aria-label="Main">
+	<nav aria-label={t('nav.main')}>
 		<a class="brand" href={resolve('/')}>
 			<span aria-hidden="true">&gt;_</span> FreeOSINT-UI
 		</a>
@@ -34,12 +36,13 @@
 				<NavbarClock />
 			</li>
 			<li>
-				<a href={resolve('/')} aria-current={page.url.pathname === '/' ? 'page' : undefined}>Home</a
+				<a href={resolve('/')} aria-current={page.url.pathname === '/' ? 'page' : undefined}
+					>{t('nav.home')}</a
 				>
 			</li>
 			<li>
 				<details bind:this={menu} bind:open={menuOpen}>
-					<summary>Tools</summary>
+					<summary>{t('nav.tools')}</summary>
 					<div class="menu">
 						{#each groups as group (group.id)}
 							<div class="group">
@@ -60,6 +63,9 @@
 						{/each}
 					</div>
 				</details>
+			</li>
+			<li>
+				<LanguageSwitch />
 			</li>
 		</ul>
 	</nav>

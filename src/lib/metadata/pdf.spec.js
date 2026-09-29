@@ -70,10 +70,10 @@ describe('parsePdf', () => {
 			Custom: 'SomeName'
 		});
 		expect(pdf.xmp).toMatchObject({
-			'Creator (author)': 'José Doe',
-			'Creator tool': 'Microsoft Word',
-			Producer: 'macOS Quartz',
-			Created: '2024-05-01 12:34:56+02:00'
+			creator: 'José Doe',
+			creatorTool: 'Microsoft Word',
+			producer: 'macOS Quartz',
+			created: '2024-05-01 12:34:56+02:00'
 		});
 	});
 

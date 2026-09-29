@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /**
  * Reverse image search engines. Search-by-URL links need a publicly reachable image URL;
  * for local files the user has to upload the image on the engine's own page.
@@ -45,10 +47,10 @@ export function buildReverseSearchLinks(input) {
 	try {
 		url = new URL(value);
 	} catch {
-		return { error: 'Enter a full URL starting with http:// or https://.', links: [] };
+		return { error: t('metadata.reverse.errorFullUrl'), links: [] };
 	}
 	if (url.protocol !== 'http:' && url.protocol !== 'https:')
-		return { error: 'Only http:// and https:// URLs can be searched.', links: [] };
+		return { error: t('metadata.reverse.errorProtocol'), links: [] };
 	return {
 		error: null,
 		links: REVERSE_ENGINES.map((engine) => ({

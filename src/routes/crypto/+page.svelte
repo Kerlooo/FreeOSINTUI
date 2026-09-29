@@ -4,17 +4,18 @@
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
 	import CopyButton from '$lib/components/CopyButton.svelte';
 	import CryptoTxList from '$lib/components/CryptoTxList.svelte';
-	import { analyzeAddress } from '$lib/crypto/address.js';
+	import { analyzeAddress, checksumLabel, typeLabel } from '$lib/crypto/address.js';
 	import { CHAINS } from '$lib/crypto/chains.js';
 	import { formatAmount } from '$lib/crypto/format.js';
 	import { traceAddress } from '$lib/crypto/trace.js';
+	import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
 
 	const SHOWN_TXS = 10;
 
 	let input = $state('');
 	let busy = $state(false);
 	let error = $state('');
-	/** @type {{ chain: 'btc' | 'ltc' | 'eth', address: string, type: string, typeLabel: string, checksum: string } | null} */
+	/** @type {{ chain: 'btc' | 'ltc' | 'eth', address: string, type: string, typeLabel: string, checksumKind: 'eip55' | 'none' | 'bech32' | 'bech32m' | 'base58check', checksum: string } | null} */
 	let target = $state(null);
 	/** @type {Awaited<ReturnType<typeof traceAddress>> | null} */
 	let data = $state(null);
@@ -65,9 +66,9 @@
 	let detectionRows = $derived(
 		target && chain
 			? [
-					{ label: 'Chain', value: chain.name },
-					{ label: 'Type', value: target.typeLabel },
-					{ label: 'Checksum', value: target.checksum }
+					{ label: t('crypto.row.chain'), value: chain.name },
+					{ label: t('crypto.row.type'), value: typeLabel(target.type) },
+					{ label: t('crypto.row.checksum'), value: checksumLabel(target.checksumKind) }
 				]
 			: []
 	);
@@ -75,21 +76,26 @@
 	let summaryRows = $derived(
 		data && chain
 			? [
-					{ label: 'Balance', value: formatAmount(data.balance, chain) },
+					{ label: t('crypto.row.balance'), value: formatAmount(data.balance, chain) },
 					{
-						label: 'Total received',
+						label: t('crypto.row.received'),
 						value: data.received === null ? null : formatAmount(data.received, chain)
 					},
 					{
-						label: 'Total sent',
+						label: t('crypto.row.sent'),
 						value: data.sent === null ? null : formatAmount(data.sent, chain)
 					},
 					{
-						label: 'Transactions',
-						value: `${data.txCount.toLocaleString('en')}${data.pendingTxCount ? ` (${data.pendingTxCount} unconfirmed)` : ''}`
+						label: t('crypto.row.txs'),
+						value: data.pendingTxCount
+							? t('crypto.txCountUnconfirmed', {
+									count: formatNumber(data.txCount),
+									pending: formatNumber(data.pendingTxCount)
+								})
+							: formatNumber(data.txCount)
 					},
-					{ label: 'First seen', value: formatDate(data.firstSeen) },
-					{ label: 'Last seen', value: formatDate(data.lastSeen) },
+					{ label: t('crypto.row.firstSeen'), value: formatDate(data.firstSeen) },
+					{ label: t('crypto.row.lastSeen'), value: formatDate(data.lastSeen) },
 					...data.extra
 				]
 			: []
@@ -97,35 +103,26 @@
 </script>
 
 <svelte:head>
-	<title>Crypto Tracer — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Trace a Bitcoin, Litecoin or Ethereum address: detect the chain and address type, check the checksum, see balance, totals and the latest transactions with their counterparties."
-	/>
+	<title>{t('tools.crypto.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('crypto.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Crypto Tracer"
-	description="Paste a Bitcoin, Litecoin or Ethereum address to detect its type, verify its checksum and follow the money: balance, totals and latest transactions. Click a counterparty to trace it in turn."
-/>
+<ToolHeader title={t('tools.crypto.name')} description={t('crypto.intro')} />
 
 <section class="panel" aria-labelledby="crypto-input-heading">
-	<h2 id="crypto-input-heading">Address</h2>
+	<h2 id="crypto-input-heading">{t('crypto.addressHeading')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="Wallet address"
+		label={t('crypto.inputLabel')}
 		placeholder="bc1q…, 1…, 3…, L…, M…, ltc1…, 0x…"
-		buttonLabel="Trace"
+		buttonLabel={t('crypto.trace')}
 		{busy}
 		onsubmit={lookup}
 	/>
 	{#if error}
 		<p class="error" role="alert">{error}</p>
 	{:else}
-		<p class="hint">
-			Data comes from public block explorers (mempool.space, litecoinspace.org, Blockscout) and is
-			requested directly from your browser.
-		</p>
+		<p class="hint">{t('crypto.sourcesHint')}</p>
 	{/if}
 </section>
 
@@ -133,15 +130,15 @@
 	<div class="layout">
 		<section class="panel" aria-labelledby="crypto-summary-heading">
 			<div class="panel-head">
-				<h2 id="crypto-summary-heading">Summary</h2>
-				<CopyButton value={target.address} label="Copy address" />
+				<h2 id="crypto-summary-heading">{t('crypto.summary')}</h2>
+				<CopyButton value={target.address} label={t('crypto.copyAddress')} />
 			</div>
 			<p class="address">{target.address}</p>
 			<KeyValueTable rows={detectionRows} />
 			{#if data}
 				<KeyValueTable rows={summaryRows} />
 			{:else if busy}
-				<p class="hint">Loading on-chain data…</p>
+				<p class="hint">{t('crypto.loadingData')}</p>
 			{/if}
 			<ul class="explorers">
 				{#each chain.explorers as explorer (explorer.name)}
@@ -158,30 +155,24 @@
 		</section>
 
 		<section class="panel" aria-labelledby="crypto-txs-heading">
-			<h2 id="crypto-txs-heading">Latest transactions</h2>
+			<h2 id="crypto-txs-heading">{t('crypto.latestTxs')}</h2>
 			{#if data}
 				{#if data.txs.length}
 					<CryptoTxList txs={data.txs.slice(0, SHOWN_TXS)} {chain} ontrace={retrace} />
 					{#if target.chain === 'eth'}
-						<p class="hint">
-							Amounts are native ETH only: token transfers (ERC-20, NFTs) are not listed here.
-						</p>
+						<p class="hint">{t('crypto.ethNativeOnly')}</p>
 					{/if}
 				{:else}
-					<p class="hint">No transactions found for this address.</p>
+					<p class="hint">{t('crypto.noTxs')}</p>
 				{/if}
 			{:else if busy}
-				<p class="hint">Loading transactions…</p>
+				<p class="hint">{t('crypto.loadingTxs')}</p>
 			{/if}
 		</section>
 	</div>
 {/if}
 
-<p class="note">
-	Blockchains are public, but linking an address to a person is always heuristic: exchanges, mixers
-	and shared wallets make counterparties misleading. Treat every link as a lead to verify, not as
-	proof.
-</p>
+<p class="note">{t('crypto.disclaimer')}</p>
 
 <style>
 	.layout {

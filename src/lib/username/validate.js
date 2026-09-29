@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /** Same rule as the backend (backend/app/wmn.py USERNAME_RE). */
 const USERNAME_RE = /^[A-Za-z0-9._-]{1,64}$/;
 
@@ -8,11 +10,7 @@ const USERNAME_RE = /^[A-Za-z0-9._-]{1,64}$/;
  */
 export function normalizeUsername(input) {
 	const value = input.trim().replace(/^@/, '');
-	if (!value) return { value, error: 'Enter a username.' };
-	if (!USERNAME_RE.test(value))
-		return {
-			value,
-			error: "Use only letters, digits, '.', '_' or '-' (max 64 characters)."
-		};
+	if (!value) return { value, error: t('username.error.empty') };
+	if (!USERNAME_RE.test(value)) return { value, error: t('username.error.invalid') };
 	return { value, error: null };
 }

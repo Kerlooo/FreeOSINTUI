@@ -1,5 +1,6 @@
 <script>
 	import { formatAmount, shortenHash } from '$lib/crypto/format.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/**
 	 * Latest transactions of a traced address. Counterparties are buttons that trace them in turn.
@@ -12,11 +13,12 @@
 	let { txs, chain, ontrace } = $props();
 
 	const SHOWN_COUNTERPARTIES = 3;
-	const DIRECTIONS = { in: '↓ in', out: '↑ out', self: '↻ self' };
 
 	/** @param {Date | null} time */
 	function formatDate(time) {
-		return time ? time.toISOString().slice(0, 16).replace('T', ' ') + ' UTC' : 'pending';
+		return time
+			? time.toISOString().slice(0, 16).replace('T', ' ') + ' UTC'
+			: t('crypto.tx.pending');
 	}
 </script>
 
@@ -39,33 +41,37 @@
 				<span class="date">{formatDate(tx.time)}</span>
 			</div>
 			<div class="body">
-				<span class="direction {tx.direction}">{DIRECTIONS[tx.direction]}</span>
+				<span class="direction {tx.direction}">{t(`crypto.tx.${tx.direction}`)}</span>
 				<span class="amount">
 					{tx.direction === 'out' ? '-' : tx.direction === 'in' ? '+' : ''}{formatAmount(
 						tx.amount,
 						chain
 					)}
 				</span>
-				{#if tx.failed}<span class="tag failed">failed</span>{/if}
-				{#if !tx.confirmed}<span class="tag">unconfirmed</span>{/if}
-				{#if tx.coinbase}<span class="tag">coinbase</span>{/if}
+				{#if tx.failed}<span class="tag failed">{t('crypto.tx.failed')}</span>{/if}
+				{#if !tx.confirmed}<span class="tag">{t('crypto.tx.unconfirmed')}</span>{/if}
+				{#if tx.coinbase}<span class="tag">{t('crypto.tx.coinbase')}</span>{/if}
 				{#if tx.method}<span class="tag">{tx.method}</span>{/if}
 			</div>
 			{#if tx.counterparties.length}
 				<div class="parties">
-					<span class="label">{tx.direction === 'out' ? 'to' : 'from'}</span>
+					<span class="label">{t(tx.direction === 'out' ? 'crypto.tx.to' : 'crypto.tx.from')}</span>
 					{#each tx.counterparties.slice(0, SHOWN_COUNTERPARTIES) as address (address)}
 						<button
 							type="button"
 							onclick={() => ontrace(address)}
-							title={`Trace ${address}`}
-							aria-label={`Trace ${address}`}
+							title={t('crypto.tx.traceAddress', { address })}
+							aria-label={t('crypto.tx.traceAddress', { address })}
 						>
 							{shortenHash(address, 10, 6)}
 						</button>
 					{/each}
 					{#if tx.counterparties.length > SHOWN_COUNTERPARTIES}
-						<span class="label">+{tx.counterparties.length - SHOWN_COUNTERPARTIES} more</span>
+						<span class="label"
+							>{t('crypto.tx.more', {
+								count: tx.counterparties.length - SHOWN_COUNTERPARTIES
+							})}</span
+						>
 					{/if}
 				</div>
 			{/if}

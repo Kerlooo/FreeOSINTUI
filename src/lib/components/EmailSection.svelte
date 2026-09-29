@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * Result panel of the Email Analyzer with loading and error states.
 	 * @type {{ id: string, title: string, loading?: boolean, error?: string, children?: import('svelte').Snippet }}
@@ -9,7 +11,7 @@
 <section class="panel" aria-labelledby={id} aria-busy={loading}>
 	<h2 {id}>{title}</h2>
 	{#if loading}
-		<p class="status">Looking up…</p>
+		<p class="status">{t('email.lookingUp')}</p>
 	{:else if error}
 		<p class="status error" role="alert">{error}</p>
 	{:else}

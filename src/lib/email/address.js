@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /** Free webmail domains mapped to the provider name. */
 export const FREE_PROVIDERS = {
 	'gmail.com': 'Gmail',
@@ -101,27 +103,26 @@ const DOMAIN_LABEL = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
 
 /**
  * Validates and normalizes an email address (trimmed, lowercase, domain converted to ASCII).
- * Returns `{ error }` for invalid input.
+ * Returns `{ error }` (a message in the current language) for invalid input.
  * @param {string} input
  * @returns {{ email: string, local: string, domain: string, error?: undefined } | { error: string }}
  */
 export function parseEmail(input) {
 	const value = input.trim().toLowerCase();
-	if (!value) return { error: 'Enter an email address.' };
+	if (!value) return { error: t('email.error.empty') };
 	const at = value.lastIndexOf('@');
-	if (at < 1 || at === value.length - 1)
-		return { error: 'An email address looks like name@example.com.' };
+	if (at < 1 || at === value.length - 1) return { error: t('email.error.shape') };
 
 	const local = value.slice(0, at);
 	let domain = value.slice(at + 1).replace(/\.$/, '');
-	if (local.length > 64) return { error: 'The part before @ is longer than 64 characters.' };
-	if (!LOCAL_PART.test(local)) return { error: 'The part before @ contains invalid characters.' };
+	if (local.length > 64) return { error: t('email.error.localTooLong') };
+	if (!LOCAL_PART.test(local)) return { error: t('email.error.localInvalid') };
 
 	// Internationalized domains are converted to punycode (xn--...) by the URL parser.
 	try {
 		domain = new URL(`http://${domain}`).hostname;
 	} catch {
-		return { error: 'The domain is not valid.' };
+		return { error: t('email.error.domainInvalid') };
 	}
 	const labels = domain.split('.');
 	const tld = labels.at(-1) ?? '';
@@ -131,7 +132,7 @@ export function parseEmail(input) {
 		!labels.every((label) => DOMAIN_LABEL.test(label)) ||
 		!/^([a-z]{2,63}|xn--[a-z0-9-]{1,59})$/.test(tld)
 	)
-		return { error: 'The domain is not valid (e.g. example.com).' };
+		return { error: t('email.error.domainExample') };
 
 	return { email: `${local}@${domain}`, local, domain };
 }

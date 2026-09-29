@@ -1,9 +1,14 @@
-/** Candidate algorithms for plain hex digests, by digest length. */
+import { t } from '$lib/i18n/i18n.svelte.js';
+
+/**
+ * Candidate algorithms for plain hex digests, by digest length.
+ * Names with words to translate are `{ key }` objects, resolved by identifyHash().
+ */
 const HEX_CANDIDATES = {
 	8: ['CRC32', 'Adler-32'],
 	16: ['MySQL 3.x', 'CRC64', 'Half MD5'],
 	32: ['MD5', 'NTLM', 'MD4', 'LM'],
-	40: ['SHA-1', 'RIPEMD-160', 'MySQL 4.1+ (without *)'],
+	40: ['SHA-1', 'RIPEMD-160', { key: 'hash.candidate.mysqlNoStar' }],
 	56: ['SHA-224', 'SHA3-224'],
 	64: ['SHA-256', 'SHA3-256', 'BLAKE3', 'BLAKE2s-256', 'Keccak-256'],
 	96: ['SHA-384', 'SHA3-384'],
@@ -43,7 +48,11 @@ export function identifyHash(value) {
 	if (pattern) return pattern.names;
 
 	const hex = normalizeHash(trimmed);
-	if (/^[0-9a-f]+$/.test(hex)) return HEX_CANDIDATES[hex.length] ?? [];
+	if (/^[0-9a-f]+$/.test(hex)) {
+		return (HEX_CANDIDATES[hex.length] ?? []).map((name) =>
+			typeof name === 'string' ? name : t(name.key)
+		);
+	}
 
 	return [];
 }

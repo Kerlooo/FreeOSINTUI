@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /**
  * Client for the optional Python backend (backend/). In dev, Vite proxies /api to it;
  * when frontend and backend are hosted separately, set VITE_API_BASE to the backend origin.
@@ -43,20 +45,20 @@ export async function apiGet(path, options = {}) {
 		});
 	} catch (error) {
 		if (signal?.aborted) throw error;
-		if (timeout.aborted) throw new ApiError('The backend did not answer in time.');
-		throw new ApiError('Backend not running.', { unreachable: true });
+		if (timeout.aborted) throw new ApiError(t('common.backendTimeout'));
+		throw new ApiError(t('common.backendDown'), { unreachable: true });
 	}
 
 	const type = response.headers.get('content-type') ?? '';
 	if (!type.includes('application/json')) {
-		throw new ApiError('Backend not running.', { status: response.status, unreachable: true });
+		throw new ApiError(t('common.backendDown'), { status: response.status, unreachable: true });
 	}
 
 	let data;
 	try {
 		data = await response.json();
 	} catch {
-		throw new ApiError('The backend returned an invalid response.', { status: response.status });
+		throw new ApiError(t('common.backendInvalid'), { status: response.status });
 	}
 	if (!response.ok) {
 		const detail = typeof data?.detail === 'string' ? data.detail : `HTTP ${response.status}`;

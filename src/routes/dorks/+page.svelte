@@ -5,8 +5,9 @@
 	import ModeSwitch from '$lib/components/ModeSwitch.svelte';
 	import { generateDorks } from '$lib/dorks/generate.js';
 	import { TARGET_TYPES } from '$lib/dorks/targets.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
-	const TYPE_OPTIONS = TARGET_TYPES.map((type) => ({ value: type.id, label: type.label }));
+	let typeOptions = $derived(TARGET_TYPES.map((type) => ({ value: type.id, label: type.label })));
 
 	let typeId = $state('username');
 	let input = $state('');
@@ -15,38 +16,32 @@
 	onMount(() => {
 		const params = new URLSearchParams(window.location.search);
 		const type = params.get('type');
-		if (TARGET_TYPES.some((t) => t.id === type)) typeId = /** @type {string} */ (type);
+		if (TARGET_TYPES.some((target) => target.id === type)) typeId = /** @type {string} */ (type);
 		input = params.get('q') ?? '';
 	});
 
-	let type = $derived(TARGET_TYPES.find((t) => t.id === typeId));
+	let type = $derived(TARGET_TYPES.find((target) => target.id === typeId));
 	let result = $derived(generateDorks(typeId, input));
 	let total = $derived(result.groups.reduce((sum, group) => sum + group.dorks.length, 0));
 </script>
 
 <svelte:head>
-	<title>Google Dork Generator — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Generate Google dorks for a username, email, name, phone number or domain, grouped by type (social, documents, code, pastes) with direct search links."
-	/>
+	<title>{t('tools.dorks.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('tools.dorks.description')} />
 </svelte:head>
 
-<ToolHeader
-	title="Google Dork Generator"
-	description="Pick what you are looking for, enter it and get ready-made Google dorks grouped by type. Each one opens the search directly on Google."
-/>
+<ToolHeader title={t('tools.dorks.name')} description={t('dorks.intro')} />
 
 <section class="panel" aria-labelledby="target-heading">
-	<h2 id="target-heading">Target</h2>
-	<ModeSwitch bind:value={typeId} options={TYPE_OPTIONS} label="Target type" />
+	<h2 id="target-heading">{t('dorks.targetHeading')}</h2>
+	<ModeSwitch bind:value={typeId} options={typeOptions} label={t('dorks.targetType')} />
 
 	<label class="visually-hidden" for="dork-target">{type.label}</label>
 	<input
 		id="dork-target"
 		type="text"
 		bind:value={input}
-		placeholder={`${type.label}, e.g. ${type.placeholder}`}
+		placeholder={t('dorks.placeholder', { label: type.label, example: type.placeholder })}
 		autocomplete="off"
 		spellcheck="false"
 		aria-invalid={result.error ? 'true' : undefined}
@@ -56,15 +51,15 @@
 		{#if result.error}
 			{result.error}
 		{:else if result.target}
-			{total} dorks for <strong>{result.target.value}</strong>
+			{t('dorks.statusCount', { count: total })} <strong>{result.target.value}</strong>
 		{:else}
-			Dorks are generated as you type.
+			{t('dorks.statusIdle')}
 		{/if}
 	</p>
 </section>
 
 {#if result.groups.length}
-	<nav class="jump" aria-label="Dork categories">
+	<nav class="jump" aria-label={t('dorks.categoriesNav')}>
 		{#each result.groups as group (group.id)}
 			<a href={`#dorks-${group.id}`}>{group.label} ({group.dorks.length})</a>
 		{/each}

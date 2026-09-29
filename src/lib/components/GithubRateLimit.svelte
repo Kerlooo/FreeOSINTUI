@@ -1,14 +1,17 @@
 <script>
 	import { formatResetTime } from '$lib/github/api.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ rate: import('$lib/github/api.js').RateLimit }} */
 	let { rate } = $props();
 </script>
 
 <p class="rate" class:low={rate.remaining < 10}>
-	GitHub API: {rate.remaining} / {rate.limit} requests left this hour, resets {formatResetTime(
-		rate.reset
-	)}.
+	{t('github.rate.status', {
+		remaining: rate.remaining,
+		limit: rate.limit,
+		reset: formatResetTime(rate.reset)
+	})}
 </p>
 
 <style>

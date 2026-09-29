@@ -1,5 +1,6 @@
 <script>
 	import { summarizeGpgKeys, summarizeSshKeys } from '$lib/github/analyze.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ ssh: any[], gpg: any[] }} */
 	let { ssh, gpg } = $props();
@@ -8,7 +9,7 @@
 	let gpgKeys = $derived(summarizeGpgKeys(gpg));
 </script>
 
-<h3>SSH keys ({sshSummary.count})</h3>
+<h3>{t('github.keys.ssh', { count: sshSummary.count })}</h3>
 {#if sshSummary.count}
 	<p class="hint">
 		{sshSummary.types.map((item) => `${item.count} × ${item.type}`).join(', ')}
@@ -18,43 +19,47 @@
 			<li>
 				<span>{key.type}</span>
 				<code>…{key.tail}</code>
-				{#if key.created}<span class="hint">added {key.created}</span>{/if}
+				{#if key.created}<span class="hint">{t('github.keys.added', { date: key.created })}</span
+					>{/if}
 			</li>
 		{/each}
 	</ul>
 {:else}
-	<p class="hint">No public SSH keys.</p>
+	<p class="hint">{t('github.keys.noSsh')}</p>
 {/if}
 
-<h3>GPG keys ({gpgKeys.length})</h3>
+<h3>{t('github.keys.gpg', { count: gpgKeys.length })}</h3>
 {#if gpgKeys.length}
 	<ul>
 		{#each gpgKeys as key (key.id)}
 			<li class="gpg">
 				<div>
 					<code>{key.keyId}</code>
-					{#if key.revoked}<span class="tag">revoked</span>{/if}
-					{#if key.canSign}<span class="tag">can sign</span>{/if}
+					{#if key.revoked}<span class="tag">{t('github.keys.revoked')}</span>{/if}
+					{#if key.canSign}<span class="tag">{t('github.keys.canSign')}</span>{/if}
 				</div>
 				<span class="hint"
-					>created {key.created} · expires {key.expires} · {key.subkeys} subkeys</span
+					>{t('github.keys.details', {
+						created: key.created,
+						expires: key.expires,
+						subkeys: t('github.keys.subkeys', { count: key.subkeys })
+					})}</span
 				>
 				{#each key.emails as item (item.email)}
 					<span>
 						<code>{item.email}</code>
-						<span class="tag">{item.verified ? 'verified' : 'unverified'}</span>
+						<span class="tag"
+							>{t(item.verified ? 'github.keys.verified' : 'github.keys.unverified')}</span
+						>
 					</span>
 				{/each}
 			</li>
 		{/each}
 	</ul>
 {:else}
-	<p class="hint">No public GPG keys.</p>
+	<p class="hint">{t('github.keys.noGpg')}</p>
 {/if}
-<p class="hint">
-	The same key tail on different accounts or servers can link identities. GPG keys often declare
-	real email addresses.
-</p>
+<p class="hint">{t('github.keys.note')}</p>
 
 <style>
 	h3 {

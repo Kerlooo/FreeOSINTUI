@@ -1,5 +1,6 @@
 <script>
 	import { resolve } from '$app/paths';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ links: { id: string, label: string, url: string }[], number: string }} */
 	let { links, number } = $props();
@@ -15,7 +16,9 @@
 		</li>
 	{/each}
 	<li>
-		<a href={resolve(`/dorks?type=phone&q=${encodeURIComponent(number)}`)}>Google Dork Generator</a>
+		<a href={resolve(`/dorks?type=phone&q=${encodeURIComponent(number)}`)}
+			>{t('tools.dorks.name')}</a
+		>
 	</li>
 </ul>
 

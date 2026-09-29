@@ -1,4 +1,5 @@
 import { fetchJson } from '$lib/net.js';
+import { t } from '$lib/i18n/i18n.svelte.js';
 
 /** DNS record types by numeric code, as returned by DNS-over-HTTPS JSON APIs. */
 export const RECORD_TYPES = {
@@ -26,7 +27,7 @@ export async function resolveDns(name, type, options = {}) {
 	const json = await fetchJson(url, options);
 	// Status 3 is NXDOMAIN: the name does not exist, which is a valid empty result.
 	if (json.Status !== 0 && json.Status !== 3)
-		throw new Error(`DNS lookup failed (status ${json.Status}).`);
+		throw new Error(t('dns.lookupFailed', { status: json.Status }));
 	return (json.Answer ?? [])
 		.map((answer) => ({
 			name: answer.name.replace(/\.$/, ''),

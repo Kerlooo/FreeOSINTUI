@@ -1,4 +1,5 @@
 import exifr from 'exifr';
+import { t } from '$lib/i18n/i18n.svelte.js';
 import { formatLocalDate, formatValue, mapLinks } from './format.js';
 
 /**
@@ -29,23 +30,17 @@ export const EXIFR_OPTIONS = {
 	sanitize: true
 };
 
-/** Readable names for exifr segment keys; XMP namespaces fall back to "XMP (<prefix>)". */
-const SEGMENT_LABELS = {
-	ifd0: 'EXIF — main image (IFD0)',
-	exif: 'EXIF — capture settings',
-	gps: 'GPS',
-	interop: 'EXIF — interoperability',
-	iptc: 'IPTC',
-	icc: 'ICC color profile',
-	jfif: 'JFIF',
-	ihdr: 'PNG header and text chunks'
-};
+/** exifr segment keys with a readable name; XMP namespaces fall back to "XMP (<prefix>)". */
+const NAMED_SEGMENTS = new Set(['ifd0', 'exif', 'gps', 'interop', 'iptc', 'icc', 'jfif', 'ihdr']);
 
 /**
+ * Readable name of an exifr segment, in the current language.
  * @param {string} key
  */
 export function segmentLabel(key) {
-	return SEGMENT_LABELS[/** @type {keyof typeof SEGMENT_LABELS} */ (key)] ?? `XMP (${key})`;
+	return NAMED_SEGMENTS.has(key)
+		? t(`metadata.segment.${key}`)
+		: t('metadata.segment.xmp', { prefix: key });
 }
 
 /**
@@ -209,9 +204,9 @@ export function imageHighlights(segments) {
 	);
 
 	const rows = [
-		{ label: 'Camera', value: camera },
+		{ label: t('metadata.image.camera'), value: camera },
 		{
-			label: 'Lens',
+			label: t('metadata.image.lens'),
 			value: display(
 				pick(segments, [
 					['exif', 'LensModel'],
@@ -221,7 +216,7 @@ export function imageHighlights(segments) {
 			)
 		},
 		{
-			label: 'Camera serial number',
+			label: t('metadata.image.serial'),
 			value: display(
 				pick(segments, [
 					['exif', 'BodySerialNumber'],
@@ -230,7 +225,7 @@ export function imageHighlights(segments) {
 			)
 		},
 		{
-			label: 'Software',
+			label: t('metadata.image.software'),
 			value: display(
 				pick(segments, [
 					['ifd0', 'Software'],
@@ -238,9 +233,12 @@ export function imageHighlights(segments) {
 				])
 			)
 		},
-		{ label: 'Original date', value: original && offset ? `${original} ${offset}` : original },
 		{
-			label: 'Modified date',
+			label: t('metadata.image.originalDate'),
+			value: original && offset ? `${original} ${offset}` : original
+		},
+		{
+			label: t('metadata.image.modifiedDate'),
 			value: display(
 				pick(segments, [
 					['ifd0', 'ModifyDate'],
@@ -248,9 +246,12 @@ export function imageHighlights(segments) {
 				])
 			)
 		},
-		{ label: 'Dimensions', value: width && height ? `${width} × ${height} px` : '' },
 		{
-			label: 'Author',
+			label: t('metadata.image.dimensions'),
+			value: width && height ? `${width} × ${height} px` : ''
+		},
+		{
+			label: t('metadata.image.author'),
 			value: display(
 				pick(segments, [
 					['ifd0', 'Artist'],
@@ -261,7 +262,7 @@ export function imageHighlights(segments) {
 			)
 		},
 		{
-			label: 'Copyright',
+			label: t('metadata.image.copyright'),
 			value: display(
 				pick(segments, [
 					['ifd0', 'Copyright'],
@@ -271,7 +272,7 @@ export function imageHighlights(segments) {
 			)
 		},
 		{
-			label: 'Description',
+			label: t('metadata.image.description'),
 			value: display(
 				pick(segments, [
 					['ifd0', 'ImageDescription'],
@@ -281,7 +282,10 @@ export function imageHighlights(segments) {
 				])
 			)
 		},
-		{ label: 'Owner name', value: display(pick(segments, [['exif', 'CameraOwnerName']])) }
+		{
+			label: t('metadata.image.owner'),
+			value: display(pick(segments, [['exif', 'CameraOwnerName']]))
+		}
 	];
 
 	const gps = extractGps(segments);
@@ -289,13 +293,13 @@ export function imageHighlights(segments) {
 		const links = mapLinks(gps.latitude, gps.longitude);
 		const coords = `${gps.latitude.toFixed(6)}, ${gps.longitude.toFixed(6)}`;
 		rows.push(
-			{ label: 'GPS coordinates', value: coords },
+			{ label: t('metadata.image.gpsCoordinates'), value: coords },
 			{
-				label: 'GPS altitude',
+				label: t('metadata.image.gpsAltitude'),
 				value: gps.altitude === null ? '' : `${Number(gps.altitude.toFixed(1))} m`
 			},
-			{ label: 'OpenStreetMap', value: 'open map ↗', href: links.osm },
-			{ label: 'Google Maps', value: 'open map ↗', href: links.google }
+			{ label: 'OpenStreetMap', value: t('metadata.image.openMap'), href: links.osm },
+			{ label: 'Google Maps', value: t('metadata.image.openMap'), href: links.google }
 		);
 	}
 	return rows.filter((row) => row.value);

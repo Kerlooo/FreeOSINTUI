@@ -1,6 +1,8 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ value: string, label?: string }} */
-	let { value, label = 'Copy' } = $props();
+	let { value, label } = $props();
 
 	let copied = $state(false);
 	/** @type {ReturnType<typeof setTimeout> | undefined} */
@@ -14,8 +16,8 @@
 	}
 </script>
 
-<button type="button" onclick={copy} aria-label={`${label}: ${value}`}>
-	{copied ? 'copied' : 'copy'}
+<button type="button" onclick={copy} aria-label={`${label ?? t('common.copyLabel')}: ${value}`}>
+	{copied ? t('common.copied') : t('common.copy')}
 </button>
 
 <style>

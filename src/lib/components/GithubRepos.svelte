@@ -1,5 +1,6 @@
 <script>
 	import { formatDate, summarizeRepos } from '$lib/github/analyze.js';
+	import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ repos: any[], publicCount?: number }} */
 	let { repos, publicCount } = $props();
@@ -8,23 +9,40 @@
 </script>
 
 {#if repos.length === 0}
-	<p class="hint">No public repositories.</p>
+	<p class="hint">{t('github.repos.none')}</p>
 {:else}
 	<ul class="stats">
-		<li><strong>{summary.total}</strong> repositories</li>
-		<li><strong>{summary.sources}</strong> sources</li>
-		<li><strong>{summary.forks}</strong> forks</li>
-		<li><strong>{summary.archived}</strong> archived</li>
-		<li><strong>{summary.stars}</strong> stars (sources)</li>
+		<li>
+			<strong>{formatNumber(summary.total)}</strong>
+			{t('github.repos.total', { count: summary.total })}
+		</li>
+		<li>
+			<strong>{formatNumber(summary.sources)}</strong>
+			{t('github.repos.sources', { count: summary.sources })}
+		</li>
+		<li>
+			<strong>{formatNumber(summary.forks)}</strong>
+			{t('github.repos.forks', { count: summary.forks })}
+		</li>
+		<li>
+			<strong>{formatNumber(summary.archived)}</strong>
+			{t('github.repos.archived', { count: summary.archived })}
+		</li>
+		<li>
+			<strong>{formatNumber(summary.stars)}</strong>
+			{t('github.repos.stars', { count: summary.stars })}
+		</li>
 	</ul>
 	{#if publicCount && publicCount > repos.length}
 		<p class="hint">
-			Only the {repos.length} most recently pushed of {publicCount} repositories are analysed.
+			{t('github.repos.partial', { shown: repos.length, total: formatNumber(publicCount) })}
 		</p>
 	{/if}
 
 	{#if summary.languages.length}
-		<h3>Top languages <span class="hint">(by number of non-fork repositories)</span></h3>
+		<h3>
+			{t('github.repos.languages')} <span class="hint">{t('github.repos.languagesHint')}</span>
+		</h3>
 		<ul class="bars">
 			{#each summary.languages.slice(0, 8) as language (language.name)}
 				<li>
@@ -37,7 +55,7 @@
 	{/if}
 
 	{#if summary.topics.length}
-		<h3>Topics</h3>
+		<h3>{t('github.repos.topics')}</h3>
 		<p class="topics">
 			{#each summary.topics as topic (topic.name)}
 				<span>{topic.name} ({topic.count})</span>
@@ -48,34 +66,39 @@
 	<!-- External links only, so resolve() does not apply. -->
 	<!-- eslint-disable svelte/no-navigation-without-resolve -->
 	{#if summary.mostStarred.length}
-		<h3>Most starred</h3>
+		<h3>{t('github.repos.mostStarred')}</h3>
 		<ul class="starred">
 			{#each summary.mostStarred as repo (repo.id)}
 				<li>
 					<a href={repo.html_url} target="_blank" rel="noopener noreferrer">{repo.name}</a>
-					<span class="hint">★ {repo.stargazers_count}</span>
+					<span class="hint">★ {formatNumber(repo.stargazers_count)}</span>
 				</li>
 			{/each}
 		</ul>
 	{/if}
 
-	<h3>Recently pushed</h3>
+	<h3>{t('github.repos.recent')}</h3>
 	<div class="table">
 		<table>
 			<thead>
-				<tr><th>Repository</th><th>Language</th><th>★</th><th>Last push</th></tr>
+				<tr>
+					<th>{t('github.repos.colRepo')}</th>
+					<th>{t('github.repos.colLanguage')}</th>
+					<th>★</th>
+					<th>{t('github.repos.colPush')}</th>
+				</tr>
 			</thead>
 			<tbody>
 				{#each summary.recent as repo (repo.id)}
 					<tr>
 						<td>
 							<a href={repo.html_url} target="_blank" rel="noopener noreferrer">{repo.name}</a>
-							{#if repo.fork}<span class="tag">fork</span>{/if}
-							{#if repo.archived}<span class="tag">archived</span>{/if}
+							{#if repo.fork}<span class="tag">{t('github.repos.fork')}</span>{/if}
+							{#if repo.archived}<span class="tag">{t('github.repos.archivedTag')}</span>{/if}
 							{#if repo.description}<span class="desc">{repo.description}</span>{/if}
 						</td>
 						<td>{repo.language ?? '—'}</td>
-						<td>{repo.stargazers_count}</td>
+						<td>{formatNumber(repo.stargazers_count)}</td>
 						<td class="date">{formatDate(repo.pushed_at).slice(0, 10)}</td>
 					</tr>
 				{/each}

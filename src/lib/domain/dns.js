@@ -1,4 +1,5 @@
 import { resolveDns } from '$lib/dns/doh.js';
+import { t } from '$lib/i18n/i18n.svelte.js';
 
 /** Record types shown by the Domain Analyzer, in display order. */
 export const DNS_RECORD_TYPES = ['A', 'AAAA', 'MX', 'NS', 'TXT', 'CAA', 'SOA'];
@@ -8,7 +9,7 @@ export const DNS_RECORD_TYPES = ['A', 'AAAA', 'MX', 'NS', 'TXT', 'CAA', 'SOA'];
  * @param {string} data
  */
 export function describeMx(data) {
-	return /^\d+\s*$/.test(data) ? `${data.trim()} . (null MX: the domain accepts no email)` : data;
+	return /^\d+\s*$/.test(data) ? `${data.trim()} . ${t('domain.dns.nullMx')}` : data;
 }
 
 /**
@@ -30,6 +31,6 @@ export async function lookupDnsRecords(domain, options = {}) {
 				.sort((a, b) => a.data.localeCompare(b.data, undefined, { numeric: true }));
 			return { type, records, error: null };
 		}
-		return { type, records: [], error: result.reason?.message ?? 'Lookup failed.' };
+		return { type, records: [], error: result.reason?.message ?? t('domain.lookupFailed') };
 	});
 }

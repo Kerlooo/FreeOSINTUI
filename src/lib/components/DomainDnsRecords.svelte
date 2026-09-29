@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ groups: { type: string, records: { name: string, ttl: number, data: string }[], error: string | null }[] }} */
 	let { groups } = $props();
 
@@ -6,7 +8,7 @@
 </script>
 
 {#if total === 0 && groups.every((group) => !group.error)}
-	<p class="empty">No DNS records found: the domain may not exist or not be delegated.</p>
+	<p class="empty">{t('domain.dns.noRecords')}</p>
 {/if}
 
 <div class="groups">
@@ -16,13 +18,13 @@
 			{#if group.error}
 				<p class="error">{group.error}</p>
 			{:else if group.records.length === 0}
-				<p class="empty">No {group.type} records.</p>
+				<p class="empty">{t('domain.dns.noRecordsOfType', { type: group.type })}</p>
 			{:else}
 				<ul>
 					{#each group.records as record, index (index)}
 						<li>
 							<code>{record.data}</code>
-							<span class="ttl" title="Time to live">TTL {record.ttl}s</span>
+							<span class="ttl" title={t('domain.dns.ttlTitle')}>TTL {record.ttl}s</span>
 						</li>
 					{/each}
 				</ul>

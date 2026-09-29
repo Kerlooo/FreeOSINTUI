@@ -1,6 +1,7 @@
 import { FetchError, fetchJson } from '$lib/net.js';
 import { resolveDns, reverseName } from '$lib/dns/doh.js';
 import { lookupRdap } from '$lib/rdap.js';
+import { t } from '$lib/i18n/i18n.svelte.js';
 import { parseIp } from './address.js';
 import { serviceName } from './ports.js';
 
@@ -47,7 +48,7 @@ export async function lookupPtr(ip, options = {}) {
  */
 export function parseIpWhois(data) {
 	if (!data?.success) {
-		throw new FetchError(`ipwho.is: ${data?.message ?? 'lookup failed'}.`);
+		throw new FetchError(`ipwho.is: ${data?.message ?? t('ip.error.ipwhois')}.`);
 	}
 	const hasCoordinates = typeof data.latitude === 'number' && typeof data.longitude === 'number';
 	const connection = data.connection ?? {};
@@ -137,6 +138,6 @@ export async function lookupInternetDb(ip, options = {}) {
  * @param {LookupOptions} [options]
  */
 export async function lookupIpRdap(ip, options = {}) {
-	if (!parseIp(ip)) throw new Error('Invalid IP address.');
+	if (!parseIp(ip)) throw new Error(t('ip.error.invalidIp'));
 	return lookupRdap('ip', ip, options);
 }

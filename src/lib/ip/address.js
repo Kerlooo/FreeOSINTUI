@@ -3,6 +3,8 @@
  * Addresses are handled as byte arrays (4 bytes for IPv4, 16 for IPv6).
  */
 
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /**
  * Parses a dotted-decimal IPv4 address. Leading zeros are rejected because some
  * tools read them as octal, so `010.0.0.1` would be ambiguous.
@@ -137,7 +139,7 @@ const HOSTNAME_RE =
  */
 export function parseInput(text) {
 	let value = text.trim();
-	if (!value) return { kind: 'error', error: 'Enter an IP address or a hostname.' };
+	if (!value) return { kind: 'error', error: t('ip.error.empty') };
 
 	const ip = parseIp(value);
 	if (ip) return { kind: 'ip', ip };
@@ -147,7 +149,7 @@ export function parseInput(text) {
 		try {
 			value = new URL(value).hostname;
 		} catch {
-			return { kind: 'error', error: 'That URL is not valid.' };
+			return { kind: 'error', error: t('ip.error.url') };
 		}
 		const hostIp = parseIp(value);
 		if (hostIp) return { kind: 'ip', ip: hostIp };
@@ -160,8 +162,8 @@ export function parseInput(text) {
 
 	if (HOSTNAME_RE.test(value)) return { kind: 'hostname', hostname: value };
 	if (/^[\d.]+$/.test(value) || value.includes(':'))
-		return { kind: 'error', error: 'That is not a valid IPv4 or IPv6 address.' };
-	return { kind: 'error', error: 'Enter a valid IP address (IPv4 or IPv6) or a hostname.' };
+		return { kind: 'error', error: t('ip.error.ip') };
+	return { kind: 'error', error: t('ip.error.invalid') };
 }
 
 /**
@@ -170,35 +172,56 @@ export function parseInput(text) {
  */
 const SPECIAL_RANGES = [
 	// IPv4
-	['0.0.0.0/8', 'This network', 'Unspecified / "this network" address (0.0.0.0/8).'],
-	['10.0.0.0/8', 'Private', 'Private network range (RFC 1918), used inside LANs.'],
-	['100.64.0.0/10', 'CGNAT', 'Carrier-grade NAT range (RFC 6598), shared by ISP customers.'],
-	['127.0.0.0/8', 'Loopback', 'Loopback address: it always points to the local machine.'],
-	['169.254.0.0/16', 'Link-local', 'Link-local address (RFC 3927), self-assigned on a LAN.'],
-	['172.16.0.0/12', 'Private', 'Private network range (RFC 1918), used inside LANs.'],
-	['192.0.0.0/24', 'Reserved', 'IETF protocol assignments range (RFC 6890).'],
-	['192.0.2.0/24', 'Documentation', 'Documentation range TEST-NET-1 (RFC 5737).'],
-	['192.168.0.0/16', 'Private', 'Private network range (RFC 1918), used inside LANs.'],
-	['198.18.0.0/15', 'Benchmarking', 'Network benchmarking range (RFC 2544).'],
-	['198.51.100.0/24', 'Documentation', 'Documentation range TEST-NET-2 (RFC 5737).'],
-	['203.0.113.0/24', 'Documentation', 'Documentation range TEST-NET-3 (RFC 5737).'],
-	['224.0.0.0/4', 'Multicast', 'Multicast range: it identifies a group, not a host.'],
-	['255.255.255.255/32', 'Broadcast', 'Limited broadcast address.'],
-	['240.0.0.0/4', 'Reserved', 'Reserved for future use (class E).'],
+	['0.0.0.0/8', 'thisNetwork', 'thisNetwork'],
+	['10.0.0.0/8', 'private', 'rfc1918'],
+	['100.64.0.0/10', 'cgnat', 'cgnat'],
+	['127.0.0.0/8', 'loopback', 'loopback'],
+	['169.254.0.0/16', 'linkLocal', 'linkLocal4'],
+	['172.16.0.0/12', 'private', 'rfc1918'],
+	['192.0.0.0/24', 'reserved', 'ietf'],
+	['192.0.2.0/24', 'documentation', 'testNet1'],
+	['192.168.0.0/16', 'private', 'rfc1918'],
+	['198.18.0.0/15', 'benchmarking', 'benchmarking'],
+	['198.51.100.0/24', 'documentation', 'testNet2'],
+	['203.0.113.0/24', 'documentation', 'testNet3'],
+	['224.0.0.0/4', 'multicast', 'multicast'],
+	['255.255.255.255/32', 'broadcast', 'broadcast'],
+	['240.0.0.0/4', 'reserved', 'classE'],
 	// IPv6
-	['::/128', 'Unspecified', 'Unspecified IPv6 address.'],
-	['::1/128', 'Loopback', 'Loopback address: it always points to the local machine.'],
-	['100::/64', 'Discard', 'Discard-only range (RFC 6666).'],
-	['2001:db8::/32', 'Documentation', 'Documentation range (RFC 3849).'],
-	['3fff::/20', 'Documentation', 'Documentation range (RFC 9637).'],
-	['fc00::/7', 'Private', 'Unique local address (RFC 4193), the IPv6 private range.'],
-	['fe80::/10', 'Link-local', 'Link-local address, valid only on the local network segment.'],
-	['ff00::/8', 'Multicast', 'Multicast range: it identifies a group, not a host.']
-].map(([cidr, label, description]) => {
+	['::/128', 'unspecified', 'unspecified6'],
+	['::1/128', 'loopback', 'loopback'],
+	['100::/64', 'discard', 'discard'],
+	['2001:db8::/32', 'documentation', 'doc3849'],
+	['3fff::/20', 'documentation', 'doc9637'],
+	['fc00::/7', 'private', 'ula'],
+	['fe80::/10', 'linkLocal', 'linkLocal6'],
+	['ff00::/8', 'multicast', 'multicast']
+].map(([cidr, labelKey, descriptionKey]) => {
 	const [network, length] = cidr.split('/');
 	const parsed = /** @type {NonNullable<ReturnType<typeof parseIp>>} */ (parseIp(network));
-	return { cidr, label, description, bytes: parsed.bytes, length: Number(length) };
+	return { cidr, labelKey, descriptionKey, bytes: parsed.bytes, length: Number(length) };
 });
+
+/**
+ * A special range whose texts follow the current language.
+ * @param {() => string} cidr
+ * @param {string} labelKey
+ * @param {string} descriptionKey
+ * @returns {{ readonly cidr: string, readonly label: string, readonly description: string }}
+ */
+function specialRange(cidr, labelKey, descriptionKey) {
+	return {
+		get cidr() {
+			return cidr();
+		},
+		get label() {
+			return t(`ip.range.${labelKey}`);
+		},
+		get description() {
+			return t(`ip.desc.${descriptionKey}`);
+		}
+	};
+}
 
 /**
  * @param {number[]} bytes
@@ -224,13 +247,9 @@ function inPrefix(bytes, network, length) {
  */
 export function classifyIp(bytes) {
 	const match = SPECIAL_RANGES.find((range) => inPrefix(bytes, range.bytes, range.length));
-	if (match) return { cidr: match.cidr, label: match.label, description: match.description };
+	if (match) return specialRange(() => match.cidr, match.labelKey, match.descriptionKey);
 	// Only 2000::/3 is allocated as global unicast; the rest of the IPv6 space is reserved.
 	if (bytes.length === 16 && (bytes[0] & 0xe0) !== 0x20)
-		return {
-			cidr: 'outside 2000::/3',
-			label: 'Reserved',
-			description: 'Outside the global unicast range (2000::/3): not routable on the internet.'
-		};
+		return specialRange(() => t('ip.range.outsideGlobalCidr'), 'reserved', 'outsideGlobal');
 	return null;
 }

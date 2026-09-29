@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * One independently loaded result section of the IP Analyzer.
 	 * Shows the loading, error and empty states; `children` renders the data.
@@ -20,7 +22,7 @@
 		note,
 		result,
 		isEmpty = (data) => data === null || data === undefined,
-		emptyText = 'No data.',
+		emptyText,
 		children
 	} = $props();
 </script>
@@ -35,11 +37,11 @@
 	{/if}
 
 	{#if result.status === 'loading'}
-		<p class="status">loading…</p>
+		<p class="status">{t('ip.loading')}</p>
 	{:else if result.status === 'error'}
 		<p class="status error" role="alert">{result.error}</p>
 	{:else if isEmpty(result.data)}
-		<p class="status">{emptyText}</p>
+		<p class="status">{emptyText ?? t('common.noData')}</p>
 	{:else}
 		{@render children(result.data)}
 	{/if}

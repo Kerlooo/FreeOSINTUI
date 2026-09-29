@@ -1,4 +1,5 @@
 import { FetchError, fetchJson } from '$lib/net.js';
+import { t } from '$lib/i18n/i18n.svelte.js';
 
 const API = 'https://api.xposedornot.com/v1';
 
@@ -75,10 +76,9 @@ export function enrichBreaches(names, catalog) {
  * @param {unknown} error
  */
 function explainError(error) {
-	if (error instanceof FetchError && error.status === null && !/in time/.test(error.message))
-		return new FetchError(
-			'Could not reach XposedOrNot. It may be rate limiting this browser: wait a minute and try again.'
-		);
+	const timeoutMessage = t('common.timeout', { host: new URL(API).host });
+	if (error instanceof FetchError && error.status === null && error.message !== timeoutMessage)
+		return new FetchError(t('leaks.email.rateLimited'));
 	return error;
 }
 

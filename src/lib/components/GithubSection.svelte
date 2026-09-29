@@ -1,4 +1,5 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
 	/**
 	 * Panel for one lookup section, with loading and error states.
 	 * @type {{ id: string, title: string, status: 'idle' | 'loading' | 'done' | 'error', error?: string, children: import('svelte').Snippet }}
@@ -9,7 +10,7 @@
 <section class="panel" aria-labelledby={`${id}-heading`} aria-busy={status === 'loading'}>
 	<h2 id={`${id}-heading`}>{title}</h2>
 	{#if status === 'loading'}
-		<p class="hint">Loading…</p>
+		<p class="hint">{t('github.loading')}</p>
 	{:else if status === 'error'}
 		<p class="error" role="alert">{error}</p>
 	{:else if status === 'done'}

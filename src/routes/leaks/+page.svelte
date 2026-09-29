@@ -8,11 +8,12 @@
 	import { parseEmail } from '$lib/email/address.js';
 	import { checkEmailBreaches } from '$lib/leaks/xposedornot.js';
 	import { checkPwnedPassword } from '$lib/leaks/pwned-passwords.js';
+	import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
 
-	const MODES = [
-		{ value: 'email', label: 'Email' },
-		{ value: 'password', label: 'Password' }
-	];
+	const MODES = $derived([
+		{ value: 'email', label: t('leaks.mode.email') },
+		{ value: 'password', label: t('leaks.mode.password') }
+	]);
 
 	let mode = $state('email');
 
@@ -35,14 +36,6 @@
 	/** @type {AbortController | null} */
 	let passwordController = null;
 
-	/**
-	 * @param {number} count
-	 * @param {string} one
-	 * @param {string} many
-	 */
-	const plural = (count, one, many) =>
-		`${count.toLocaleString('en-US')} ${count === 1 ? one : many}`;
-
 	let passwordStale = $derived(passwordResult !== null && password !== checkedPassword);
 
 	/** @param {string} value */
@@ -63,7 +56,7 @@
 			if (!signal.aborted) emailResult = { email: parsed.email, breaches };
 		} catch (error) {
 			if (!signal.aborted)
-				emailError = error instanceof Error ? error.message : 'Unexpected error.';
+				emailError = error instanceof Error ? error.message : t('leaks.unexpectedError');
 		} finally {
 			if (!signal.aborted) emailLoading = false;
 		}
@@ -88,7 +81,7 @@
 			}
 		} catch (error) {
 			if (!signal.aborted)
-				passwordError = error instanceof Error ? error.message : 'Unexpected error.';
+				passwordError = error instanceof Error ? error.message : t('leaks.unexpectedError');
 		} finally {
 			if (!signal.aborted) passwordLoading = false;
 		}
@@ -111,66 +104,60 @@
 </script>
 
 <svelte:head>
-	<title>Leak Check — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Check whether an email address appears in known data breaches and whether a password has been exposed, using k-anonymity so the password never leaves your browser."
-	/>
+	<title>{t('tools.leaks.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('leaks.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Leak Check"
-	description="Find out which known data breaches include an email address, or whether a password appears in breached password lists."
-/>
+<ToolHeader title={t('tools.leaks.name')} description={t('leaks.intro')} />
 
 <section class="panel" aria-labelledby="leak-input-heading">
-	<h2 id="leak-input-heading">What to check</h2>
-	<ModeSwitch bind:value={mode} options={MODES} label="Check type" />
+	<h2 id="leak-input-heading">{t('leaks.inputHeading')}</h2>
+	<ModeSwitch bind:value={mode} options={MODES} label={t('leaks.modeLabel')} />
 
 	{#if mode === 'email'}
 		<LookupForm
 			bind:value={emailInput}
-			label="Email address"
-			placeholder="e.g. john.doe@example.com"
-			buttonLabel="Check"
+			label={t('leaks.email.label')}
+			placeholder={t('leaks.email.placeholder')}
+			buttonLabel={t('leaks.check')}
 			busy={emailLoading}
 			onsubmit={checkEmail}
 		/>
 		<p class="note">
-			The address is sent to XposedOrNot. Only breach metadata (name, date, data types) is shown,
-			never the leaked data itself.
+			{t('leaks.email.note')}
 		</p>
 	{:else}
 		<form class="password-form" onsubmit={checkPassword}>
-			<LeakPasswordInput bind:value={password} id="leak-password" label="Password" />
+			<LeakPasswordInput
+				bind:value={password}
+				id="leak-password"
+				label={t('leaks.password.label')}
+			/>
 			<button type="submit" disabled={passwordLoading || !password}>
-				{passwordLoading ? 'working…' : 'Check'}
+				{passwordLoading ? t('common.working') : t('leaks.check')}
 			</button>
 		</form>
 		<p class="note">
-			Your password never leaves the browser: it is hashed locally with SHA-1 and only the first 5
-			characters of the hash are sent (k-anonymity). The API returns hundreds of matching hashes and
-			the comparison happens here. Even so, avoid typing passwords you still use anywhere they are
-			not needed.
+			{t('leaks.password.note')}
 		</p>
 	{/if}
 </section>
 
 {#if mode === 'email'}
 	<section class="panel results" aria-labelledby="leak-email-results" aria-busy={emailLoading}>
-		<h2 id="leak-email-results">Breaches</h2>
+		<h2 id="leak-email-results">{t('leaks.email.heading')}</h2>
 		{#if emailLoading}
-			<p class="status">Checking known breaches…</p>
+			<p class="status">{t('leaks.email.checking')}</p>
 		{:else if emailError}
 			<p class="status error" role="alert">{emailError}</p>
 		{:else if emailResult}
 			{#if emailResult.breaches.length}
 				<p class="lead danger">
-					<strong>{emailResult.email}</strong> appears in {plural(
-						emailResult.breaches.length,
-						'known breach',
-						'known breaches'
-					)}.
+					<strong>{emailResult.email}</strong>
+					{t('leaks.email.found', {
+						count: emailResult.breaches.length,
+						total: formatNumber(emailResult.breaches.length)
+					})}
 				</p>
 				<ul class="breaches">
 					{#each emailResult.breaches as breach (breach.id)}
@@ -178,19 +165,19 @@
 					{/each}
 				</ul>
 				<p class="note">
-					Change the password on these services and anywhere it was reused, and enable two-factor
-					authentication.
+					{t('leaks.email.advice')}
 				</p>
 			{:else}
 				<p class="lead">
-					<strong>{emailResult.email}</strong> was not found in XposedOrNot's breach database.
+					<strong>{emailResult.email}</strong>
+					{t('leaks.email.notFound')}
 				</p>
 				<p class="note">
-					This does not prove it was never leaked: only publicly known breaches are indexed.
+					{t('leaks.email.notFoundNote')}
 				</p>
 			{/if}
 		{:else}
-			<p class="status">Enter an email address to see the breaches that include it.</p>
+			<p class="status">{t('leaks.email.empty')}</p>
 		{/if}
 	</section>
 {:else}
@@ -199,43 +186,47 @@
 		aria-labelledby="leak-password-results"
 		aria-busy={passwordLoading}
 	>
-		<h2 id="leak-password-results">Result</h2>
+		<h2 id="leak-password-results">{t('leaks.password.heading')}</h2>
 		{#if passwordLoading}
-			<p class="status">Checking…</p>
+			<p class="status">{t('leaks.password.checking')}</p>
 		{:else if passwordError}
 			<p class="status error" role="alert">{passwordError}</p>
 		{:else if passwordResult}
 			{#if passwordStale}
-				<p class="status">The password changed: press Check again.</p>
+				<p class="status">{t('leaks.password.stale')}</p>
 			{:else if passwordResult.count > 0}
 				<p class="lead danger">
-					Exposed: this password appeared {plural(passwordResult.count, 'time', 'times')} in data breaches.
-					Do not use it.
+					{t('leaks.password.exposed', {
+						count: passwordResult.count,
+						total: formatNumber(passwordResult.count)
+					})}
 				</p>
 			{:else}
-				<p class="lead">Not found in known breaches.</p>
+				<p class="lead">{t('leaks.password.notFound')}</p>
 				<p class="note">
-					That does not make it strong: use a long, unique password for every account (a password
-					manager helps).
+					{t('leaks.password.notFoundNote')}
 				</p>
 			{/if}
 			<p class="note">
-				Sent to the API: only the hash prefix <code>{passwordResult.prefix}</code>.
+				{t('leaks.password.sent')} <code>{passwordResult.prefix}</code>
 			</p>
-			<button type="button" class="clear" onclick={clearPassword}>clear password</button>
+			<button type="button" class="clear" onclick={clearPassword}
+				>{t('leaks.password.clear')}</button
+			>
 		{:else}
-			<p class="status">Enter a password to check it against Have I Been Pwned.</p>
+			<p class="status">{t('leaks.password.empty')}</p>
 		{/if}
 	</section>
 {/if}
 
 <p class="credits">
-	Sources:
+	{t('leaks.credits.sources')}
 	<a href="https://xposedornot.com" target="_blank" rel="noopener noreferrer">XposedOrNot</a>
-	(email breaches) and
+	{t('leaks.credits.emailBreaches')}
 	<a href="https://haveibeenpwned.com/Passwords" target="_blank" rel="noopener noreferrer"
 		>Have I Been Pwned — Pwned Passwords</a
-	> (passwords). Thanks to both projects for their free public APIs.
+	>
+	{t('leaks.credits.passwords')}
 </p>
 
 <style>

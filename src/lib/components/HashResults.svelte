@@ -1,6 +1,7 @@
 <script>
 	import CopyButton from '$lib/components/CopyButton.svelte';
 	import { ALGORITHMS } from '$lib/hash/algorithms.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ digests: Record<string, string>, matches?: string[] }} */
 	let { digests, matches = [] } = $props();
@@ -9,9 +10,9 @@
 <table>
 	<thead>
 		<tr>
-			<th scope="col">Algorithm</th>
-			<th scope="col">Digest</th>
-			<th scope="col"><span class="visually-hidden">Actions</span></th>
+			<th scope="col">{t('hash.results.algorithm')}</th>
+			<th scope="col">{t('hash.results.digest')}</th>
+			<th scope="col"><span class="visually-hidden">{t('hash.results.actions')}</span></th>
 		</tr>
 	</thead>
 	<tbody>

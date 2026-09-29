@@ -10,4 +10,10 @@ describe('formatClock', () => {
 	it('handles the end of the year', () => {
 		expect(formatClock(new Date(2026, 11, 31, 23, 59, 59)).day).toBe('31 Dec');
 	});
+
+	it('uses the month name of the requested language', () => {
+		const date = new Date(2026, 8, 29);
+		expect(formatClock(date, 'it').day).toBe('29 set');
+		expect(formatClock(date, 'fr').day).toBe('29 sept');
+	});
 });

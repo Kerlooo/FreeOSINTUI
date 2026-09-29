@@ -1,6 +1,7 @@
 <script>
 	import { ALGORITHMS } from '$lib/hash/algorithms.js';
 	import { findMatches, identifyHash } from '$lib/hash/identify.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ value: string, digests: Record<string, string> | null }} */
 	let { value = $bindable(), digests } = $props();
@@ -17,13 +18,13 @@
 
 <div class="verifier">
 	<label for="expected-hash"
-		>Hash to verify or identify <span class="optional">(optional)</span></label
+		>{t('hash.verifier.label')} <span class="optional">{t('hash.verifier.optional')}</span></label
 	>
 	<input
 		id="expected-hash"
 		type="text"
 		bind:value
-		placeholder="Paste a hash, e.g. 5d41402abc4b2a76b9719d911017c592"
+		placeholder={t('hash.verifier.placeholder', { example: '5d41402abc4b2a76b9719d911017c592' })}
 		autocomplete="off"
 		spellcheck="false"
 	/>
@@ -31,27 +32,24 @@
 	{#if value.trim()}
 		<div class="report" aria-live="polite">
 			<p>
-				<span class="key">Possible type:</span>
+				<span class="key">{t('hash.verifier.possibleType')}</span>
 				{#if candidates.length}
 					{candidates.join(', ')}
 				{:else}
-					<span class="warning">unknown format</span>
+					<span class="warning">{t('hash.verifier.unknownFormat')}</span>
 				{/if}
 			</p>
 
 			{#if digests}
 				{#if matches.length}
-					<p class="match">✔ Match: {matchLabels.join(', ')}</p>
+					<p class="match">{t('hash.verifier.match', { names: matchLabels.join(', ') })}</p>
 				{:else if candidates.length && !computable}
-					<p class="neutral">
-						This hash type is not computed here (salted or password hashes cannot be verified by
-						recomputing the input).
-					</p>
+					<p class="neutral">{t('hash.verifier.notComputed')}</p>
 				{:else}
-					<p class="mismatch">✘ No match: the input does not produce this hash.</p>
+					<p class="mismatch">{t('hash.verifier.noMatch')}</p>
 				{/if}
 			{:else}
-				<p class="neutral">Enter text or choose a file to verify it against this hash.</p>
+				<p class="neutral">{t('hash.verifier.needInput')}</p>
 			{/if}
 		</div>
 	{/if}

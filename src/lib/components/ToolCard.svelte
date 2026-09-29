@@ -1,5 +1,6 @@
 <script>
 	import { resolve } from '$app/paths';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ tool: { name: string, route: string, description: string } }} */
 	let { tool } = $props();
@@ -8,7 +9,7 @@
 <a class="card" href={resolve(tool.route)}>
 	<h4>{tool.name}</h4>
 	<p>{tool.description}</p>
-	<span class="open" aria-hidden="true">open &gt;</span>
+	<span class="open" aria-hidden="true">{t('home.open')} &gt;</span>
 </a>
 
 <style>

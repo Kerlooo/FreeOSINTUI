@@ -10,6 +10,7 @@
 	import { runPool } from '$lib/username/pool.js';
 	import { NSFW_CATEGORY, foundUrls, groupByCategory, summarize } from '$lib/username/results.js';
 	import { normalizeUsername } from '$lib/username/validate.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	const CONCURRENCY = 8;
 
@@ -124,68 +125,62 @@
 </script>
 
 <svelte:head>
-	<title>Username Analyzer — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Check whether a username exists on hundreds of websites and social networks, using the WhatsMyName site list."
-	/>
+	<title>{t('tools.username.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('username.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Username Analyzer"
-	description="Check whether a username is registered on hundreds of websites, social networks and forums. Each site is checked by the FreeOSINT-UI backend using the WhatsMyName detection rules."
-/>
+<ToolHeader title={t('tools.username.name')} description={t('username.description')} />
 
 <section class="panel" aria-labelledby="username-heading">
-	<h2 id="username-heading">Username</h2>
+	<h2 id="username-heading">{t('username.heading')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="Username"
-		placeholder="e.g. torvalds"
-		buttonLabel="Scan"
+		label={t('username.inputLabel')}
+		placeholder={t('username.placeholder')}
+		buttonLabel={t('username.scan')}
 		busy={scanning || loadingSites || backendDown}
 		onsubmit={scan}
 	/>
 	<label class="option">
 		<input type="checkbox" bind:checked={includeNsfw} disabled={scanning} />
-		Include NSFW sites
+		{t('username.includeNsfw')}
 	</label>
 
 	{#if backendDown}
 		<div class="notice" role="alert">
 			<p>
-				<strong>Backend not running.</strong> This tool needs the FreeOSINT-UI Python backend. Start it
-				with:
+				<strong>{t('backend.down')}</strong>
+				{t('backend.needed')}
 			</p>
 			<code>{BACKEND_START_COMMAND}</code>
-			<button type="button" onclick={loadSites}>Retry</button>
+			<button type="button" onclick={loadSites}>{t('backend.retry')}</button>
 		</div>
 	{:else if error}
 		<p class="error" role="alert">{error}</p>
 	{:else if loadingSites}
-		<p>Loading site list…</p>
+		<p>{t('username.loadingSites')}</p>
 	{:else}
-		<p>{targetSites.length} sites will be checked.</p>
+		<p>{t('username.sitesToCheck', { count: targetSites.length })}</p>
 	{/if}
 </section>
 
 {#if total}
 	<section class="panel results" aria-labelledby="results-heading">
 		<div class="results-head">
-			<h2 id="results-heading">Results for <strong>{scannedName}</strong></h2>
+			<h2 id="results-heading">{t('username.resultsFor')} <strong>{scannedName}</strong></h2>
 			<div class="actions">
 				{#if scanning}
-					<button type="button" class="cancel" onclick={cancel}>Cancel</button>
+					<button type="button" class="cancel" onclick={cancel}>{t('username.cancel')}</button>
 				{/if}
 				{#if urls}
-					<CopyButton value={urls} label="Copy found profile URLs" />
+					<CopyButton value={urls} label={t('username.copyUrls')} />
 				{/if}
 			</div>
 		</div>
 
-		<ProgressBar value={results.length / total} label="Sites checked" />
+		<ProgressBar value={results.length / total} label={t('username.sitesChecked')} />
 		<p aria-live="polite">
-			{results.length} / {total} sites checked{scanning ? '…' : '.'}
+			{t('username.progress', { done: results.length, total })}{scanning ? '…' : '.'}
 		</p>
 
 		<UsernameStatusFilters {counts} bind:selected />
@@ -197,24 +192,22 @@
 				{/each}
 			</div>
 		{:else}
-			<p>No results with the selected statuses{scanning ? ' yet' : ''}.</p>
+			<p>{scanning ? t('username.noResultsYet') : t('username.noResults')}</p>
 		{/if}
 	</section>
 {/if}
 
-<section class="notes" aria-label="About the results">
+<section class="notes" aria-label={t('username.aboutLabel')}>
 	<p>
-		<strong>False positives happen.</strong> Sites change their pages, rate limit or block automated requests,
-		and some answer the same way for existing and missing accounts. Always open the profile to confirm,
-		and treat "unknown" as "check by hand". Sites marked with * are behind bot protection and are less
-		reliable.
+		<strong>{t('username.falsePositivesTitle')}</strong>
+		{t('username.falsePositives')}
 	</p>
 	<p>
-		Site list and detection rules from
+		{t('username.creditsBefore')}
 		<a href="https://github.com/WebBreacher/WhatsMyName" target="_blank" rel="noopener noreferrer"
 			>WhatsMyName</a
 		>
-		by Micah Hoffman and contributors, licensed under
+		{t('username.creditsMiddle')}
 		<a
 			href="https://creativecommons.org/licenses/by-sa/4.0/"
 			target="_blank"

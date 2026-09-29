@@ -7,40 +7,40 @@ import { readAttributes, readElement, readElements } from './xml.js';
  * plus the names of comment authors.
  */
 
-/** Core properties (docProps/core.xml): [element, label]. */
+/** Core properties (docProps/core.xml): [element, field id]. Labels: `metadata.office.<id>`. */
 const CORE_FIELDS = [
-	['dc:title', 'Title'],
-	['dc:subject', 'Subject'],
-	['dc:creator', 'Author (creator)'],
-	['cp:lastModifiedBy', 'Last modified by'],
-	['dcterms:created', 'Created'],
-	['dcterms:modified', 'Modified'],
-	['cp:lastPrinted', 'Last printed'],
-	['cp:revision', 'Revision'],
-	['cp:keywords', 'Keywords'],
-	['dc:description', 'Description'],
-	['cp:category', 'Category'],
-	['cp:contentStatus', 'Status'],
-	['dc:language', 'Language']
+	['dc:title', 'title'],
+	['dc:subject', 'subject'],
+	['dc:creator', 'creator'],
+	['cp:lastModifiedBy', 'lastModifiedBy'],
+	['dcterms:created', 'created'],
+	['dcterms:modified', 'modified'],
+	['cp:lastPrinted', 'lastPrinted'],
+	['cp:revision', 'revision'],
+	['cp:keywords', 'keywords'],
+	['dc:description', 'description'],
+	['cp:category', 'category'],
+	['cp:contentStatus', 'contentStatus'],
+	['dc:language', 'language']
 ];
 
-/** Extended properties (docProps/app.xml): [element, label]. */
+/** Extended properties (docProps/app.xml): [element, field id]. */
 const APP_FIELDS = [
-	['Application', 'Application'],
-	['AppVersion', 'Application version'],
-	['Company', 'Company'],
-	['Manager', 'Manager'],
-	['Template', 'Template'],
-	['TotalTime', 'Total editing time'],
-	['Pages', 'Pages'],
-	['Words', 'Words'],
-	['Characters', 'Characters'],
-	['Lines', 'Lines'],
-	['Paragraphs', 'Paragraphs'],
-	['Slides', 'Slides'],
-	['Notes', 'Notes'],
-	['HiddenSlides', 'Hidden slides'],
-	['HyperlinkBase', 'Hyperlink base']
+	['Application', 'application'],
+	['AppVersion', 'appVersion'],
+	['Company', 'company'],
+	['Manager', 'manager'],
+	['Template', 'template'],
+	['TotalTime', 'totalTime'],
+	['Pages', 'pages'],
+	['Words', 'words'],
+	['Characters', 'characters'],
+	['Lines', 'lines'],
+	['Paragraphs', 'paragraphs'],
+	['Slides', 'slides'],
+	['Notes', 'notes'],
+	['HiddenSlides', 'hiddenSlides'],
+	['HyperlinkBase', 'hyperlinkBase']
 ];
 
 /** Files read from the archive; everything else is skipped without inflating it. */
@@ -76,21 +76,22 @@ function formatMinutes(minutes) {
 
 /**
  * Identifies the kind of Office document from the archive's file names.
+ * Returns an id; its label is `metadata.office.kind.<id>`.
  * @param {string[]} names
  */
 function documentKind(names) {
-	if (names.some((name) => name.startsWith('word/'))) return 'Word document';
-	if (names.some((name) => name.startsWith('xl/'))) return 'Excel workbook';
-	if (names.some((name) => name.startsWith('ppt/'))) return 'PowerPoint presentation';
-	if (names.some((name) => name.startsWith('visio/'))) return 'Visio drawing';
-	return 'Office Open XML document';
+	if (names.some((name) => name.startsWith('word/'))) return 'word';
+	if (names.some((name) => name.startsWith('xl/'))) return 'excel';
+	if (names.some((name) => name.startsWith('ppt/'))) return 'powerpoint';
+	if (names.some((name) => name.startsWith('visio/'))) return 'visio';
+	return 'generic';
 }
 
 /**
  * @typedef {object} OfficeMetadata
- * @property {string} kind
- * @property {Record<string, string>} core core properties keyed by display label
- * @property {Record<string, string>} app extended properties keyed by display label
+ * @property {'word' | 'excel' | 'powerpoint' | 'visio' | 'generic'} kind
+ * @property {Record<string, string>} core core properties keyed by field id (see CORE_FIELDS)
+ * @property {Record<string, string>} app extended properties keyed by field id (see APP_FIELDS)
  * @property {Record<string, string>} custom custom properties keyed by name
  * @property {string[]} commentAuthors
  */
@@ -119,17 +120,17 @@ export function parseOffice(bytes) {
 	/** @type {Record<string, string>} */
 	const core = {};
 	const coreXml = read('docProps/core.xml');
-	for (const [element, label] of CORE_FIELDS) {
+	for (const [element, id] of CORE_FIELDS) {
 		const value = readElement(coreXml, element);
-		if (value) core[label] = /^dcterms:|lastPrinted/.test(element) ? formatW3cDate(value) : value;
+		if (value) core[id] = /^dcterms:|lastPrinted/.test(element) ? formatW3cDate(value) : value;
 	}
 
 	/** @type {Record<string, string>} */
 	const app = {};
 	const appXml = read('docProps/app.xml');
-	for (const [element, label] of APP_FIELDS) {
+	for (const [element, id] of APP_FIELDS) {
 		const value = readElement(appXml, element);
-		if (value) app[label] = element === 'TotalTime' ? formatMinutes(value) : value;
+		if (value) app[id] = element === 'TotalTime' ? formatMinutes(value) : value;
 	}
 
 	/** @type {Record<string, string>} */

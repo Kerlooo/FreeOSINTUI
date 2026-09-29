@@ -1,15 +1,16 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	const GITHUB_URL = 'https://github.com/Kerlooo';
 	const LINKEDIN_URL = 'https://www.linkedin.com/in/carlo-scaglione/';
 </script>
 
 <footer>
 	<div class="inner">
-		<p>FreeOSINT-UI — free OSINT tools that run entirely in your browser. Made by kerlo.</p>
+		<p>{t('nav.footerAbout')}</p>
 		<p class="credits">
-			Inspired by <a href="https://osint-ui.com/" target="_blank" rel="noopener noreferrer"
-				>OSINT-UI</a
-			>.
+			{t('nav.inspiredBy')}
+			<a href="https://osint-ui.com/" target="_blank" rel="noopener noreferrer">OSINT-UI</a>.
 		</p>
 		<ul>
 			<li><a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a></li>

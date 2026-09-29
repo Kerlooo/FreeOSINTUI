@@ -1,5 +1,6 @@
 <script>
 	import { STATUSES } from '$lib/username/results.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/**
 	 * Live counters per status that double as filters for the results list.
@@ -13,7 +14,7 @@
 	}
 </script>
 
-<div class="filters" role="group" aria-label="Show results by status">
+<div class="filters" role="group" aria-label={t('username.filtersLabel')}>
 	{#each STATUSES as status (status.id)}
 		<button
 			type="button"

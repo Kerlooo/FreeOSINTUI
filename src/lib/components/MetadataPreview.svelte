@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ file: File }} */
 	let { file } = $props();
 
@@ -22,19 +24,17 @@
 
 <figure>
 	{#if failed}
-		<p class="hint">
-			This browser cannot display a preview of this format (e.g. HEIC outside Safari).
-		</p>
+		<p class="hint">{t('metadata.preview.unsupported')}</p>
 	{:else if url}
 		<img
 			src={url}
-			alt={`Preview of ${file.name}`}
+			alt={t('metadata.preview.alt', { name: file.name })}
 			onload={handleLoad}
 			onerror={() => (failed = true)}
 		/>
 	{/if}
 	{#if size}
-		<figcaption>Rendered size: {size}</figcaption>
+		<figcaption>{t('metadata.preview.size', { size })}</figcaption>
 	{/if}
 </figure>
 

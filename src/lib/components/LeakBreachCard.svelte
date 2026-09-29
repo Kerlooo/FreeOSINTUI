@@ -1,14 +1,14 @@
 <script>
+	import { formatDate, formatNumber, t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ breach: import('$lib/leaks/xposedornot.js').Breach }} */
 	let { breach } = $props();
 
-	const dateFormat = new Intl.DateTimeFormat('en-GB', {
-		year: 'numeric',
-		month: 'short',
-		timeZone: 'UTC'
-	});
-
-	let date = $derived(breach.date ? dateFormat.format(new Date(breach.date)) : null);
+	let date = $derived(
+		breach.date
+			? formatDate(new Date(breach.date), { year: 'numeric', month: 'short', timeZone: 'UTC' })
+			: null
+	);
 </script>
 
 <li class="breach">
@@ -19,11 +19,16 @@
 	<p class="meta">
 		{#if breach.domain}<span>{breach.domain}</span>{/if}
 		{#if breach.industry}<span>{breach.industry}</span>{/if}
-		{#if breach.records !== null}<span>{breach.records.toLocaleString('en-US')} records</span>{/if}
-		{#if breach.verified === false}<span>unverified</span>{/if}
+		{#if breach.records !== null}<span
+				>{t('leaks.breach.records', {
+					count: breach.records,
+					total: formatNumber(breach.records)
+				})}</span
+			>{/if}
+		{#if breach.verified === false}<span>{t('leaks.breach.unverified')}</span>{/if}
 	</p>
 	{#if breach.exposedData.length}
-		<ul class="tags" aria-label="Exposed data types">
+		<ul class="tags" aria-label={t('leaks.breach.exposedData')}>
 			{#each breach.exposedData as item (item)}
 				<li>{item}</li>
 			{/each}
@@ -32,7 +37,7 @@
 	{#if breach.description}
 		<p class="description">{breach.description}</p>
 	{:else if !breach.date}
-		<p class="description">No details available in the breach catalog.</p>
+		<p class="description">{t('leaks.breach.noDetails')}</p>
 	{/if}
 </li>
 

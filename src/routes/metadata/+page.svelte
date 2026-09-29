@@ -5,12 +5,15 @@
 	import MetadataPreview from '$lib/components/MetadataPreview.svelte';
 	import MetadataGroups from '$lib/components/MetadataGroups.svelte';
 	import MetadataReverseSearch from '$lib/components/MetadataReverseSearch.svelte';
-	import { extractMetadata } from '$lib/metadata/extract.js';
+	import { buildResult, readMetadata } from '$lib/metadata/extract.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {File | null} */
 	let file = $state(null);
-	/** @type {import('$lib/metadata/extract.js').MetadataResult | null} */
-	let result = $state(null);
+	/** @type {import('$lib/metadata/extract.js').RawMetadata | null} */
+	let raw = $state.raw(null);
+	// Built from the parsed data, so labels follow the language without re-reading the file.
+	let result = $derived(raw ? buildResult(raw) : null);
 	let busy = $state(false);
 	let error = $state('');
 	let run = 0;
@@ -19,15 +22,14 @@
 	async function selectFile(selected) {
 		const current = ++run;
 		file = selected;
-		result = null;
+		raw = null;
 		error = '';
 		busy = true;
 		try {
-			const extracted = await extractMetadata(selected);
-			if (current === run) result = extracted;
+			const extracted = await readMetadata(selected);
+			if (current === run) raw = extracted;
 		} catch (err) {
-			if (current === run)
-				error = `Could not read the metadata: ${err instanceof Error ? err.message : String(err)}`;
+			if (current === run) error = err instanceof Error ? err.message : String(err);
 		} finally {
 			if (current === run) busy = false;
 		}
@@ -35,33 +37,21 @@
 </script>
 
 <svelte:head>
-	<title>Metadata Extractor — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Extract EXIF, GPS, XMP and IPTC metadata from photos and author, software and dates from PDF and Office documents. Runs in your browser: the file is never uploaded."
-	/>
+	<title>{t('tools.metadata.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('metadata.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Metadata Extractor"
-	description="Read hidden metadata from images (EXIF, GPS, XMP, IPTC), PDFs and Office documents: camera, location, author, software and dates. The file never leaves your browser."
-/>
+<ToolHeader title={t('tools.metadata.name')} description={t('metadata.description')} />
 
 <div class="layout">
 	<section class="panel" aria-labelledby="file-heading">
-		<h2 id="file-heading">File</h2>
+		<h2 id="file-heading">{t('metadata.fileHeading')}</h2>
 		<FileDrop {file} onselect={selectFile} />
-		<p class="hint">
-			Supported: JPEG, PNG, TIFF, WebP, HEIC/AVIF, PDF, DOCX, XLSX, PPTX. The file never leaves your
-			browser.
-		</p>
-		<p class="hint">
-			Social networks and messaging apps usually strip metadata from uploaded images, so look for
-			the original file. Metadata can also be edited or forged: treat it as a lead, not as proof.
-		</p>
+		<p class="hint">{t('metadata.supportedHint')}</p>
+		<p class="hint">{t('metadata.strippedHint')}</p>
 		{#if result}
 			<KeyValueTable
-				rows={[{ label: 'Detected format', value: result.formatLabel }, ...result.file]}
+				rows={[{ label: t('metadata.detectedFormat'), value: result.formatLabel }, ...result.file]}
 			/>
 		{/if}
 		{#if file && result?.isImage}
@@ -70,11 +60,11 @@
 	</section>
 
 	<section class="panel" aria-labelledby="summary-heading" aria-busy={busy}>
-		<h2 id="summary-heading">Key findings</h2>
+		<h2 id="summary-heading">{t('metadata.summaryHeading')}</h2>
 		{#if busy}
-			<p class="hint">Reading metadata…</p>
+			<p class="hint">{t('metadata.reading')}</p>
 		{:else if error}
-			<p class="error" role="alert">{error}</p>
+			<p class="error" role="alert">{t('metadata.readError', { message: error })}</p>
 		{:else if result}
 			{#if result.highlights.length}
 				<KeyValueTable rows={result.highlights} />
@@ -83,21 +73,21 @@
 				<p class="note">{note}</p>
 			{/each}
 		{:else}
-			<p class="hint">Choose a file to read its metadata.</p>
+			<p class="hint">{t('metadata.chooseFile')}</p>
 		{/if}
 	</section>
 </div>
 
 {#if result?.groups.length}
 	<section class="panel wide" aria-labelledby="all-heading">
-		<h2 id="all-heading">All metadata</h2>
+		<h2 id="all-heading">{t('metadata.allHeading')}</h2>
 		<MetadataGroups groups={result.groups} />
 	</section>
 {/if}
 
 {#if result?.isImage}
 	<section class="panel wide" aria-labelledby="reverse-heading">
-		<h2 id="reverse-heading">Reverse image search</h2>
+		<h2 id="reverse-heading">{t('metadata.reverseHeading')}</h2>
 		<MetadataReverseSearch />
 	</section>
 {/if}

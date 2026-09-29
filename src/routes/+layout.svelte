@@ -3,8 +3,13 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { initLocale } from '$lib/i18n/i18n.svelte.js';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
+
+	// Pages are prerendered in English; the saved or browser language is applied on load.
+	onMount(initLocale);
 </script>
 
 <svelte:head>

@@ -351,21 +351,21 @@ function findXmp(text) {
 	return matches.length ? matches[matches.length - 1][0] : '';
 }
 
-/** XMP properties shown for PDFs, in display order. */
+/** XMP properties shown for PDFs, in display order: [property, field id]. Labels: `metadata.xmp.<id>`. */
 export const PDF_XMP_FIELDS = [
-	['dc:title', 'Title'],
-	['dc:creator', 'Creator (author)'],
-	['dc:description', 'Description'],
-	['dc:subject', 'Subject / keywords'],
-	['pdf:Keywords', 'Keywords'],
-	['xmp:CreatorTool', 'Creator tool'],
-	['pdf:Producer', 'Producer'],
-	['xmp:CreateDate', 'Created'],
-	['xmp:ModifyDate', 'Modified'],
-	['xmp:MetadataDate', 'Metadata date'],
-	['xmpMM:DocumentID', 'Document ID'],
-	['xmpMM:InstanceID', 'Instance ID'],
-	['pdf:PDFVersion', 'PDF version']
+	['dc:title', 'title'],
+	['dc:creator', 'creator'],
+	['dc:description', 'description'],
+	['dc:subject', 'subject'],
+	['pdf:Keywords', 'keywords'],
+	['xmp:CreatorTool', 'creatorTool'],
+	['pdf:Producer', 'producer'],
+	['xmp:CreateDate', 'created'],
+	['xmp:ModifyDate', 'modified'],
+	['xmp:MetadataDate', 'metadataDate'],
+	['xmpMM:DocumentID', 'documentId'],
+	['xmpMM:InstanceID', 'instanceId'],
+	['pdf:PDFVersion', 'pdfVersion']
 ];
 
 /**
@@ -376,9 +376,9 @@ export const PDF_XMP_FIELDS = [
 export function readPdfXmp(xmp) {
 	/** @type {Record<string, string>} */
 	const fields = {};
-	for (const [name, label] of PDF_XMP_FIELDS) {
+	for (const [name, id] of PDF_XMP_FIELDS) {
 		const value = readXmpProperty(xmp, name);
-		if (value) fields[label] = /Date$/.test(name) ? value.replace('T', ' ') : value;
+		if (value) fields[id] = /Date$/.test(name) ? value.replace('T', ' ') : value;
 	}
 	return fields;
 }
@@ -390,7 +390,7 @@ export function readPdfXmp(xmp) {
  * @property {boolean} encrypted
  * @property {'ok' | 'missing' | 'unreadable' | 'encrypted'} infoStatus
  * @property {Record<string, string>} info decoded Info dictionary, keyed by PDF key
- * @property {Record<string, string>} xmp selected XMP properties, keyed by display label
+ * @property {Record<string, string>} xmp selected XMP properties, keyed by field id
  * @property {boolean} objectStreams whether the file uses compressed object streams
  */
 

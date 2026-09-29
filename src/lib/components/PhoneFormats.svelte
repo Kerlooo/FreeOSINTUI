@@ -1,5 +1,6 @@
 <script>
 	import CopyButton from '$lib/components/CopyButton.svelte';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ formats: { id: string, label: string, value: string }[] }} */
 	let { formats } = $props();
@@ -10,7 +11,7 @@
 		<li>
 			<span class="label">{format.label}</span>
 			<code>{format.value}</code>
-			<CopyButton value={format.value} label={`Copy ${format.label} format`} />
+			<CopyButton value={format.value} label={t('phone.copyFormat', { format: format.label })} />
 		</li>
 	{/each}
 </ul>

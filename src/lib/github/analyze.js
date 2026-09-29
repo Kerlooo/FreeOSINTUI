@@ -3,6 +3,8 @@
  * Kept free of fetch calls so they can be tested with fixture JSON.
  */
 
+import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
+
 /**
  * Formats an ISO timestamp as "YYYY-MM-DD HH:mm UTC".
  * @param {string | null | undefined} iso
@@ -32,39 +34,48 @@ export function websiteUrl(blog) {
 }
 
 /**
- * Profile fields as KeyValueTable rows. Empty values are hidden by the table.
+ * Formats a counter with the separators of the current language; missing values stay missing.
+ * @param {number | null | undefined} value
+ */
+function count(value) {
+	return typeof value === 'number' ? formatNumber(value) : value;
+}
+
+/**
+ * Profile fields as KeyValueTable rows, labelled in the current language.
+ * Empty values are hidden by the table.
  * @param {any} user response of /users/<username>
  * @returns {{ label: string, value: string | number | null | undefined, href?: string }[]}
  */
 export function profileRows(user) {
 	const blog = websiteUrl(user.blog);
 	return [
-		{ label: 'Username', value: user.login, href: user.html_url },
-		{ label: 'Name', value: user.name },
-		{ label: 'Account type', value: user.type },
-		{ label: 'Account ID', value: user.id },
-		{ label: 'Bio', value: user.bio },
-		{ label: 'Company', value: user.company },
-		{ label: 'Location', value: user.location },
+		{ label: t('github.profile.username'), value: user.login, href: user.html_url },
+		{ label: t('github.profile.name'), value: user.name },
+		{ label: t('github.profile.accountType'), value: user.type },
+		{ label: t('github.profile.accountId'), value: user.id },
+		{ label: t('github.profile.bio'), value: user.bio },
+		{ label: t('github.profile.company'), value: user.company },
+		{ label: t('github.profile.location'), value: user.location },
 		{
-			label: 'Public email',
+			label: t('github.profile.email'),
 			value: user.email,
 			href: user.email ? `mailto:${user.email}` : undefined
 		},
-		{ label: 'Website', value: user.blog, href: blog || undefined },
+		{ label: t('github.profile.website'), value: user.blog, href: blog || undefined },
 		{
-			label: 'X / Twitter',
+			label: t('github.profile.twitter'),
 			value: user.twitter_username ? `@${user.twitter_username}` : '',
 			href: user.twitter_username ? `https://x.com/${user.twitter_username}` : undefined
 		},
-		{ label: 'Hireable', value: user.hireable ? 'yes' : '' },
-		{ label: 'Followers', value: user.followers },
-		{ label: 'Following', value: user.following },
-		{ label: 'Public repositories', value: user.public_repos },
-		{ label: 'Public gists', value: user.public_gists },
-		{ label: 'Created', value: formatDate(user.created_at) },
-		{ label: 'Last profile update', value: formatDate(user.updated_at) },
-		{ label: 'GitHub staff', value: user.site_admin ? 'yes' : '' }
+		{ label: t('github.profile.hireable'), value: user.hireable ? t('common.yes') : '' },
+		{ label: t('github.profile.followers'), value: count(user.followers) },
+		{ label: t('github.profile.following'), value: count(user.following) },
+		{ label: t('github.profile.repos'), value: count(user.public_repos) },
+		{ label: t('github.profile.gists'), value: count(user.public_gists) },
+		{ label: t('github.profile.created'), value: formatDate(user.created_at) },
+		{ label: t('github.profile.updated'), value: formatDate(user.updated_at) },
+		{ label: t('github.profile.staff'), value: user.site_admin ? t('common.yes') : '' }
 	];
 }
 
@@ -271,6 +282,6 @@ export function summarizeGpgKeys(keys) {
 		canSign: Boolean(key.can_sign),
 		revoked: Boolean(key.revoked),
 		created: formatDate(key.created_at),
-		expires: key.expires_at ? formatDate(key.expires_at) : 'never'
+		expires: key.expires_at ? formatDate(key.expires_at) : t('github.keys.never')
 	}));
 }

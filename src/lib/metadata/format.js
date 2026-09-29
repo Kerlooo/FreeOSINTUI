@@ -1,3 +1,5 @@
+import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
+
 /** Formatting helpers shared by the metadata parsers. */
 
 /** @param {number} n */
@@ -29,7 +31,12 @@ export function formatBytes(bytes) {
 		size /= 1024;
 		unit++;
 	}
-	return `${size.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
+	const digits = unit === 0 ? 0 : 1;
+	const number = formatNumber(size, {
+		minimumFractionDigits: digits,
+		maximumFractionDigits: digits
+	});
+	return `${number} ${units[unit]}`;
 }
 
 const MAX_VALUE_LENGTH = 400;
@@ -45,11 +52,11 @@ export function formatValue(value) {
 	if (value instanceof Date) return formatLocalDate(value);
 	if (value instanceof Uint8Array || value instanceof ArrayBuffer || ArrayBuffer.isView(value)) {
 		const length = /** @type {{ byteLength: number }} */ (value).byteLength;
-		return `(binary data, ${formatBytes(length)})`;
+		return t('metadata.value.binary', { size: formatBytes(length) });
 	}
 	if (Array.isArray(value)) {
 		if (value.length > 32 && value.every((item) => typeof item === 'number')) {
-			return `(${value.length} numeric values)`;
+			return t('metadata.value.numeric', { count: value.length });
 		}
 		return value.map(formatValue).join(', ');
 	}
@@ -64,7 +71,7 @@ export function formatValue(value) {
 			entries.every(([key, item]) => /^\d+$/.test(key) && typeof item === 'number')
 		) {
 			return entries.length > 32
-				? `(${entries.length} numeric values)`
+				? t('metadata.value.numeric', { count: entries.length })
 				: entries.map(([, item]) => item).join(', ');
 		}
 		return truncate(JSON.stringify(value));

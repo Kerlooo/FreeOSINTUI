@@ -1,29 +1,38 @@
 import { parsePhoneNumberFromString, validatePhoneNumberLength } from 'libphonenumber-js/max';
 import { googleSearchUrl } from '$lib/search.js';
+import { t } from '$lib/i18n/i18n.svelte.js';
 import { countryName, flagEmoji } from './countries.js';
 
-/** Human-readable labels for libphonenumber number types. */
-export const NUMBER_TYPES = {
-	MOBILE: 'Mobile',
-	FIXED_LINE: 'Fixed line',
-	FIXED_LINE_OR_MOBILE: 'Fixed line or mobile',
-	VOIP: 'VoIP',
-	TOLL_FREE: 'Toll free',
-	PREMIUM_RATE: 'Premium rate',
-	SHARED_COST: 'Shared cost',
-	PERSONAL_NUMBER: 'Personal number',
-	PAGER: 'Pager',
-	UAN: 'Universal access number (UAN)',
-	VOICEMAIL: 'Voicemail'
-};
+/** libphonenumber number types that have a translated label (`phone.type.<TYPE>`). */
+export const NUMBER_TYPES = [
+	'MOBILE',
+	'FIXED_LINE',
+	'FIXED_LINE_OR_MOBILE',
+	'VOIP',
+	'TOLL_FREE',
+	'PREMIUM_RATE',
+	'SHARED_COST',
+	'PERSONAL_NUMBER',
+	'PAGER',
+	'UAN',
+	'VOICEMAIL'
+];
 
-const LENGTH_ERRORS = {
-	TOO_SHORT: 'The number is too short.',
-	TOO_LONG: 'The number is too long.',
-	INVALID_LENGTH: 'The number has an invalid length for this country.',
-	INVALID_COUNTRY: 'Unknown country calling code. Check the prefix or pick a default country.',
-	NOT_A_NUMBER: 'This does not look like a phone number.'
-};
+const LENGTH_ERRORS = [
+	'TOO_SHORT',
+	'TOO_LONG',
+	'INVALID_LENGTH',
+	'INVALID_COUNTRY',
+	'NOT_A_NUMBER'
+];
+
+/**
+ * Translated message for a libphonenumber length validation result, or null.
+ * @param {string | undefined} reason
+ */
+function lengthError(reason) {
+	return reason && LENGTH_ERRORS.includes(reason) ? t(`phone.error.${reason}`) : null;
+}
 
 /**
  * Parses and describes a phone number, fully offline.
@@ -34,14 +43,14 @@ export function analyzePhone(raw, defaultCountry = 'IT') {
 	const input = raw.trim();
 	if (!input) return { error: null, result: null };
 	if (/[^\d\s+().\-/]/.test(input.replace(/^tel:/i, '').replace(/\s*(ext\.?|x|#)\s*\d+$/i, ''))) {
-		return { error: 'Use digits, spaces, +, -, / and brackets only.', result: null };
+		return { error: t('phone.error.chars'), result: null };
 	}
 
 	const options = { defaultCountry: /** @type {any} */ (defaultCountry) };
 	const phone = parsePhoneNumberFromString(input, options);
 	if (!phone) {
 		const reason = validatePhoneNumberLength(input, options);
-		return { error: LENGTH_ERRORS[reason] ?? LENGTH_ERRORS.NOT_A_NUMBER, result: null };
+		return { error: lengthError(reason) ?? t('phone.error.NOT_A_NUMBER'), result: null };
 	}
 
 	const valid = phone.isValid();
@@ -55,8 +64,8 @@ export function analyzePhone(raw, defaultCountry = 'IT') {
 
 	const formats = [
 		{ id: 'e164', label: 'E.164', value: e164 },
-		{ id: 'international', label: 'International', value: international },
-		{ id: 'national', label: 'National', value: national },
+		{ id: 'international', label: t('phone.format.international'), value: international },
+		{ id: 'national', label: t('phone.format.national'), value: national },
 		{ id: 'rfc3966', label: 'RFC 3966', value: phone.getURI() }
 	];
 
@@ -69,9 +78,7 @@ export function analyzePhone(raw, defaultCountry = 'IT') {
 		result: {
 			valid,
 			possible,
-			lengthProblem: possible
-				? null
-				: (LENGTH_ERRORS[validatePhoneNumberLength(input, options)] ?? null),
+			lengthProblem: possible ? null : lengthError(validatePhoneNumberLength(input, options)),
 			country,
 			countryName: country ? countryName(country) : null,
 			flag: flagEmoji(country),
@@ -79,12 +86,16 @@ export function analyzePhone(raw, defaultCountry = 'IT') {
 			nationalNumber: phone.nationalNumber,
 			extension: phone.ext ?? null,
 			type,
-			typeLabel: type ? (NUMBER_TYPES[type] ?? type) : null,
+			typeLabel: type ? (NUMBER_TYPES.includes(type) ? t(`phone.type.${type}`) : type) : null,
 			formats,
 			links: [
 				{ id: 'whatsapp', label: 'WhatsApp', url: `https://wa.me/${digits}` },
 				{ id: 'telegram', label: 'Telegram', url: `https://t.me/+${digits}` },
-				{ id: 'google', label: 'Google search', url: googleSearchUrl(searchTerms.join(' OR ')) }
+				{
+					id: 'google',
+					label: t('phone.googleSearch'),
+					url: googleSearchUrl(searchTerms.join(' OR '))
+				}
 			]
 		}
 	};

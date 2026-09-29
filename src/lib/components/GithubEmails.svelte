@@ -1,19 +1,20 @@
 <script>
 	import CopyButton from '$lib/components/CopyButton.svelte';
 	import { formatDate } from '$lib/github/analyze.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ emails: import('$lib/github/analyze.js').EmailSummary[], scanned: string[], commitsPerRepo: number }} */
 	let { emails, scanned, commitsPerRepo } = $props();
 </script>
 
 {#if scanned.length === 0}
-	<p class="hint">No non-fork repositories with commits to scan.</p>
+	<p class="hint">{t('github.emails.noRepos')}</p>
 {:else}
 	<p class="hint">
-		Scanned the last {commitsPerRepo} commits of: {scanned.join(', ')}.
+		{t('github.emails.scanned', { count: commitsPerRepo, repos: scanned.join(', ') })}
 	</p>
 	{#if emails.length === 0}
-		<p class="hint">No commit emails found for this user in these repositories.</p>
+		<p class="hint">{t('github.emails.none')}</p>
 	{:else}
 		<!-- External links only, so resolve() does not apply. -->
 		<!-- eslint-disable svelte/no-navigation-without-resolve -->
@@ -22,26 +23,32 @@
 				<li>
 					<div class="head">
 						<code>{entry.email}</code>
-						<CopyButton value={entry.email} label="Copy email" />
+						<CopyButton value={entry.email} label={t('github.emails.copy')} />
 					</div>
 					<div class="tags">
 						{#if entry.noreply}
-							<span class="tag">noreply (hidden address)</span>
+							<span class="tag">{t('github.emails.noreply')}</span>
 						{/if}
 						{#if entry.linked}
-							<span class="tag strong">linked to this account</span>
+							<span class="tag strong">{t('github.emails.linked')}</span>
 						{:else}
-							<span class="tag">not linked to any account</span>
+							<span class="tag">{t('github.emails.unlinked')}</span>
 						{/if}
 					</div>
 					<p class="meta">
-						{#if entry.names.length}Names: {entry.names.join(', ')} ·
+						{#if entry.names.length}{t('github.emails.names', { names: entry.names.join(', ') })} ·
 						{/if}
-						{entry.commits}
-						{entry.commits === 1 ? 'occurrence' : 'occurrences'} in {entry.repos.join(', ')}
-						{#if entry.lastSeen}· last {formatDate(entry.lastSeen)}{/if}
+						{t('github.emails.occurrences', {
+							count: entry.commits,
+							repos: entry.repos.join(', ')
+						})}
+						{#if entry.lastSeen}· {t('github.emails.last', {
+								date: formatDate(entry.lastSeen)
+							})}{/if}
 						{#if entry.url}
-							· <a href={entry.url} target="_blank" rel="noopener noreferrer">commit ↗</a>
+							· <a href={entry.url} target="_blank" rel="noopener noreferrer"
+								>{t('github.emails.commit')} ↗</a
+							>
 						{/if}
 					</p>
 				</li>
@@ -50,11 +57,7 @@
 		<!-- eslint-enable svelte/no-navigation-without-resolve -->
 	{/if}
 {/if}
-<p class="hint">
-	Commit emails are personal data: use them only for legitimate purposes. Emails "not linked to any
-	account" appear in this user's repositories but GitHub could not attribute them, so they may
-	belong to someone else.
-</p>
+<p class="hint">{t('github.emails.note')}</p>
 
 <style>
 	ul {

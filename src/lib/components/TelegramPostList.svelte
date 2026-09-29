@@ -1,4 +1,6 @@
 <script>
+	import { formatDate as formatLocalDate, t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ posts: { id: string, url: string | null, date: string | null, views: string | null, text: string, media: boolean }[] }} */
 	let { posts } = $props();
 
@@ -6,30 +8,31 @@
 	function formatDate(iso) {
 		if (!iso) return '';
 		const date = new Date(iso);
-		return Number.isNaN(date.getTime()) ? iso : date.toLocaleString();
+		return Number.isNaN(date.getTime()) ? iso : formatLocalDate(date);
 	}
 </script>
 
 <section aria-labelledby="telegram-posts-heading">
-	<h2 id="telegram-posts-heading">Latest posts ({posts.length})</h2>
+	<h2 id="telegram-posts-heading">{t('telegram.postsHeading', { count: posts.length })}</h2>
 	<ol>
 		{#each posts as post (post.id)}
 			<li>
 				<div class="meta">
 					{#if post.date}<time datetime={post.date}>{formatDate(post.date)}</time>{/if}
-					{#if post.views}<span>{post.views} views</span>{/if}
-					{#if post.media}<span>[media]</span>{/if}
+					{#if post.views}<span>{t('telegram.views', { views: post.views })}</span>{/if}
+					{#if post.media}<span>{t('telegram.media')}</span>{/if}
 					{#if post.url}
 						<!-- External t.me URL, so resolve() does not apply. -->
 						<!-- eslint-disable svelte/no-navigation-without-resolve -->
-						<a href={post.url} target="_blank" rel="noopener noreferrer">open ↗</a>
+						<a href={post.url} target="_blank" rel="noopener noreferrer">{t('telegram.openPost')}</a
+						>
 						<!-- eslint-enable svelte/no-navigation-without-resolve -->
 					{/if}
 				</div>
 				{#if post.text}
 					<p>{post.text}</p>
 				{:else}
-					<p class="empty">No text (media only).</p>
+					<p class="empty">{t('telegram.mediaOnly')}</p>
 				{/if}
 			</li>
 		{/each}

@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * Addresses a hostname resolved to; the selected one is analyzed.
 	 * @type {{ hostname: string, addresses: { address: string, version: 4 | 6 }[], selected: string, onselect: (address: string) => void }}
@@ -8,9 +10,9 @@
 
 <div class="choices">
 	<p>
-		<strong>{hostname}</strong> resolves to {addresses.length}
-		{addresses.length === 1 ? 'address' : 'addresses'}. Analyzing
-		<strong>{selected}</strong>{addresses.length > 1 ? ', pick another one:' : '.'}
+		<strong>{hostname}</strong>
+		{t('ip.choices.resolvesTo', { count: addresses.length })}
+		<strong>{selected}</strong>{addresses.length > 1 ? t('ip.choices.pickAnother') : '.'}
 	</p>
 	{#if addresses.length > 1}
 		<ul>

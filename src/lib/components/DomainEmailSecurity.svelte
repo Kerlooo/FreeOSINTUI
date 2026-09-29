@@ -1,12 +1,12 @@
 <script>
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/**
-	 * @type {{ auth: { spf: any, dmarc: any }, findings: { level: 'good' | 'warn' | 'bad' | 'info', text: string }[] }}
+	 * @type {{ auth: { spf: any, dmarc: any }, findings: { level: 'good' | 'warn' | 'bad' | 'info', key: string, text: string }[] }}
 	 */
 	let { auth, findings } = $props();
 
-	const LABELS = { good: 'OK', warn: 'WEAK', bad: 'RISK', info: 'NOTE' };
 	const SPF_ALL = {
 		fail: '-all (fail)',
 		softfail: '~all (softfail)',
@@ -17,9 +17,12 @@
 	let spfRows = $derived(
 		auth.spf
 			? [
-					{ label: 'Record', value: auth.spf.record },
-					{ label: '"all" policy', value: SPF_ALL[auth.spf.allPolicy] ?? 'none' },
-					{ label: 'Includes', value: auth.spf.includes.join(', ') }
+					{ label: t('dns.label.record'), value: auth.spf.record },
+					{
+						label: t('dns.label.allPolicy'),
+						value: SPF_ALL[auth.spf.allPolicy] ?? t('dns.value.none')
+					},
+					{ label: t('dns.label.includes'), value: auth.spf.includes.join(', ') }
 				]
 			: []
 	);
@@ -27,20 +30,20 @@
 	let dmarcRows = $derived(
 		auth.dmarc
 			? [
-					{ label: 'Record', value: auth.dmarc.record },
-					{ label: 'Policy (p)', value: auth.dmarc.policy ?? 'missing' },
-					{ label: 'Subdomain policy (sp)', value: auth.dmarc.subdomainPolicy },
-					{ label: 'Percent (pct)', value: `${auth.dmarc.percent}%` },
-					{ label: 'Reports (rua)', value: auth.dmarc.reports.join(', ') }
+					{ label: t('dns.label.record'), value: auth.dmarc.record },
+					{ label: t('dns.label.policy'), value: auth.dmarc.policy ?? t('dns.value.missing') },
+					{ label: t('dns.label.subdomainPolicy'), value: auth.dmarc.subdomainPolicy },
+					{ label: t('dns.label.percent'), value: `${auth.dmarc.percent}%` },
+					{ label: t('dns.label.reports'), value: auth.dmarc.reports.join(', ') }
 				]
 			: []
 	);
 </script>
 
 <ul class="findings">
-	{#each findings as finding (finding.text)}
+	{#each findings as finding (finding.key)}
 		<li class={finding.level}>
-			<span class="badge">{LABELS[finding.level]}</span>
+			<span class="badge">{t(`dns.finding.${finding.level}`)}</span>
 			<span>{finding.text}</span>
 		</li>
 	{/each}
@@ -52,7 +55,7 @@
 		{#if auth.spf}
 			<KeyValueTable rows={spfRows} />
 		{:else}
-			<p>No SPF record (TXT "v=spf1").</p>
+			<p>{t('dns.spf.noRecord')}</p>
 		{/if}
 	</div>
 	<div>
@@ -60,7 +63,7 @@
 		{#if auth.dmarc}
 			<KeyValueTable rows={dmarcRows} />
 		{:else}
-			<p>No DMARC record (TXT at _dmarc).</p>
+			<p>{t('dns.dmarc.noRecord')}</p>
 		{/if}
 	</div>
 </div>

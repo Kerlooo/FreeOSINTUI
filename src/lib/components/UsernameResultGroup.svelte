@@ -1,11 +1,12 @@
 <script>
 	import UsernameResultRow from '$lib/components/UsernameResultRow.svelte';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ group: { category: string, label: string, results: { site: string, name: string, status: string, url: string | null, http_status: number | null, reason: string, unreliable?: boolean }[] } }} */
 	let { group } = $props();
 </script>
 
-<section aria-label={`${group.label} results`}>
+<section aria-label={t('username.groupLabel', { category: group.label })}>
 	<h3>{group.label} <span>({group.results.length})</span></h3>
 	<ul>
 		{#each group.results as result (result.site)}

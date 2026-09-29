@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * Shodan InternetDB data: open ports, hostnames, CPEs, tags and CVEs.
 	 * @type {{ data: { ports: { port: number, service: string | null }[], hostnames: string[], cpes: string[], tags: string[], vulns: string[] } }}
@@ -8,7 +10,7 @@
 
 <div class="scan">
 	<div class="group">
-		<h3>Open ports ({data.ports.length})</h3>
+		<h3>{t('ip.scan.ports', { count: data.ports.length })}</h3>
 		{#if data.ports.length}
 			<ul class="chips">
 				{#each data.ports as { port, service } (port)}
@@ -19,14 +21,14 @@
 				{/each}
 			</ul>
 		{:else}
-			<p>None seen.</p>
+			<p>{t('ip.scan.noPorts')}</p>
 		{/if}
 	</div>
 
 	<div class="group">
-		<h3>Vulnerabilities ({data.vulns.length})</h3>
+		<h3>{t('ip.scan.vulns', { count: data.vulns.length })}</h3>
 		{#if data.vulns.length}
-			<p class="hint">Matched from software versions, not confirmed: the service may be patched.</p>
+			<p class="hint">{t('ip.scan.vulnsHint')}</p>
 			<ul class="chips">
 				{#each data.vulns as cve (cve)}
 					<li>
@@ -42,13 +44,13 @@
 				{/each}
 			</ul>
 		{:else}
-			<p>None listed.</p>
+			<p>{t('ip.scan.noVulns')}</p>
 		{/if}
 	</div>
 
 	{#if data.hostnames.length}
 		<div class="group">
-			<h3>Hostnames ({data.hostnames.length})</h3>
+			<h3>{t('ip.scan.hostnames', { count: data.hostnames.length })}</h3>
 			<ul class="list">
 				{#each data.hostnames as hostname (hostname)}
 					<li>{hostname}</li>
@@ -59,7 +61,7 @@
 
 	{#if data.cpes.length}
 		<div class="group">
-			<h3>Software (CPE)</h3>
+			<h3>{t('ip.scan.software')}</h3>
 			<ul class="list">
 				{#each data.cpes as cpe (cpe)}
 					<li><code>{cpe}</code></li>
@@ -70,7 +72,7 @@
 
 	{#if data.tags.length}
 		<div class="group">
-			<h3>Tags</h3>
+			<h3>{t('ip.scan.tags')}</h3>
 			<ul class="chips">
 				{#each data.tags as tag (tag)}
 					<li>{tag}</li>

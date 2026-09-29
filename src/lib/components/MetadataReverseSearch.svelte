@@ -1,4 +1,5 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
 	import { buildReverseSearchLinks, REVERSE_ENGINES } from '$lib/metadata/reverse.js';
 
 	let imageUrl = $state('');
@@ -6,12 +7,9 @@
 </script>
 
 <div class="reverse">
-	<p class="hint">
-		Search engines need the image itself: either upload the file on the engine's page, or give them
-		a public URL of the image. Nothing is sent from this page.
-	</p>
+	<p class="hint">{t('metadata.reverse.hint')}</p>
 
-	<h3>Upload the file on the engine's page</h3>
+	<h3>{t('metadata.reverse.upload')}</h3>
 	<!-- External links only, so resolve() does not apply. -->
 	<!-- eslint-disable svelte/no-navigation-without-resolve -->
 	<ul class="links">
@@ -23,8 +21,8 @@
 	</ul>
 	<!-- eslint-enable svelte/no-navigation-without-resolve -->
 
-	<h3>Search by image URL</h3>
-	<label class="visually-hidden" for="reverse-url">Public image URL</label>
+	<h3>{t('metadata.reverse.byUrl')}</h3>
+	<label class="visually-hidden" for="reverse-url">{t('metadata.reverse.urlLabel')}</label>
 	<input
 		id="reverse-url"
 		type="text"

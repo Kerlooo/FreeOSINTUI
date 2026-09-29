@@ -11,6 +11,7 @@
 	import { checkDisposable, DISPOSABLE_LIST_SOURCE } from '$lib/email/disposable.js';
 	import { lookupMailServer } from '$lib/email/mail-server.js';
 	import { gravatarAvatarUrl, gravatarHash, lookupGravatarProfile } from '$lib/email/gravatar.js';
+	import { formatNumber, t } from '$lib/i18n/i18n.svelte.js';
 
 	/**
 	 * @template T
@@ -51,7 +52,7 @@
 			if (signal.aborted) return;
 			set({
 				loading: false,
-				error: error instanceof Error ? error.message : 'Unexpected error.',
+				error: error instanceof Error ? error.message : t('email.unexpectedError'),
 				data: null
 			});
 		}
@@ -95,25 +96,19 @@
 </script>
 
 <svelte:head>
-	<title>Email Analyzer — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Analyze an email address: syntax, free or disposable provider, role address, MX mail servers, SPF and DMARC, and public Gravatar profile."
-	/>
+	<title>{t('tools.email.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('email.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Email Analyzer"
-	description="Enter an email address to check its syntax, provider type, disposable domain, mail servers, SPF/DMARC protection and public Gravatar profile."
-/>
+<ToolHeader title={t('tools.email.name')} description={t('email.intro')} />
 
 <section class="panel" aria-labelledby="email-input-heading">
-	<h2 id="email-input-heading">Email address</h2>
+	<h2 id="email-input-heading">{t('email.inputHeading')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="Email address"
-		placeholder="e.g. john.doe@example.com"
-		buttonLabel="Analyze"
+		label={t('email.inputLabel')}
+		placeholder={t('email.placeholder')}
+		buttonLabel={t('email.analyze')}
 		{busy}
 		onsubmit={analyze}
 	/>
@@ -121,31 +116,30 @@
 		{#if inputError}
 			{inputError}
 		{:else}
-			Only public sources are queried: DNS over HTTPS (Google), a public disposable-domain list and
-			Gravatar. Nothing is sent to the address or its mail server.
+			{t('email.privacyNote')}
 		{/if}
 	</p>
 </section>
 
 {#if target && address}
 	<div class="results">
-		<EmailSection id="email-address-heading" title="Address">
+		<EmailSection id="email-address-heading" title={t('email.address.title')}>
 			<KeyValueTable
 				rows={[
-					{ label: 'Normalized', value: target.email },
-					{ label: 'Local part', value: address.local },
-					{ label: 'Plus tag', value: address.tag },
-					{ label: 'Domain', value: address.domain },
-					{ label: 'Syntax', value: 'Valid' },
+					{ label: t('email.address.normalized'), value: target.email },
+					{ label: t('email.address.local'), value: address.local },
+					{ label: t('email.address.tag'), value: address.tag },
+					{ label: t('email.address.domain'), value: address.domain },
+					{ label: t('email.address.syntax'), value: t('email.address.valid') },
 					{
-						label: 'Free provider',
-						value: address.freeProvider ? `Yes — ${address.freeProvider}` : 'No (custom domain)'
+						label: t('email.address.freeProvider'),
+						value: address.freeProvider
+							? t('email.address.freeYes', { provider: address.freeProvider })
+							: t('email.address.freeNo')
 					},
 					{
-						label: 'Role address',
-						value: address.role
-							? 'Yes — likely a shared or team mailbox, not a person'
-							: 'No — looks personal'
+						label: t('email.address.role'),
+						value: address.role ? t('email.address.roleYes') : t('email.address.roleNo')
 					}
 				]}
 			/>
@@ -153,38 +147,40 @@
 
 		<EmailSection
 			id="email-disposable-heading"
-			title="Disposable domain"
+			title={t('email.disposable.title')}
 			loading={disposable.loading}
 			error={disposable.error}
 		>
 			{#if disposable.data}
 				<p class="lead" class:danger={disposable.data.disposable}>
 					{#if disposable.data.disposable}
-						Disposable: <strong>{disposable.data.match}</strong> is a throwaway email service.
+						{t('email.disposable.yes')} <strong>{disposable.data.match}</strong>
+						{t('email.disposable.yesDetail')}
 					{:else}
-						Not listed as disposable.
+						{t('email.disposable.no')}
 					{/if}
 				</p>
 				<p class="note">
-					Checked against {disposable.data.listSize.toLocaleString('en-US')} domains of the
+					{t('email.disposable.checkedBefore', {
+						count: formatNumber(disposable.data.listSize)
+					})}
 					<!-- eslint-disable svelte/no-navigation-without-resolve -->
 					<a href={DISPOSABLE_LIST_SOURCE} target="_blank" rel="noopener noreferrer"
 						>disposable-email-domains</a
-					>
+					>{t('email.disposable.checkedAfter')}
 					<!-- eslint-enable svelte/no-navigation-without-resolve -->
-					list. New throwaway services may be missing.
 				</p>
 			{/if}
 		</EmailSection>
 
 		<EmailSection
 			id="email-mail-heading"
-			title="Mail server"
+			title={t('email.mail.title')}
 			loading={mail.loading}
 			error={mail.error}
 		>
 			{#if mail.data}
-				<EmailVerdict label="Receiving" verdict={mail.data.verdicts.mx} />
+				<EmailVerdict label={t('email.mail.receiving')} verdict={mail.data.verdicts.mx} />
 				{#if mail.data.mx.length}
 					<EmailMxList mx={mail.data.mx} />
 				{/if}
@@ -197,8 +193,7 @@
 					<code>{mail.data.dmarc.record}</code>
 				{/if}
 				<p class="note">
-					A valid mail server only means the domain accepts mail; it does not prove this specific
-					mailbox exists.
+					{t('email.mail.note')}
 				</p>
 			{/if}
 		</EmailSection>
@@ -214,22 +209,24 @@
 					<EmailGravatar gravatar={gravatar.data} />
 				{/key}
 				<p class="note">
-					Gravatar receives only the SHA-256 hash of the address. Profiles are public and
-					self-declared.
+					{t('email.gravatar.note')}
 				</p>
 			{/if}
 		</EmailSection>
 
-		<EmailSection id="email-links-heading" title="Next steps">
+		<EmailSection id="email-links-heading" title={t('email.links.title')}>
 			<ul class="links">
 				<li>
-					<a href={resolve(`/leaks?email=${encodeURIComponent(target.email)}`)}>Leak Check</a>
-					— see which known data breaches include this address.
+					<a href={resolve(`/leaks?email=${encodeURIComponent(target.email)}`)}
+						>{t('tools.leaks.name')}</a
+					>
+					{t('email.links.leaks')}
 				</li>
 				<li>
 					<a href={resolve(`/dorks?type=email&q=${encodeURIComponent(target.email)}`)}
-						>Google Dork Generator</a
-					> — ready-made Google searches for this address.
+						>{t('tools.dorks.name')}</a
+					>
+					{t('email.links.dorks')}
 				</li>
 			</ul>
 		</EmailSection>

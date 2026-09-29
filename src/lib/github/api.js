@@ -1,4 +1,5 @@
 import { FetchError } from '$lib/net.js';
+import { formatDate, t } from '$lib/i18n/i18n.svelte.js';
 
 /**
  * Minimal client for the unauthenticated GitHub REST API (CORS enabled, 60 requests per
@@ -33,10 +34,10 @@ export function parseRateLimit(headers) {
  * @param {Date | null} date
  */
 export function formatResetTime(date) {
-	if (!date) return 'within an hour';
+	if (!date) return t('github.rate.withinHour');
 	const minutes = Math.max(0, Math.ceil((date.getTime() - Date.now()) / 60000));
-	const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-	return `at ${time} (in ${minutes} min)`;
+	const time = formatDate(date, { hour: '2-digit', minute: '2-digit' });
+	return t('github.rate.at', { time, minutes });
 }
 
 /** Error thrown when the hourly quota is used up. */
@@ -47,7 +48,10 @@ export class RateLimitError extends FetchError {
 	 */
 	constructor(rate, status) {
 		super(
-			`GitHub API rate limit reached (${rate?.limit ?? 60} requests per hour per IP without login). It resets ${formatResetTime(rate?.reset ?? null)}.`,
+			t('github.error.rateLimit', {
+				limit: rate?.limit ?? 60,
+				reset: formatResetTime(rate?.reset ?? null)
+			}),
 			status
 		);
 		this.name = 'RateLimitError';
@@ -82,10 +86,8 @@ export async function githubFetch(path, options = {}) {
 		});
 	} catch (error) {
 		if (signal?.aborted) throw error;
-		if (timeout.aborted) throw new FetchError('api.github.com did not answer in time.');
-		throw new FetchError(
-			'Could not reach api.github.com (network error or blocked by the browser).'
-		);
+		if (timeout.aborted) throw new FetchError(t('github.error.timeout'));
+		throw new FetchError(t('github.error.network'));
 	}
 
 	const rate = parseRateLimit(response.headers);
@@ -100,16 +102,16 @@ export async function githubFetch(path, options = {}) {
 		}
 		if (rate?.remaining === 0 || /rate limit/i.test(message))
 			throw new RateLimitError(rate, status);
-		throw new FetchError(`GitHub refused the request (HTTP ${status}).`, status);
+		throw new FetchError(t('github.error.refused', { status }), status);
 	}
 	if (status === 404 && allowNotFound) return { data: null, rate, status };
 	if (emptyStatuses.includes(status)) return { data: null, rate, status };
-	if (!response.ok) throw new FetchError(`api.github.com answered with HTTP ${status}.`, status);
+	if (!response.ok) throw new FetchError(t('github.error.http', { status }), status);
 
 	try {
 		return { data: await response.json(), rate, status };
 	} catch {
-		throw new FetchError('api.github.com returned an invalid response.', status);
+		throw new FetchError(t('github.error.invalid'), status);
 	}
 }
 
@@ -123,11 +125,7 @@ export function normalizeUsername(input) {
 	const url = value.match(/^(?:https?:\/\/)?(?:www\.)?github\.com\/([^/?#]+)/i);
 	if (url) value = url[1];
 	if (!/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i.test(value)) {
-		return {
-			value: null,
-			error:
-				'Invalid GitHub username: up to 39 letters, digits or single hyphens, not starting or ending with a hyphen.'
-		};
+		return { value: null, error: t('github.error.username') };
 	}
 	return { value, error: null };
 }

@@ -1,5 +1,6 @@
 <script>
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/**
 	 * @type {{ gravatar: { hash: string, avatarUrl: string, profile: ReturnType<typeof import('$lib/email/gravatar.js').summarizeGravatarProfile> | null } }}
@@ -17,7 +18,7 @@
 	<div class="avatar">
 		<img
 			src={gravatar.avatarUrl}
-			alt="Gravatar avatar"
+			alt={t('email.gravatar.avatarAlt')}
 			width="120"
 			height="120"
 			class:hidden={avatar !== 'loaded'}
@@ -25,9 +26,9 @@
 			onerror={() => (avatar = 'missing')}
 		/>
 		{#if avatar === 'missing'}
-			<p>No Gravatar avatar for this address.</p>
+			<p>{t('email.gravatar.noAvatar')}</p>
 		{:else if avatar === 'loading'}
-			<p>Loading avatar…</p>
+			<p>{t('email.gravatar.loadingAvatar')}</p>
 		{/if}
 	</div>
 
@@ -35,17 +36,21 @@
 		<KeyValueTable
 			rows={[
 				{ label: 'SHA-256', value: gravatar.hash },
-				{ label: 'Name', value: profile?.displayName },
-				{ label: 'Profile', value: profile?.profileUrl, href: profile?.profileUrl ?? undefined },
-				{ label: 'Location', value: profile?.location },
-				{ label: 'Job title', value: profile?.jobTitle },
-				{ label: 'Company', value: profile?.company },
-				{ label: 'Pronouns', value: profile?.pronouns },
-				{ label: 'About', value: profile?.description }
+				{ label: t('email.gravatar.name'), value: profile?.displayName },
+				{
+					label: t('email.gravatar.profile'),
+					value: profile?.profileUrl,
+					href: profile?.profileUrl ?? undefined
+				},
+				{ label: t('email.gravatar.location'), value: profile?.location },
+				{ label: t('email.gravatar.jobTitle'), value: profile?.jobTitle },
+				{ label: t('email.gravatar.company'), value: profile?.company },
+				{ label: t('email.gravatar.pronouns'), value: profile?.pronouns },
+				{ label: t('email.gravatar.about'), value: profile?.description }
 			]}
 		/>
 		{#if profile?.accounts.length}
-			<h3>Verified accounts</h3>
+			<h3>{t('email.gravatar.accounts')}</h3>
 			<ul>
 				{#each profile.accounts as account (account.url)}
 					<li>
@@ -59,7 +64,7 @@
 			</ul>
 		{/if}
 		{#if !profile}
-			<p>No public Gravatar profile for this address.</p>
+			<p>{t('email.gravatar.noProfile')}</p>
 		{/if}
 	</div>
 </div>

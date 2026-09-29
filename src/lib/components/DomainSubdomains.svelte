@@ -1,5 +1,6 @@
 <script>
 	import CopyButton from '$lib/components/CopyButton.svelte';
+	import { t, formatNumber } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ result: { names: string[], source: string, partial: boolean, fallbackReason: string | null } }} */
 	let { result } = $props();
@@ -13,27 +14,31 @@
 </script>
 
 <p class="meta">
-	<strong>{result.names.length}</strong> unique subdomains from <strong>{result.source}</strong>
+	<strong>{formatNumber(result.names.length)}</strong>
+	{t('domain.subdomains.countFrom', { count: result.names.length })}
+	<strong>{result.source}</strong>
 	{#if result.partial}
-		(first page of results only, the list may be incomplete)
+		{t('domain.subdomains.partial')}
 	{/if}
 </p>
 {#if result.fallbackReason}
-	<p class="meta">crt.sh failed ({result.fallbackReason}), so Cert Spotter was used instead.</p>
+	<p class="meta">{t('domain.subdomains.fallback', { reason: result.fallbackReason })}</p>
 {/if}
 
 {#if result.names.length}
 	<div class="toolbar">
-		<label class="visually-hidden" for="subdomain-filter">Filter subdomains</label>
+		<label class="visually-hidden" for="subdomain-filter"
+			>{t('domain.subdomains.filterLabel')}</label
+		>
 		<input
 			id="subdomain-filter"
 			type="text"
 			bind:value={filter}
-			placeholder="Filter, e.g. mail"
+			placeholder={t('domain.subdomains.filterPlaceholder')}
 			autocomplete="off"
 			spellcheck="false"
 		/>
-		<CopyButton value={visible.join('\n')} label="Copy all listed subdomains" />
+		<CopyButton value={visible.join('\n')} label={t('domain.subdomains.copyAll')} />
 	</div>
 	{#if visible.length}
 		<ul>
@@ -42,18 +47,22 @@
 			{/each}
 		</ul>
 		{#if filter.trim()}
-			<p class="meta">{visible.length} of {result.names.length} shown.</p>
+			<p class="meta">
+				{t('domain.subdomains.shown', {
+					visible: formatNumber(visible.length),
+					total: formatNumber(result.names.length)
+				})}
+			</p>
 		{/if}
 	{:else}
-		<p class="meta">No subdomain matches the filter.</p>
+		<p class="meta">{t('domain.subdomains.noMatch')}</p>
 	{/if}
 {:else}
-	<p class="meta">No subdomains found in certificate transparency logs.</p>
+	<p class="meta">{t('domain.subdomains.none')}</p>
 {/if}
 
 <p class="meta">
-	Names come from public TLS certificates: some may no longer resolve, and hosts without a public
-	certificate are not listed.
+	{t('domain.subdomains.note')}
 </p>
 
 <style>

@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ mx: { priority: number, host: string }[] }} */
 	let { mx } = $props();
 </script>
@@ -6,15 +8,15 @@
 <table>
 	<thead>
 		<tr>
-			<th scope="col">Priority</th>
-			<th scope="col">Mail server</th>
+			<th scope="col">{t('email.mail.priority')}</th>
+			<th scope="col">{t('email.mail.server')}</th>
 		</tr>
 	</thead>
 	<tbody>
 		{#each mx as record (record.priority + record.host)}
 			<tr>
 				<td>{record.priority}</td>
-				<td>{record.host || '(null MX)'}</td>
+				<td>{record.host || t('email.mail.nullMx')}</td>
 			</tr>
 		{/each}
 	</tbody>

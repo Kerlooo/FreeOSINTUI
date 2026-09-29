@@ -9,6 +9,7 @@
 	import GithubEmails from '$lib/components/GithubEmails.svelte';
 	import GithubKeys from '$lib/components/GithubKeys.svelte';
 	import { normalizeUsername } from '$lib/github/api.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 	import {
 		COMMITS_PER_REPO,
 		MAX_REQUESTS,
@@ -96,7 +97,7 @@
 		if (signal.aborted || profile.status !== 'done') return;
 		if (!user) {
 			profile.status = 'error';
-			profile.error = `No GitHub account named "${username}".`;
+			profile.error = t('github.noAccount', { username });
 			return;
 		}
 		const login = user.login;
@@ -108,7 +109,7 @@
 		if (signal.aborted) return;
 		if (repos.status === 'error') {
 			emails.status = 'error';
-			emails.error = 'Repositories could not be loaded, so no commits were scanned.';
+			emails.error = t('github.reposFailed');
 			return;
 		}
 		load(emails, () => fetchCommitEmails(login, repoList ?? [], options), signal);
@@ -120,34 +121,25 @@
 </script>
 
 <svelte:head>
-	<title>GitHub OSINT — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Investigate a GitHub account: profile, repositories and languages, organizations, emails leaked in public commits, SSH and GPG keys. Uses the public GitHub API from your browser."
-	/>
+	<title>{t('tools.github.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('github.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="GitHub OSINT"
-	description="Enter a GitHub username to see its public profile, repositories and top languages, organizations, emails found in recent commits and public SSH/GPG keys."
-/>
+<ToolHeader title={t('tools.github.name')} description={t('github.intro')} />
 
 <section class="panel" aria-labelledby="search-heading">
-	<h2 id="search-heading">Username</h2>
+	<h2 id="search-heading">{t('github.usernameHeading')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="GitHub username"
-		placeholder="e.g. torvalds or https://github.com/torvalds"
+		label={t('github.inputLabel')}
+		placeholder={t('github.placeholder')}
 		{busy}
 		onsubmit={lookup}
 	/>
 	{#if inputError}
 		<p class="error" role="alert">{inputError}</p>
 	{/if}
-	<p class="hint">
-		Requests go from your browser straight to the public GitHub API, without login: GitHub allows 60
-		requests per hour per IP address, and one lookup uses at most {MAX_REQUESTS}.
-	</p>
+	<p class="hint">{t('github.requestsHint', { max: MAX_REQUESTS })}</p>
 	{#if rate}
 		<GithubRateLimit {rate} />
 	{/if}
@@ -155,19 +147,29 @@
 
 {#if searched}
 	<div class="sections">
-		<GithubSection id="profile" title="Profile" status={profile.status} error={profile.error}>
+		<GithubSection
+			id="profile"
+			title={t('github.section.profile')}
+			status={profile.status}
+			error={profile.error}
+		>
 			<GithubProfile user={profile.data} />
 		</GithubSection>
 
 		{#if profile.status === 'done'}
-			<GithubSection id="repos" title="Repositories" status={repos.status} error={repos.error}>
+			<GithubSection
+				id="repos"
+				title={t('github.section.repos')}
+				status={repos.status}
+				error={repos.error}
+			>
 				<GithubRepos repos={repos.data} publicCount={profile.data.public_repos} />
 			</GithubSection>
 
 			<div class="columns">
 				<GithubSection
 					id="emails"
-					title="Emails in public commits"
+					title={t('github.section.emails')}
 					status={emails.status}
 					error={emails.error}
 				>
@@ -179,11 +181,21 @@
 				</GithubSection>
 
 				<div class="stack">
-					<GithubSection id="orgs" title="Organizations" status={orgs.status} error={orgs.error}>
+					<GithubSection
+						id="orgs"
+						title={t('github.section.orgs')}
+						status={orgs.status}
+						error={orgs.error}
+					>
 						<GithubOrgs orgs={orgs.data} />
 					</GithubSection>
 
-					<GithubSection id="keys" title="SSH and GPG keys" status={keys.status} error={keys.error}>
+					<GithubSection
+						id="keys"
+						title={t('github.section.keys')}
+						status={keys.status}
+						error={keys.error}
+					>
 						<GithubKeys ssh={keys.data.ssh} gpg={keys.data.gpg} />
 					</GithubSection>
 				</div>

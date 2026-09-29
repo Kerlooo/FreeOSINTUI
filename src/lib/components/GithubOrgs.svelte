@@ -1,4 +1,5 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
 	/** @type {{ orgs: any[] }} */
 	let { orgs } = $props();
 </script>
@@ -21,9 +22,9 @@
 	</ul>
 	<!-- eslint-enable svelte/no-navigation-without-resolve -->
 {:else}
-	<p class="hint">No public organization memberships.</p>
+	<p class="hint">{t('github.orgs.none')}</p>
 {/if}
-<p class="hint">Only memberships the user made public are listed.</p>
+<p class="hint">{t('github.orgs.note')}</p>
 
 <style>
 	ul {

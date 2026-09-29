@@ -15,6 +15,7 @@
 		resolveHostname
 	} from '$lib/ip/lookups.js';
 	import { geoRows, rdapRows } from '$lib/ip/rows.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @typedef {{ status: 'loading' | 'done' | 'error', data?: any, error?: string }} SectionState */
 
@@ -28,7 +29,7 @@
 	/** @type {NonNullable<ReturnType<typeof parseIp>> | null} */
 	let target = $state(null);
 	/** @type {ReturnType<typeof classifyIp>} */
-	let special = $state(null);
+	let special = $state.raw(null);
 
 	/** @type {Record<'geo' | 'ptr' | 'rdap' | 'scan', SectionState>} */
 	let sections = $state({
@@ -69,7 +70,7 @@
 			const addresses = await resolveHostname(parsed.hostname, { signal: controller.signal });
 			if (controller.signal.aborted) return;
 			if (!addresses.length) {
-				inputError = `${parsed.hostname} has no A or AAAA records.`;
+				inputError = t('ip.noAddresses', { hostname: parsed.hostname });
 				return;
 			}
 			resolved = { hostname: parsed.hostname, addresses };
@@ -129,25 +130,19 @@
 </script>
 
 <svelte:head>
-	<title>IP Analyzer — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Analyze an IP address or hostname: approximate geolocation, ASN and ISP, reverse DNS, RDAP network owner and abuse contact, and open ports and CVEs from Shodan's passive scans."
-	/>
+	<title>{t('tools.ip.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('ip.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="IP Analyzer"
-	description="Enter an IPv4/IPv6 address or a hostname to see where it is, who owns the network, its reverse DNS and which ports and vulnerabilities public scanners have recorded. All lookups are passive and use public sources."
-/>
+<ToolHeader title={t('tools.ip.name')} description={t('ip.intro')} />
 
 <section class="panel" aria-labelledby="ip-target-heading">
-	<h2 id="ip-target-heading">Target</h2>
+	<h2 id="ip-target-heading">{t('ip.target')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="IP address or hostname"
-		placeholder="e.g. 8.8.8.8, 2606:4700:4700::1111 or example.com"
-		buttonLabel="Analyze"
+		label={t('ip.inputLabel')}
+		placeholder={t('ip.placeholder')}
+		buttonLabel={t('ip.analyze')}
 		busy={resolving}
 		onsubmit={submit}
 	/>
@@ -155,14 +150,14 @@
 		{#if inputError}
 			{inputError}
 		{:else if resolving}
-			Resolving the hostname…
+			{t('ip.resolving')}
 		{:else if target}
-			Analyzing <strong>{target.address}</strong> (IPv{target.version}{target.mapped
-				? ', unwrapped from an IPv4-mapped IPv6 address'
+			{t('ip.analyzing')} <strong>{target.address}</strong> (IPv{target.version}{target.mapped
+				? t('ip.unwrapped')
 				: ''})
-			<CopyButton value={target.address} label="Copy address" />
+			<CopyButton value={target.address} label={t('ip.copyAddress')} />
 		{:else}
-			A hostname is resolved first (A/AAAA records) and its first address is analyzed.
+			{t('ip.inputHint')}
 		{/if}
 	</p>
 	{#if resolved && target}
@@ -177,22 +172,22 @@
 
 {#if target && special}
 	<section class="panel notice" role="status">
-		<h2>{special.label} address</h2>
+		<h2>{t('ip.special.title', { label: special.label })}</h2>
 		<p>
-			<strong>{target.address}</strong> is in <code>{special.cidr}</code>. {special.description}
+			<strong>{target.address}</strong>
+			{t('ip.special.isIn')} <code>{special.cidr}</code>. {special.description}
 		</p>
 		<p>
-			It is not a public internet address, so there is no geolocation, owner or scan data for it.
-			Remote lookups were skipped.
+			{t('ip.special.skipped')}
 		</p>
 	</section>
 {:else if target}
 	<div class="results">
 		<IpSection
 			id="ip-geo"
-			title="Geolocation & network"
+			title={t('ip.geo.title')}
 			source="ipwho.is"
-			note="Location is approximate (often the ISP's city or data center), not the address of a person."
+			note={t('ip.geo.note')}
 			result={sections.geo}
 		>
 			{#snippet children(/** @type {any} */ geo)}
@@ -202,11 +197,11 @@
 
 		<IpSection
 			id="ip-ptr"
-			title="Reverse DNS"
-			source="PTR via dns.google"
+			title={t('ip.ptr.title')}
+			source={t('ip.ptr.source')}
 			result={sections.ptr}
 			isEmpty={isEmptyList}
-			emptyText="No PTR record for this address."
+			emptyText={t('ip.ptr.empty')}
 		>
 			{#snippet children(/** @type {string[]} */ names)}
 				<ul class="names">
@@ -219,11 +214,11 @@
 
 		<IpSection
 			id="ip-rdap"
-			title="Network owner (RDAP)"
+			title={t('ip.rdap.title')}
 			source="rdap.org"
-			note="Registered holder of the address block; the abuse contact is where to report misuse."
+			note={t('ip.rdap.note')}
 			result={sections.rdap}
-			emptyText="The registry has no RDAP record for this address."
+			emptyText={t('ip.rdap.empty')}
 		>
 			{#snippet children(/** @type {any} */ rdap)}
 				<KeyValueTable rows={rdapRows(rdap)} />
@@ -232,11 +227,11 @@
 
 		<IpSection
 			id="ip-scan"
-			title="Open ports & vulnerabilities"
+			title={t('ip.scan.title')}
 			source="Shodan InternetDB"
-			note="Passive: data from Shodan's weekly scans, no packets are sent to the target. It may be up to a few weeks old."
+			note={t('ip.scan.note')}
 			result={sections.scan}
-			emptyText="Shodan has no data for this address (not scanned recently or nothing exposed)."
+			emptyText={t('ip.scan.empty')}
 		>
 			{#snippet children(/** @type {any} */ scan)}
 				<IpScanResults data={scan} />

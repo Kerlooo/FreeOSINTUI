@@ -1,9 +1,29 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /**
- * @typedef {{ level: 'good' | 'warn' | 'bad' | 'info', text: string }} Finding
+ * @typedef {{ level: 'good' | 'warn' | 'bad' | 'info', key: string, params?: Record<string, unknown>, readonly text: string }} Finding
  */
 
 /**
- * Turns the SPF/DMARC records of a domain into plain-English findings.
+ * Builds a finding whose text follows the current language.
+ * @param {Finding['level']} level
+ * @param {string} key message key in the `dns` namespace
+ * @param {Record<string, unknown>} [params]
+ * @returns {Finding}
+ */
+function finding(level, key, params) {
+	return {
+		level,
+		key,
+		params,
+		get text() {
+			return t(`dns.${key}`, params);
+		}
+	};
+}
+
+/**
+ * Turns the SPF/DMARC records of a domain into plain-language findings.
  * @param {{ spf: ReturnType<typeof import('$lib/dns/email-auth.js').parseSpf> | null, dmarc: ReturnType<typeof import('$lib/dns/email-auth.js').parseDmarc> | null }} auth
  * @returns {Finding[]}
  */
@@ -12,70 +32,37 @@ export function emailSecurityFindings({ spf, dmarc }) {
 	const findings = [];
 
 	if (!spf) {
-		findings.push({
-			level: 'bad',
-			text: 'No SPF record: receivers cannot tell which servers may send mail for this domain.'
-		});
+		findings.push(finding('bad', 'spf.missing'));
 	} else if (spf.allPolicy === 'fail') {
-		findings.push({ level: 'good', text: 'SPF rejects mail from unlisted servers (-all).' });
+		findings.push(finding('good', 'spf.fail'));
 	} else if (spf.allPolicy === 'softfail') {
-		findings.push({
-			level: 'warn',
-			text: 'SPF only soft-fails unlisted servers (~all): their mail is marked suspicious, not rejected.'
-		});
+		findings.push(finding('warn', 'spf.softfail'));
 	} else if (spf.allPolicy === 'neutral' || spf.allPolicy === 'pass') {
-		findings.push({
-			level: 'bad',
-			text: `SPF ends with ${spf.allPolicy === 'pass' ? '+all' : '?all'}: any server is accepted, so SPF gives no protection.`
-		});
+		findings.push(finding('bad', 'spf.open', { all: spf.allPolicy === 'pass' ? '+all' : '?all' }));
 	} else if (spf.mechanisms.some((m) => m.name === 'redirect')) {
-		findings.push({
-			level: 'info',
-			text: 'SPF delegates its policy to another domain (redirect=).'
-		});
+		findings.push(finding('info', 'spf.redirect'));
 	} else {
-		findings.push({
-			level: 'warn',
-			text: 'SPF has no "all" mechanism: mail from unlisted servers gets a neutral result.'
-		});
+		findings.push(finding('warn', 'spf.noAll'));
 	}
 
 	if (!dmarc) {
-		findings.push({
-			level: 'bad',
-			text: 'No DMARC: the domain can be spoofed more easily, and receivers get no policy for failing mail.'
-		});
+		findings.push(finding('bad', 'dmarc.missing'));
 	} else {
 		const policy = dmarc.policy?.toLowerCase();
 		if (policy === 'reject') {
-			findings.push({
-				level: 'good',
-				text: 'DMARC rejects mail that fails authentication (p=reject).'
-			});
+			findings.push(finding('good', 'dmarc.reject'));
 		} else if (policy === 'quarantine') {
-			findings.push({
-				level: 'good',
-				text: 'DMARC sends mail that fails authentication to spam (p=quarantine).'
-			});
+			findings.push(finding('good', 'dmarc.quarantine'));
 		} else if (policy === 'none') {
-			findings.push({
-				level: 'warn',
-				text: 'DMARC is in monitoring mode only (p=none): spoofed mail is not blocked.'
-			});
+			findings.push(finding('warn', 'dmarc.none'));
 		} else {
-			findings.push({ level: 'bad', text: 'DMARC record has no valid policy (p=).' });
+			findings.push(finding('bad', 'dmarc.invalid'));
 		}
 		if ((policy === 'reject' || policy === 'quarantine') && dmarc.percent < 100) {
-			findings.push({
-				level: 'warn',
-				text: `The DMARC policy applies to only ${dmarc.percent}% of failing mail (pct=${dmarc.percent}).`
-			});
+			findings.push(finding('warn', 'dmarc.partial', { percent: dmarc.percent }));
 		}
 		if (!dmarc.reports.length) {
-			findings.push({
-				level: 'info',
-				text: 'No aggregate report address (rua=): the owner gets no DMARC reports.'
-			});
+			findings.push(finding('info', 'dmarc.noReports'));
 		}
 	}
 

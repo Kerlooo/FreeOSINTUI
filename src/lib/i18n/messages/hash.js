@@ -1,0 +1,103 @@
+// Hash Checker: page, results table and verifier.
+export default {
+	en: {
+		metaDescription:
+			'Compute MD5, SHA-1, SHA-256, SHA-512, SHA-3, BLAKE and CRC32 hashes of text or files, identify and verify hashes. Runs in your browser.',
+		intro:
+			'Compute the most common hashes of a text or a file, identify an unknown hash and check whether it matches. Everything runs locally: nothing leaves your browser.',
+		inputHeading: 'Input',
+		inputType: 'Input type',
+		'mode.text': 'Text',
+		'mode.file': 'File',
+		textLabel: 'Text to hash',
+		textPlaceholder: 'Type or paste text to hash…',
+		textHint: 'Text is encoded as UTF-8. Hashes update as you type.',
+		hashingFile: 'Hashing file',
+		fileError: 'Could not read the file: {error}',
+		resultsHeading: 'Results',
+		hashing: 'Hashing…',
+		emptyText: 'Enter some text to compute its hashes.',
+		emptyFile: 'Choose a file to compute its hashes.',
+		'results.algorithm': 'Algorithm',
+		'results.digest': 'Digest',
+		'results.actions': 'Actions',
+		'verifier.label': 'Hash to verify or identify',
+		'verifier.optional': '(optional)',
+		'verifier.placeholder': 'Paste a hash, e.g. {example}',
+		'verifier.possibleType': 'Possible type:',
+		'verifier.unknownFormat': 'unknown format',
+		'verifier.match': '✔ Match: {names}',
+		'verifier.notComputed':
+			'This hash type is not computed here (salted or password hashes cannot be verified by recomputing the input).',
+		'verifier.noMatch': '✘ No match: the input does not produce this hash.',
+		'verifier.needInput': 'Enter text or choose a file to verify it against this hash.',
+		'candidate.mysqlNoStar': 'MySQL 4.1+ (without *)'
+	},
+	it: {
+		metaDescription:
+			'Calcola gli hash MD5, SHA-1, SHA-256, SHA-512, SHA-3, BLAKE e CRC32 di testo o file, identifica e verifica hash. Funziona nel tuo browser.',
+		intro:
+			'Calcola gli hash più comuni di un testo o di un file, identifica un hash sconosciuto e controlla se corrisponde. Tutto avviene in locale: nulla lascia il tuo browser.',
+		inputHeading: 'Input',
+		inputType: 'Tipo di input',
+		'mode.text': 'Testo',
+		'mode.file': 'File',
+		textLabel: "Testo di cui calcolare l'hash",
+		textPlaceholder: "Scrivi o incolla il testo di cui calcolare l'hash…",
+		textHint: 'Il testo è codificato in UTF-8. Gli hash si aggiornano mentre scrivi.',
+		hashingFile: "Calcolo dell'hash del file",
+		fileError: 'Impossibile leggere il file: {error}',
+		resultsHeading: 'Risultati',
+		hashing: 'Calcolo in corso…',
+		emptyText: 'Inserisci del testo per calcolarne gli hash.',
+		emptyFile: 'Scegli un file per calcolarne gli hash.',
+		'results.algorithm': 'Algoritmo',
+		'results.digest': 'Digest',
+		'results.actions': 'Azioni',
+		'verifier.label': 'Hash da verificare o identificare',
+		'verifier.optional': '(facoltativo)',
+		'verifier.placeholder': 'Incolla un hash, es. {example}',
+		'verifier.possibleType': 'Tipo possibile:',
+		'verifier.unknownFormat': 'formato sconosciuto',
+		'verifier.match': '✔ Corrispondenza: {names}',
+		'verifier.notComputed':
+			"Questo tipo di hash non viene calcolato qui (gli hash con salt o delle password non si possono verificare ricalcolando l'input).",
+		'verifier.noMatch': "✘ Nessuna corrispondenza: l'input non produce questo hash.",
+		'verifier.needInput': 'Inserisci del testo o scegli un file per verificarlo con questo hash.',
+		'candidate.mysqlNoStar': 'MySQL 4.1+ (senza *)'
+	},
+	fr: {
+		metaDescription:
+			'Calculez les hash MD5, SHA-1, SHA-256, SHA-512, SHA-3, BLAKE et CRC32 de textes ou de fichiers, identifiez et vérifiez des hash. Fonctionne dans votre navigateur.',
+		intro:
+			"Calculez les hash les plus courants d'un texte ou d'un fichier, identifiez un hash inconnu et vérifiez s'il correspond. Tout s'exécute localement : rien ne quitte votre navigateur.",
+		inputHeading: 'Entrée',
+		inputType: "Type d'entrée",
+		'mode.text': 'Texte',
+		'mode.file': 'Fichier',
+		textLabel: 'Texte à hacher',
+		textPlaceholder: 'Saisissez ou collez le texte à hacher…',
+		textHint: 'Le texte est encodé en UTF-8. Les hash se mettent à jour pendant la saisie.',
+		hashingFile: 'Hachage du fichier',
+		fileError: 'Impossible de lire le fichier : {error}',
+		resultsHeading: 'Résultats',
+		hashing: 'Hachage en cours…',
+		emptyText: 'Saisissez du texte pour calculer ses hash.',
+		emptyFile: 'Choisissez un fichier pour calculer ses hash.',
+		'results.algorithm': 'Algorithme',
+		'results.digest': 'Empreinte',
+		'results.actions': 'Actions',
+		'verifier.label': 'Hash à vérifier ou identifier',
+		'verifier.optional': '(facultatif)',
+		'verifier.placeholder': 'Collez un hash, ex. {example}',
+		'verifier.possibleType': 'Type possible :',
+		'verifier.unknownFormat': 'format inconnu',
+		'verifier.match': '✔ Correspondance : {names}',
+		'verifier.notComputed':
+			"Ce type de hash n'est pas calculé ici (les hash salés ou de mots de passe ne peuvent pas être vérifiés en recalculant l'entrée).",
+		'verifier.noMatch': "✘ Aucune correspondance : l'entrée ne produit pas ce hash.",
+		'verifier.needInput':
+			'Saisissez du texte ou choisissez un fichier pour le vérifier avec ce hash.',
+		'candidate.mysqlNoStar': 'MySQL 4.1+ (sans *)'
+	}
+};

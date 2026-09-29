@@ -1,9 +1,11 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/**
 	 * Panel for one Domain Analyzer section, with its own loading and error state.
 	 * @type {{ id: string, title: string, subtitle?: string, section: { status: 'idle' | 'loading' | 'done' | 'error', error?: string | null }, loadingText?: string, children: import('svelte').Snippet }}
 	 */
-	let { id, title, subtitle = '', section, loadingText = 'Loading…', children } = $props();
+	let { id, title, subtitle = '', section, loadingText, children } = $props();
 </script>
 
 <section class="panel" aria-labelledby={id} aria-busy={section.status === 'loading'}>
@@ -13,7 +15,7 @@
 	</header>
 	<div aria-live="polite">
 		{#if section.status === 'loading'}
-			<p class="status">{loadingText}</p>
+			<p class="status">{loadingText ?? t('domain.loading')}</p>
 		{:else if section.status === 'error'}
 			<p class="status error">{section.error}</p>
 		{:else if section.status === 'done'}

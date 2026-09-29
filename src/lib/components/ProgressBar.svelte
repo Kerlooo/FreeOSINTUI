@@ -1,4 +1,6 @@
 <script>
+	import { formatNumber } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ value: number, label: string }} */
 	let { value, label } = $props();
 
@@ -16,7 +18,7 @@
 	>
 		<div class="bar" style:width={`${percent}%`}></div>
 	</div>
-	<span>{percent}%</span>
+	<span>{formatNumber(percent / 100, { style: 'percent' })}</span>
 </div>
 
 <style>

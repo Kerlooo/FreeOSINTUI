@@ -1,6 +1,7 @@
 <script>
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
 	import { profileRows } from '$lib/github/analyze.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @type {{ user: any }} */
 	let { user } = $props();
@@ -10,7 +11,12 @@
 
 <div class="profile">
 	{#if user.avatar_url}
-		<img src={user.avatar_url} alt={`Avatar of ${user.login}`} width="120" height="120" />
+		<img
+			src={user.avatar_url}
+			alt={t('github.profile.avatarAlt', { login: user.login })}
+			width="120"
+			height="120"
+		/>
 	{/if}
 	<div class="table">
 		<KeyValueTable {rows} />

@@ -1,3 +1,5 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /**
  * Detects the file format from its first bytes (magic numbers), not from the extension,
  * which can be wrong or missing.
@@ -25,13 +27,10 @@ export function detectFormat(head) {
 /** Formats handled by the image (exifr) parser. */
 export const IMAGE_FORMATS = new Set(['jpeg', 'png', 'tiff', 'webp', 'heic']);
 
-/** Display names for detected formats. */
-export const FORMAT_LABELS = {
-	jpeg: 'JPEG image',
-	png: 'PNG image',
-	tiff: 'TIFF image',
-	webp: 'WebP image',
-	heic: 'HEIC / AVIF image',
-	pdf: 'PDF document',
-	zip: 'ZIP archive'
-};
+/**
+ * Display name of a detected format, in the current language.
+ * @param {string | null} format
+ */
+export function formatLabel(format) {
+	return t(format ? `metadata.format.${format}` : 'metadata.format.unknown');
+}

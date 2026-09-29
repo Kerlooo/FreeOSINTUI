@@ -1,16 +1,14 @@
 <script>
 	import ToolCard from '$lib/components/ToolCard.svelte';
 	import { TOOLS, toolsByCategory } from '$lib/tools.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	const groups = toolsByCategory();
 </script>
 
 <svelte:head>
-	<title>FreeOSINT-UI — Free OSINT tools</title>
-	<meta
-		name="description"
-		content="Free OSINT tools: Google dorks, username, email, phone, domain and IP analysis, breach check, metadata extractor, hash checker and more."
-	/>
+	<title>{t('home.title')}</title>
+	<meta name="description" content={t('home.metaDescription')} />
 </svelte:head>
 
 <section class="hero">
@@ -21,13 +19,15 @@
 		>
 	</h1>
 	<p>
-		Free OSINT tools, from the simplest to the most advanced. No account, no paywall: everything
-		runs in your browser and nothing is sent to a server.
+		{t('home.intro')}
 	</p>
 </section>
 
 <section aria-labelledby="tools-heading">
-	<h2 id="tools-heading">Tools <span class="count">({TOOLS.length})</span></h2>
+	<h2 id="tools-heading">
+		{t('home.tools')}
+		<span class="count">({t('home.toolCount', { count: TOOLS.length })})</span>
+	</h2>
 	{#each groups as group (group.id)}
 		<section class="category" aria-labelledby={`category-${group.id}`}>
 			<h3 id={`category-${group.id}`}>{group.label}</h3>

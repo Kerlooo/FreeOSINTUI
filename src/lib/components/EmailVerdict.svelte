@@ -1,12 +1,12 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ label: string, verdict: { level: 'good' | 'warn' | 'bad', text: string } }} */
 	let { label, verdict } = $props();
-
-	const BADGES = { good: 'OK', warn: 'WEAK', bad: 'RISK' };
 </script>
 
 <div class="verdict {verdict.level}">
-	<span class="badge">{BADGES[verdict.level]}</span>
+	<span class="badge">{t(`email.badge.${verdict.level}`)}</span>
 	<p><strong>{label}:</strong> {verdict.text}</p>
 </div>
 

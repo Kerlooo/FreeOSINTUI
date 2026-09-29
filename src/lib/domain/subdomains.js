@@ -1,4 +1,5 @@
 import { fetchJson } from '$lib/net.js';
+import { t } from '$lib/i18n/i18n.svelte.js';
 
 /**
  * Cleans certificate names: lowercase, no wildcards, only valid subdomains of `domain`
@@ -31,7 +32,8 @@ export function cleanNames(names, domain) {
  * @param {string} domain
  */
 export function parseCrtSh(entries, domain) {
-	if (!Array.isArray(entries)) throw new Error('crt.sh returned an unexpected response.');
+	if (!Array.isArray(entries))
+		throw new Error(t('domain.subdomains.unexpected', { source: 'crt.sh' }));
 	return cleanNames(
 		entries.flatMap((entry) => [
 			...(entry.name_value ?? '').split('\n'),
@@ -47,7 +49,8 @@ export function parseCrtSh(entries, domain) {
  * @param {string} domain
  */
 export function parseCertSpotter(issuances, domain) {
-	if (!Array.isArray(issuances)) throw new Error('Cert Spotter returned an unexpected response.');
+	if (!Array.isArray(issuances))
+		throw new Error(t('domain.subdomains.unexpected', { source: 'Cert Spotter' }));
 	return cleanNames(
 		issuances.flatMap((issuance) => issuance.dns_names ?? []),
 		domain
@@ -71,7 +74,7 @@ export async function findSubdomains(domain, options = {}) {
 		return { names: parseCrtSh(entries, domain), source: 'crt.sh', partial: false, fallbackReason };
 	} catch (error) {
 		if (options.signal?.aborted) throw error;
-		fallbackReason = error instanceof Error ? error.message : 'crt.sh failed.';
+		fallbackReason = error instanceof Error ? error.message : t('domain.subdomains.crtFailed');
 	}
 
 	const issuances = await fetchJson(

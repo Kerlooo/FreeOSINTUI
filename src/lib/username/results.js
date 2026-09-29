@@ -1,9 +1,34 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
+
 /** Result statuses returned by /api/username/check, in display order. */
-export const STATUSES = [
-	{ id: 'found', label: 'Found' },
-	{ id: 'unknown', label: 'Unknown' },
-	{ id: 'not_found', label: 'Not found' },
-	{ id: 'error', label: 'Errors' }
+export const STATUSES = ['found', 'unknown', 'not_found', 'error'].map((id) => ({
+	id,
+	get label() {
+		return t(`username.status.${id}`);
+	}
+}));
+
+/** WhatsMyName categories with a translated label (`username.category.<id>`). */
+const CATEGORIES = [
+	'archived',
+	'art',
+	'blog',
+	'business',
+	'coding',
+	'dating',
+	'finance',
+	'gaming',
+	'health',
+	'hobby',
+	'images',
+	'misc',
+	'music',
+	'news',
+	'political',
+	'shopping',
+	'social',
+	'tech',
+	'video'
 ];
 
 export const NSFW_CATEGORY = 'xx NSFW xx';
@@ -14,6 +39,7 @@ export const NSFW_CATEGORY = 'xx NSFW xx';
  */
 export function categoryLabel(category) {
 	if (category === NSFW_CATEGORY) return 'NSFW';
+	if (CATEGORIES.includes(category)) return t(`username.category.${category}`);
 	return category.charAt(0).toUpperCase() + category.slice(1);
 }
 

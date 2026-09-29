@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ file: File | null, onselect: (file: File) => void }} */
 	let { file, onselect } = $props();
 
@@ -45,10 +47,10 @@
 	<input class="visually-hidden" type="file" onchange={handleChange} />
 	{#if file}
 		<span class="name">{file.name}</span>
-		<span class="meta">{formatSize(file.size)} — click or drop to choose another file</span>
+		<span class="meta">{t('common.fileDropChosenHint', { size: formatSize(file.size) })}</span>
 	{:else}
-		<span class="name">Drop a file here or click to choose one</span>
-		<span class="meta">Any type and size. The file is read locally and never uploaded.</span>
+		<span class="name">{t('common.fileDropEmpty')}</span>
+		<span class="meta">{t('common.fileDropEmptyHint')}</span>
 	{/if}
 </label>
 

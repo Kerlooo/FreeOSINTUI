@@ -1,4 +1,6 @@
 <script>
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
 	/** @type {{ value: string, id: string, label: string }} */
 	let { value = $bindable(), id, label } = $props();
 
@@ -11,7 +13,7 @@
 		{id}
 		type={visible ? 'text' : 'password'}
 		bind:value
-		placeholder="Password to check"
+		placeholder={t('leaks.password.placeholder')}
 		autocomplete="off"
 		autocapitalize="off"
 		spellcheck="false"
@@ -22,7 +24,7 @@
 		aria-pressed={visible}
 		aria-controls={id}
 	>
-		{visible ? 'hide' : 'show'}
+		{visible ? t('leaks.password.hide') : t('leaks.password.show')}
 	</button>
 </div>
 

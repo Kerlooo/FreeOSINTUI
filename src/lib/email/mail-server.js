@@ -1,3 +1,4 @@
+import { t } from '$lib/i18n/i18n.svelte.js';
 import { resolveDns } from '$lib/dns/doh.js';
 import { lookupEmailAuth } from '$lib/dns/email-auth.js';
 
@@ -24,28 +25,32 @@ export function parseMx(answers) {
  */
 
 /**
- * Plain-English verdict on whether the domain can receive mail.
+ * Builds a verdict whose text is translated when read, so it follows the current language.
+ * @param {Verdict['level']} level
+ * @param {string} key message key under `email.verdict.`
+ * @param {Record<string, unknown> | (() => Record<string, unknown>)} [params]
+ * @returns {Verdict}
+ */
+function verdict(level, key, params) {
+	return {
+		level,
+		get text() {
+			return t(`email.verdict.${key}`, typeof params === 'function' ? params() : params);
+		}
+	};
+}
+
+/**
+ * Verdict on whether the domain can receive mail.
  * @param {{ host: string }[]} mx
  * @param {boolean} hasAddress whether the domain has an A/AAAA record (implicit MX fallback)
  * @returns {Verdict}
  */
 export function mxVerdict(mx, hasAddress) {
-	if (mx.length === 1 && mx[0].host === '')
-		return {
-			level: 'bad',
-			text: 'Null MX: the domain explicitly declares it does not accept mail.'
-		};
-	if (mx.length)
-		return {
-			level: 'good',
-			text: `The domain can receive mail (${mx.length} mail server${mx.length > 1 ? 's' : ''}).`
-		};
-	if (hasAddress)
-		return {
-			level: 'warn',
-			text: 'No MX record: mail may still be delivered to the domain’s own address (A/AAAA fallback), but this is unusual.'
-		};
-	return { level: 'bad', text: 'No MX and no address record: this domain cannot receive mail.' };
+	if (mx.length === 1 && mx[0].host === '') return verdict('bad', 'mx.null');
+	if (mx.length) return verdict('good', 'mx.good', { count: mx.length });
+	if (hasAddress) return verdict('warn', 'mx.fallback');
+	return verdict('bad', 'mx.none');
 }
 
 /**
@@ -53,40 +58,20 @@ export function mxVerdict(mx, hasAddress) {
  * @returns {Verdict}
  */
 export function spfVerdict(spf) {
-	if (!spf)
-		return {
-			level: 'bad',
-			text: 'No SPF record: any server can send mail claiming to be from this domain.'
-		};
+	if (!spf) return verdict('bad', 'spf.none');
 	switch (spf.allPolicy) {
 		case 'fail':
-			return {
-				level: 'good',
-				text: 'Strict (-all): mail from unlisted servers should be rejected.'
-			};
+			return verdict('good', 'spf.fail');
 		case 'softfail':
-			return {
-				level: 'warn',
-				text: 'Soft (~all): mail from unlisted servers is marked suspicious but usually accepted.'
-			};
+			return verdict('warn', 'spf.softfail');
 		case 'neutral':
-			return { level: 'bad', text: 'Neutral (?all): the record does not say anything useful.' };
+			return verdict('bad', 'spf.neutral');
 		case 'pass':
-			return {
-				level: 'bad',
-				text: 'Permissive (+all): any server is allowed to send for this domain.'
-			};
+			return verdict('bad', 'spf.pass');
 		default: {
 			const redirect = spf.mechanisms?.find((m) => m.name === 'redirect')?.value;
-			if (redirect)
-				return {
-					level: 'warn',
-					text: `Delegated with redirect to ${redirect}: the actual policy is defined there.`
-				};
-			return {
-				level: 'warn',
-				text: 'No "all" rule: the policy for unlisted servers is unclear (treated as neutral).'
-			};
+			if (redirect) return verdict('warn', 'spf.redirect', { target: redirect });
+			return verdict('warn', 'spf.noAll');
 		}
 	}
 }
@@ -96,24 +81,20 @@ export function spfVerdict(spf) {
  * @returns {Verdict}
  */
 export function dmarcVerdict(dmarc) {
-	if (!dmarc)
-		return {
-			level: 'bad',
-			text: 'No DMARC record: receivers get no instructions for spoofed mail from this domain.'
-		};
-	const partial = dmarc.percent < 100 ? ` (applied to ${dmarc.percent}% of mail)` : '';
+	if (!dmarc) return verdict('bad', 'dmarc.none');
+	const { percent } = dmarc;
+	const partial = () => ({
+		partial: percent < 100 ? t('email.verdict.dmarc.partial', { percent }) : ''
+	});
 	switch (dmarc.policy) {
 		case 'reject':
-			return { level: 'good', text: `Reject: spoofed mail should be refused${partial}.` };
+			return verdict('good', 'dmarc.reject', partial);
 		case 'quarantine':
-			return { level: 'warn', text: `Quarantine: spoofed mail should go to spam${partial}.` };
+			return verdict('warn', 'dmarc.quarantine', partial);
 		case 'none':
-			return {
-				level: 'warn',
-				text: 'Monitoring only (p=none): spoofed mail is reported but still delivered.'
-			};
+			return verdict('warn', 'dmarc.monitor');
 		default:
-			return { level: 'bad', text: 'The DMARC record has no valid policy (p=).' };
+			return verdict('bad', 'dmarc.invalid');
 	}
 }
 

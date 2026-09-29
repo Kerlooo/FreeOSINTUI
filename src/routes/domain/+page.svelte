@@ -14,6 +14,7 @@
 	import { lookupWayback } from '$lib/domain/archive.js';
 	import { lookupEmailAuth } from '$lib/dns/email-auth.js';
 	import { lookupRdap } from '$lib/rdap.js';
+	import { t } from '$lib/i18n/i18n.svelte.js';
 
 	/** @typedef {{ status: 'idle' | 'loading' | 'done' | 'error', data: any, error: string | null }} Section */
 
@@ -80,7 +81,7 @@
 					sections[key] = {
 						status: 'error',
 						data: null,
-						error: error instanceof Error ? error.message : 'Lookup failed.'
+						error: error instanceof Error ? error.message : t('domain.lookupFailed')
 					};
 				});
 		}
@@ -88,25 +89,19 @@
 </script>
 
 <svelte:head>
-	<title>Domain Analyzer — FreeOSINT-UI</title>
-	<meta
-		name="description"
-		content="Analyze a domain: DNS records, SPF and DMARC email security, RDAP registration data, subdomains from certificate transparency and Wayback Machine snapshots."
-	/>
+	<title>{t('tools.domain.name')} — FreeOSINT-UI</title>
+	<meta name="description" content={t('domain.metaDescription')} />
 </svelte:head>
 
-<ToolHeader
-	title="Domain Analyzer"
-	description="Enter a domain to get its DNS records, email security (SPF/DMARC), registration data, subdomains from certificate transparency logs and its history in the Wayback Machine. Every lookup runs in your browser against public sources."
-/>
+<ToolHeader title={t('tools.domain.name')} description={t('domain.intro')} />
 
 <section class="panel" aria-labelledby="domain-heading">
-	<h2 id="domain-heading">Domain</h2>
+	<h2 id="domain-heading">{t('domain.domain')}</h2>
 	<LookupForm
 		bind:value={input}
-		label="Domain"
-		placeholder="example.com or https://www.example.com/page"
-		buttonLabel="Analyze"
+		label={t('domain.domain')}
+		placeholder={t('domain.placeholder')}
+		buttonLabel={t('domain.analyze')}
 		{busy}
 		onsubmit={analyze}
 	/>
@@ -114,14 +109,13 @@
 		{#if inputError}
 			{inputError}
 		{:else if domain}
-			Results for <strong>{domain}</strong>
+			{t('domain.resultsFor')} <strong>{domain}</strong>
 		{:else}
-			Scheme, path and "www." are stripped automatically.
+			{t('domain.inputHint')}
 		{/if}
 	</p>
 	<p class="note">
-		Passive lookups only: the domain's servers are never contacted directly. Queries go to Google
-		DNS, rdap.org, crt.sh / Cert Spotter and archive.org. Data may be cached or out of date.
+		{t('domain.passiveNote')}
 	</p>
 </section>
 
@@ -129,20 +123,20 @@
 	<div class="sections">
 		<DomainSection
 			id="domain-dns"
-			title="DNS records"
-			subtitle="via Google DNS-over-HTTPS"
+			title={t('domain.dns.title')}
+			subtitle={t('domain.dns.subtitle')}
 			section={sections.dns}
-			loadingText="Resolving A, AAAA, MX, NS, TXT, CAA and SOA…"
+			loadingText={t('domain.dns.loading')}
 		>
 			<DomainDnsRecords groups={sections.dns.data} />
 		</DomainSection>
 
 		<DomainSection
 			id="domain-email"
-			title="Email security"
-			subtitle="SPF and DMARC"
+			title={t('domain.email.title')}
+			subtitle={t('domain.email.subtitle')}
 			section={sections.email}
-			loadingText="Checking SPF and DMARC records…"
+			loadingText={t('domain.email.loading')}
 		>
 			<DomainEmailSecurity
 				auth={sections.email.data.auth}
@@ -152,30 +146,30 @@
 
 		<DomainSection
 			id="domain-rdap"
-			title="Registration"
-			subtitle="via RDAP (rdap.org)"
+			title={t('domain.rdap.title')}
+			subtitle={t('domain.rdap.subtitle')}
 			section={sections.rdap}
-			loadingText="Querying the registry…"
+			loadingText={t('domain.rdap.loading')}
 		>
 			<DomainRegistration rdap={sections.rdap.data} {domain} />
 		</DomainSection>
 
 		<DomainSection
 			id="domain-subdomains"
-			title="Subdomains"
-			subtitle="certificate transparency"
+			title={t('domain.subdomains.title')}
+			subtitle={t('domain.subdomains.subtitle')}
 			section={sections.subdomains}
-			loadingText="Searching certificate transparency logs (crt.sh can take up to 30 seconds)…"
+			loadingText={t('domain.subdomains.loading')}
 		>
 			<DomainSubdomains result={sections.subdomains.data} />
 		</DomainSection>
 
 		<DomainSection
 			id="domain-archive"
-			title="Web archive"
-			subtitle="Wayback Machine"
+			title={t('domain.archive.title')}
+			subtitle={t('domain.archive.subtitle')}
 			section={sections.archive}
-			loadingText="Looking for archived snapshots…"
+			loadingText={t('domain.archive.loading')}
 		>
 			<DomainArchive result={sections.archive.data} />
 		</DomainSection>
