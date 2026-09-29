@@ -167,7 +167,7 @@ FreeOSINT-UI only queries public sources, but the results can still concern real
 FreeOSINT-UI is released under the **[Apache License 2.0](LICENSE) with the [Commons Clause](https://commonsclause.com/)**.
 
 - ✅ **Use it freely**, for personal or business purposes, inside your company included.
-- ✅ **Modify and share it**, as long as you keep the [LICENSE](LICENSE) and [NOTICE](NOTICE) files, which credit the original author.
+- ✅ **Modify and share it**, as long as you keep the [LICENSE](LICENSE) and [NOTICE](../NOTICE) files, which credit the original author.
 - ❌ **Don't sell it.** You may not offer FreeOSINT-UI, or a product or service whose value comes substantially from it, for a fee (paid hosting and paid support included).
 
 Because of the no-selling condition this is a _source-available_ license, not an OSI-approved open-source one. The bundled WhatsMyName data (`backend/data/wmn-data.json`) keeps its own CC BY-SA 4.0 license.

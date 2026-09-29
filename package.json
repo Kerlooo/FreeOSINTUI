@@ -2,7 +2,7 @@
 	"name": "freeosintui",
 	"private": true,
 	"version": "0.0.1",
-	"license": "SEE LICENSE IN LICENSE",
+	"license": "SEE LICENSE IN .github/LICENSE",
 	"author": "kerlo (https://github.com/Kerlooo)",
 	"type": "module",
 	"scripts": {
