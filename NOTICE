@@ -1,0 +1,20 @@
+FreeOSINT-UI
+Copyright 2026 kerlo
+
+Created by kerlo
+  GitHub:   https://github.com/Kerlooo
+  LinkedIn: https://www.linkedin.com/in/carlo-scaglione/
+
+This product is licensed under the Apache License, Version 2.0, with the
+"Commons Clause" License Condition v1.0 (see LICENSE): it may be used, also
+commercially, but it may not be sold.
+
+Under section 4(d) of the Apache License, any redistribution or derivative work
+must include a readable copy of the attribution notices in this NOTICE file.
+
+Third-party data
+----------------
+backend/data/wmn-data.json comes from the WhatsMyName project
+(https://github.com/WebBreacher/WhatsMyName) and is licensed under the
+Creative Commons Attribution-ShareAlike 4.0 International license (CC BY-SA 4.0),
+not under the license of this project.

@@ -1,0 +1,89 @@
+:root {
+	--color-text: #00ff41;
+	--color-text-dim: #00b32d;
+	--color-text-muted: #0a7a26;
+	--color-bg: #000;
+	--color-surface: #041a0a;
+	--color-border: #0d3d1a;
+	--color-danger: #ff3b3b;
+
+	--font-mono: ui-monospace, 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+	--content-width: 72rem;
+	--radius: 4px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	color-scheme: dark;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	background: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-mono);
+	line-height: 1.6;
+}
+
+a {
+	color: var(--color-text);
+}
+
+h1,
+h2,
+h3 {
+	line-height: 1.2;
+	text-shadow: 0 0 8px var(--color-text-muted);
+}
+
+::selection {
+	background: var(--color-text);
+	color: var(--color-bg);
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-text);
+	outline-offset: 2px;
+}
+
+button,
+input,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+input[type='text'],
+textarea {
+	width: 100%;
+	padding: 0.75rem;
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	color: var(--color-text);
+}
+
+input[type='text']:focus,
+textarea:focus {
+	border-color: var(--color-text);
+	outline: none;
+}
+
+::placeholder {
+	color: var(--color-text-muted);
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
