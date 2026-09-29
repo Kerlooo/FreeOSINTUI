@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { toolsByCategory } from '$lib/tools.js';
+	import NavbarClock from './NavbarClock.svelte';
 
 	const groups = toolsByCategory();
 
@@ -29,6 +30,9 @@
 			<span aria-hidden="true">&gt;_</span> FreeOSINT-UI
 		</a>
 		<ul class="top">
+			<li>
+				<NavbarClock />
+			</li>
 			<li>
 				<a href={resolve('/')} aria-current={page.url.pathname === '/' ? 'page' : undefined}>Home</a
 				>
