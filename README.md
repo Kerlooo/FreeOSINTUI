@@ -82,11 +82,20 @@ uv run uvicorn app.main:app --reload --port 8000
 
 In development, Vite forwards `/api` requests to `http://127.0.0.1:8000`, so there is nothing else to configure. Interactive API docs are at http://localhost:8000/api/docs.
 
+### Frontend and backend together
+
+```sh
+npm run dev:all
+```
+
+Starts both servers in one terminal, with `[web]` / `[api]` prefixed logs. Ctrl+C stops both, and if one of them crashes the other is stopped too.
+
 ### Useful commands
 
 | Command                                             | What it does                                  |
 | --------------------------------------------------- | --------------------------------------------- |
 | `npm run dev`                                       | Start the development server                  |
+| `npm run dev:all`                                   | Start frontend and backend together           |
 | `npm run build`                                     | Build the static site into `build/`           |
 | `npm run preview`                                   | Serve the production build locally            |
 | `npm test`                                          | Run the frontend unit tests (Vitest)          |
