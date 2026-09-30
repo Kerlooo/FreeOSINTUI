@@ -107,8 +107,10 @@
 
 	.top {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 1.25rem;
+		gap: 0.25rem 1.25rem;
+		min-width: 0;
 	}
 
 	a,
@@ -152,8 +154,9 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 		gap: 1.25rem 2rem;
-		width: min(44rem, calc(100vw - 2rem));
+		width: min(44rem, calc(100% - 2rem));
 		max-height: calc(100vh - 5rem);
+		max-height: calc(100dvh - 5rem);
 		overflow-y: auto;
 		padding: 1.25rem;
 		background: var(--color-bg);
@@ -173,5 +176,47 @@
 
 	.group li + li {
 		margin-top: 0.25rem;
+	}
+
+	/* Touch screens: ~44px tap targets. */
+	@media (pointer: coarse) {
+		a,
+		summary {
+			padding-block: 0.6rem;
+		}
+
+		a {
+			display: inline-block;
+		}
+
+		.menu a {
+			display: block;
+		}
+
+		.group li + li {
+			margin-top: 0;
+		}
+	}
+
+	@media (max-width: 40rem) {
+		/* The wrapped navbar is tall: not sticky, so the open menu can be scrolled with the page. */
+		header {
+			position: relative;
+		}
+
+		nav {
+			gap: 0.25rem 1rem;
+			padding: 0.5rem 1rem;
+		}
+
+		.top {
+			gap: 0.25rem 0.75rem;
+		}
+
+		.menu {
+			gap: 1rem;
+			max-height: none;
+			padding: 1rem;
+		}
 	}
 </style>

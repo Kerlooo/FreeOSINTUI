@@ -14,6 +14,7 @@
 
 <style>
 	select {
+		max-width: 100%;
 		padding: 0.15rem 0.4rem;
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
@@ -28,6 +29,12 @@
 	select:focus {
 		border-color: var(--color-text);
 		color: var(--color-text);
-		outline: none;
+	}
+
+	/* Touch screens: ~44px tap target. */
+	@media (pointer: coarse) {
+		select {
+			min-height: 2.75rem;
+		}
 	}
 </style>
