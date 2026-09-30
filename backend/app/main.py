@@ -10,6 +10,7 @@ from app.http import create_client
 from app.routers import telegram, username
 from app.routers import url as url_router
 from app.routers import footprint
+from app.routers import reputation
 
 
 @asynccontextmanager
@@ -40,3 +41,4 @@ app.include_router(username.router)
 app.include_router(telegram.router)
 app.include_router(url_router.router)
 app.include_router(footprint.router)
+app.include_router(reputation.router)

@@ -30,6 +30,7 @@ class Settings:
     telegram_rate_limit: int = 30
     url_rate_limit: int = 30
     footprint_rate_limit: int = 20
+    reputation_rate_limit: int = 30
     # Optional abuse.ch Auth-Key (URLhaus); features using it report "not configured" when empty.
     abusech_auth_key: str = ""
 
@@ -42,6 +43,7 @@ def load_settings() -> Settings:
         telegram_rate_limit=_int_env("TELEGRAM_RATE_LIMIT", 30),
         url_rate_limit=_int_env("URL_RATE_LIMIT", 30),
         footprint_rate_limit=_int_env("FOOTPRINT_RATE_LIMIT", 20),
+        reputation_rate_limit=_int_env("REPUTATION_RATE_LIMIT", 30),
         abusech_auth_key=os.environ.get("ABUSECH_AUTH_KEY", "").strip(),
     )
 

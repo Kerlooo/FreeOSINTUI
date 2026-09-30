@@ -65,7 +65,10 @@ export default {
 			'Decode the creation date hidden in X, Discord, Instagram, TikTok, Mastodon and LinkedIn IDs, UUIDs, ULIDs and ObjectIds, read Unix, FILETIME, Chrome, Cocoa and Excel timestamps, or convert a date into all of them.',
 		'mac.name': 'MAC Address Vendor Lookup',
 		'mac.description':
-			'Find the vendor of a MAC address from the IEEE registries, convert it to every notation and EUI-64, and spot multicast, locally administered and randomized private addresses. Works offline.'
+			'Find the vendor of a MAC address from the IEEE registries, convert it to every notation and EUI-64, and spot multicast, locally administered and randomized private addresses. Works offline.',
+		'reputation.name': 'Reputation Checker',
+		'reputation.description':
+			'Check an IP, domain, URL or email against public blocklists and threat feeds: OTX, StopForumSpam, Tor exits, Spamhaus DROP, URLhaus, ThreatFox. A listing is a lead, not proof. Partly requires the Python backend.'
 	},
 	it: {
 		'category.search': 'Ricerca',
@@ -132,7 +135,10 @@ export default {
 			'Decodifica la data di creazione nascosta negli ID di X, Discord, Instagram, TikTok, Mastodon e LinkedIn, negli UUID, ULID e ObjectId, leggi timestamp Unix, FILETIME, Chrome, Cocoa ed Excel o converti una data in tutti i formati.',
 		'mac.name': 'Produttore Indirizzo MAC',
 		'mac.description':
-			'Trova il produttore di un indirizzo MAC dai registri IEEE, convertilo in tutte le notazioni e in EUI-64 e riconosci gli indirizzi multicast, amministrati localmente e privati casuali. Funziona offline.'
+			'Trova il produttore di un indirizzo MAC dai registri IEEE, convertilo in tutte le notazioni e in EUI-64 e riconosci gli indirizzi multicast, amministrati localmente e privati casuali. Funziona offline.',
+		'reputation.name': 'Verifica Reputazione',
+		'reputation.description':
+			'Controlla IP, dominio, URL o email su blocklist pubbliche e feed di minacce: OTX, StopForumSpam, uscite Tor, Spamhaus DROP, URLhaus, ThreatFox. Una segnalazione è una pista, non una prova. In parte richiede il backend Python.'
 	},
 	fr: {
 		'category.search': 'Recherche',
@@ -199,6 +205,9 @@ export default {
 			'Décodez la date de création cachée dans les identifiants X, Discord, Instagram, TikTok, Mastodon et LinkedIn, les UUID, ULID et ObjectId, lisez les horodatages Unix, FILETIME, Chrome, Cocoa et Excel ou convertissez une date.',
 		'mac.name': "Fabricant d'Adresse MAC",
 		'mac.description':
-			"Trouvez le fabricant d'une adresse MAC dans les registres IEEE, convertissez-la dans toutes les notations et en EUI-64, et repérez les adresses multicast, locales et privées aléatoires. Fonctionne hors ligne."
+			"Trouvez le fabricant d'une adresse MAC dans les registres IEEE, convertissez-la dans toutes les notations et en EUI-64, et repérez les adresses multicast, locales et privées aléatoires. Fonctionne hors ligne.",
+		'reputation.name': 'Vérification de Réputation',
+		'reputation.description':
+			'Vérifiez une IP, un domaine, une URL ou un e-mail sur des listes de blocage et flux de menaces publics : OTX, StopForumSpam, sorties Tor, Spamhaus DROP, URLhaus, ThreatFox. Un signalement est une piste, pas une preuve. Nécessite en partie le backend Python.'
 	}
 };

@@ -1,6 +1,6 @@
 """Shared outbound HTTP client with timeouts and a response size cap."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import httpx
 
@@ -18,6 +18,7 @@ class FetchResult:
     status: int
     body: str
     url: str
+    headers: dict[str, str] = field(default_factory=dict)  # lowercase names
 
 
 def create_client(transport: httpx.AsyncBaseTransport | None = None) -> httpx.AsyncClient:
@@ -64,4 +65,9 @@ async def fetch_text(
         body = raw.decode(encoding, errors="replace")
     except LookupError:
         body = raw.decode("utf-8", errors="replace")
-    return FetchResult(status=response.status_code, body=body, url=str(response.url))
+    return FetchResult(
+        status=response.status_code,
+        body=body,
+        url=str(response.url),
+        headers={k.lower(): v for k, v in response.headers.items()},
+    )
