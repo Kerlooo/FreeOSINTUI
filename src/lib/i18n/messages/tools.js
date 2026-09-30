@@ -42,7 +42,15 @@ export default {
 			'Investigate a GitHub user: profile, repositories and top languages, organizations, emails leaked in public commits, SSH and GPG keys.',
 		'metadata.name': 'Metadata Extractor',
 		'metadata.description':
-			'Read hidden metadata from images (EXIF, GPS with map links, XMP, IPTC), PDFs and Office documents: camera, location, author, software and dates. The file never leaves your browser.'
+			'Read hidden metadata from images (EXIF, GPS with map links, XMP, IPTC), PDFs and Office documents: camera, location, author, software and dates. The file never leaves your browser.',
+		'category.threat': 'Threat intel & phishing',
+		'category.utilities': 'Decoders & utilities',
+		'lookalike.name': 'Lookalike Domain Finder',
+		'lookalike.description':
+			'Generate typos, homoglyphs, IDN homographs, bitsquatting and TLD swaps of a domain and check with DNS which ones are registered and have mail servers (phishing risk).',
+		'favicon.name': 'Favicon Hash',
+		'favicon.description':
+			'Compute the Shodan favicon hash (mmh3), MD5 and SHA-256 of a favicon file locally and search Shodan, FOFA, ZoomEye, Censys and urlscan.io for servers using the same icon.'
 	},
 	it: {
 		'category.search': 'Ricerca',
@@ -86,7 +94,15 @@ export default {
 			'Indaga su un utente GitHub: profilo, repository e linguaggi principali, organizzazioni, email esposte nei commit pubblici, chiavi SSH e GPG.',
 		'metadata.name': 'Estrattore di Metadati',
 		'metadata.description':
-			'Leggi i metadati nascosti di immagini (EXIF, GPS con link alla mappa, XMP, IPTC), PDF e documenti Office: fotocamera, posizione, autore, software e date. Il file non lascia mai il tuo browser.'
+			'Leggi i metadati nascosti di immagini (EXIF, GPS con link alla mappa, XMP, IPTC), PDF e documenti Office: fotocamera, posizione, autore, software e date. Il file non lascia mai il tuo browser.',
+		'category.threat': 'Threat intel e phishing',
+		'category.utilities': 'Decoder e utility',
+		'lookalike.name': 'Ricerca Domini Simili',
+		'lookalike.description':
+			'Genera errori di battitura, omoglifi, omografi IDN, bitsquatting e cambi di TLD di un dominio e verifica via DNS quali sono registrati e hanno server di posta (rischio phishing).',
+		'favicon.name': 'Hash Favicon',
+		'favicon.description':
+			'Calcola in locale l’hash favicon di Shodan (mmh3), MD5 e SHA-256 di un file favicon e cerca su Shodan, FOFA, ZoomEye, Censys e urlscan.io i server che usano la stessa icona.'
 	},
 	fr: {
 		'category.search': 'Recherche',
@@ -130,6 +146,14 @@ export default {
 			'Enquêtez sur un utilisateur GitHub : profil, dépôts et langages principaux, organisations, e-mails exposés dans les commits publics, clés SSH et GPG.',
 		'metadata.name': 'Extracteur de Métadonnées',
 		'metadata.description':
-			'Lisez les métadonnées cachées des images (EXIF, GPS avec liens vers la carte, XMP, IPTC), des PDF et des documents Office : appareil photo, lieu, auteur, logiciel et dates. Le fichier ne quitte jamais votre navigateur.'
+			'Lisez les métadonnées cachées des images (EXIF, GPS avec liens vers la carte, XMP, IPTC), des PDF et des documents Office : appareil photo, lieu, auteur, logiciel et dates. Le fichier ne quitte jamais votre navigateur.',
+		'category.threat': 'Threat intel et phishing',
+		'category.utilities': 'Décodeurs et utilitaires',
+		'lookalike.name': 'Recherche de Domaines Similaires',
+		'lookalike.description':
+			'Générez fautes de frappe, homoglyphes, homographes IDN, bitsquatting et changements de TLD d’un domaine et vérifiez par DNS lesquels sont enregistrés et ont des serveurs de messagerie (risque de phishing).',
+		'favicon.name': 'Hash de Favicon',
+		'favicon.description':
+			'Calculez localement le hash favicon de Shodan (mmh3), le MD5 et le SHA-256 d’un fichier favicon et cherchez sur Shodan, FOFA, ZoomEye, Censys et urlscan.io les serveurs utilisant la même icône.'
 	}
 };

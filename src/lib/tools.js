@@ -1,14 +1,21 @@
 import { t } from '$lib/i18n/i18n.svelte.js';
 
 /** Tool categories, in display order. Names and descriptions live in `i18n/messages/tools.js`. */
-export const CATEGORIES = ['search', 'people', 'network', 'breaches', 'files', 'blockchain'].map(
-	(id) => ({
-		id,
-		get label() {
-			return t(`tools.category.${id}`);
-		}
-	})
-);
+export const CATEGORIES = [
+	'search',
+	'people',
+	'network',
+	'threat',
+	'breaches',
+	'files',
+	'blockchain',
+	'utilities'
+].map((id) => ({
+	id,
+	get label() {
+		return t(`tools.category.${id}`);
+	}
+}));
 
 /**
  * Every tool available on the site. The home page and the navbar both read this list,
@@ -74,6 +81,16 @@ export const TOOLS = /** @type {{ id: string, route: string, category: string }[
 		id: 'metadata',
 		route: '/metadata',
 		category: 'files'
+	},
+	{
+		id: 'lookalike',
+		route: '/lookalike',
+		category: 'network'
+	},
+	{
+		id: 'favicon',
+		route: '/favicon',
+		category: 'network'
 	}
 ]).map((tool) => ({
 	...tool,
