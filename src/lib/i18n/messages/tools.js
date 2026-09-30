@@ -59,7 +59,13 @@ export default {
 			"Map a site's archived URLs from Common Crawl and the Wayback Machine without contacting it: subdomains, documents, backups, config files, admin paths and parameters. The Wayback part requires the Python backend.",
 		'url.name': 'URL Analyzer',
 		'url.description':
-			'Break down a suspicious link without opening it: look-alike hosts, user@host and numeric-IP tricks, tracking parameters, hidden redirects, short link expansion, urlscan.io and URLhaus. Requires the Python backend.'
+			'Break down a suspicious link without opening it: look-alike hosts, user@host and numeric-IP tricks, tracking parameters, hidden redirects, short link expansion, urlscan.io and URLhaus. Requires the Python backend.',
+		'timestamp.name': 'ID and Timestamp Decoder',
+		'timestamp.description':
+			'Decode the creation date hidden in X, Discord, Instagram, TikTok, Mastodon and LinkedIn IDs, UUIDs, ULIDs and ObjectIds, read Unix, FILETIME, Chrome, Cocoa and Excel timestamps, or convert a date into all of them.',
+		'mac.name': 'MAC Address Vendor Lookup',
+		'mac.description':
+			'Find the vendor of a MAC address from the IEEE registries, convert it to every notation and EUI-64, and spot multicast, locally administered and randomized private addresses. Works offline.'
 	},
 	it: {
 		'category.search': 'Ricerca',
@@ -120,7 +126,13 @@ export default {
 			'Mappa gli URL archiviati di un sito da Common Crawl e Wayback Machine senza contattarlo: sottodomini, documenti, backup, file di configurazione, percorsi admin e parametri. La parte Wayback richiede il backend Python.',
 		'url.name': 'Analisi URL',
 		'url.description':
-			'Scomponi un link sospetto senza aprirlo: host somiglianti, trucchi user@host e IP numerici, parametri di tracciamento, redirect nascosti, espansione link brevi, urlscan.io e URLhaus. Richiede il backend Python.'
+			'Scomponi un link sospetto senza aprirlo: host somiglianti, trucchi user@host e IP numerici, parametri di tracciamento, redirect nascosti, espansione link brevi, urlscan.io e URLhaus. Richiede il backend Python.',
+		'timestamp.name': 'Decoder di ID e Timestamp',
+		'timestamp.description':
+			'Decodifica la data di creazione nascosta negli ID di X, Discord, Instagram, TikTok, Mastodon e LinkedIn, negli UUID, ULID e ObjectId, leggi timestamp Unix, FILETIME, Chrome, Cocoa ed Excel o converti una data in tutti i formati.',
+		'mac.name': 'Produttore Indirizzo MAC',
+		'mac.description':
+			'Trova il produttore di un indirizzo MAC dai registri IEEE, convertilo in tutte le notazioni e in EUI-64 e riconosci gli indirizzi multicast, amministrati localmente e privati casuali. Funziona offline.'
 	},
 	fr: {
 		'category.search': 'Recherche',
@@ -181,6 +193,12 @@ export default {
 			"Cartographiez les URL archivées d'un site via Common Crawl et la Wayback Machine sans le contacter : sous-domaines, documents, sauvegardes, fichiers de configuration, chemins admin et paramètres. La partie Wayback nécessite le backend Python.",
 		'url.name': "Analyse d'URL",
 		'url.description':
-			"Décortiquez un lien suspect sans l'ouvrir : hôtes sosies, astuces user@host et IP numériques, paramètres de suivi, redirections cachées, liens courts, urlscan.io et URLhaus. Nécessite le backend Python."
+			"Décortiquez un lien suspect sans l'ouvrir : hôtes sosies, astuces user@host et IP numériques, paramètres de suivi, redirections cachées, liens courts, urlscan.io et URLhaus. Nécessite le backend Python.",
+		'timestamp.name': "Décodeur d'Identifiants et d'Horodatages",
+		'timestamp.description':
+			'Décodez la date de création cachée dans les identifiants X, Discord, Instagram, TikTok, Mastodon et LinkedIn, les UUID, ULID et ObjectId, lisez les horodatages Unix, FILETIME, Chrome, Cocoa et Excel ou convertissez une date.',
+		'mac.name': "Fabricant d'Adresse MAC",
+		'mac.description':
+			"Trouvez le fabricant d'une adresse MAC dans les registres IEEE, convertissez-la dans toutes les notations et en EUI-64, et repérez les adresses multicast, locales et privées aléatoires. Fonctionne hors ligne."
 	}
 };

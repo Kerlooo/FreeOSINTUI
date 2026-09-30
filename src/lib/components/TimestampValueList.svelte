@@ -1,0 +1,55 @@
+<script>
+	import CopyButton from '$lib/components/CopyButton.svelte';
+	import { t } from '$lib/i18n/i18n.svelte.js';
+
+	/** @type {{ values: { id: string, value: string }[] }} */
+	let { values } = $props();
+</script>
+
+<ul>
+	{#each values as item (item.id)}
+		{@const label = t(`timestamp.format.${item.id}`)}
+		<li>
+			<span class="label">{label}</span>
+			<code>{item.value}</code>
+			<CopyButton value={item.value} label={t('timestamp.copyValue', { format: label })} />
+		</li>
+	{/each}
+</ul>
+
+<style>
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		display: grid;
+		grid-template-columns: minmax(10rem, 16rem) minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 0.25rem 1rem;
+		padding: 0.5rem 0.75rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.label {
+		color: var(--color-text-dim);
+		font-size: 0.875rem;
+	}
+
+	code {
+		font-family: var(--font-mono);
+		overflow-wrap: anywhere;
+	}
+
+	@media (max-width: 36rem) {
+		li {
+			grid-template-columns: minmax(0, 1fr) auto;
+		}
+
+		.label {
+			grid-column: 1 / -1;
+		}
+	}
+</style>
