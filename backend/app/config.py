@@ -28,6 +28,7 @@ class Settings:
     # Requests per minute per client IP, per tool.
     username_rate_limit: int = 1200
     telegram_rate_limit: int = 30
+    footprint_rate_limit: int = 20
 
 
 def load_settings() -> Settings:
@@ -36,6 +37,7 @@ def load_settings() -> Settings:
         allowed_origins=[o.strip() for o in origins.split(",") if o.strip()],
         username_rate_limit=_int_env("USERNAME_RATE_LIMIT", 1200),
         telegram_rate_limit=_int_env("TELEGRAM_RATE_LIMIT", 30),
+        footprint_rate_limit=_int_env("FOOTPRINT_RATE_LIMIT", 20),
     )
 
 

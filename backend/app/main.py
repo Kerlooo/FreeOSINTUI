@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.http import create_client
 from app.routers import telegram, username
+from app.routers import footprint
 
 
 @asynccontextmanager
@@ -36,3 +37,4 @@ async def health() -> dict:
 
 app.include_router(username.router)
 app.include_router(telegram.router)
+app.include_router(footprint.router)

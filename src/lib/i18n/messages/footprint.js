@@ -1,0 +1,282 @@
+// Passive Site Footprint (/footprint).
+export default {
+	en: {
+		metaDescription:
+			'Passive map of a website from web archives: archived URLs from Common Crawl and the Wayback Machine, subdomains, documents, backups, config files, admin paths and URL parameters. The site itself is never contacted.',
+		description:
+			'List every URL of a domain that web archives have seen, without ever contacting the site: Common Crawl and the Wayback Machine, merged and sorted into documents, backups, config files, scripts, admin paths and parameters.',
+		heading: 'Target domain',
+		inputLabel: 'Domain or URL',
+		placeholder: 'e.g. example.com or *.example.com',
+		analyze: 'Map',
+		'scope.label': 'Scope',
+		'scope.domain': 'Domain only',
+		'scope.subdomains': 'Domain + subdomains',
+		passiveTitle: 'Passive only:',
+		passive:
+			'the target site is never contacted. Only the Common Crawl index and the Wayback Machine are queried, and every link opens the archived copy, not the live site.',
+		pivots: 'Pivot:',
+		empty: 'No archived URLs found for this domain.',
+		'source.commoncrawl': 'Common Crawl',
+		'source.wayback': 'Wayback Machine',
+		'sourceShort.commoncrawl': 'CC',
+		'sourceShort.wayback': 'Wayback',
+		captures: { one: '{n} capture', other: '{n} captures' },
+		urls: { one: '{n} URL', other: '{n} URLs' },
+		limitReached: '(limit reached, results are partial)',
+		'cc.note':
+			'Latest {count} monthly crawls, queried one after the other from your browser. The index server is often slow or overloaded.',
+		'cc.loading': 'Querying crawls… {done}/{total} done.',
+		'wayback.note':
+			'First capture of each URL, through the FreeOSINT-UI backend (the Wayback CDX API cannot be called from the browser).',
+		'wayback.loading': 'Querying the Wayback Machine… this can take up to 30 seconds.',
+		'wayback.backendNeeded':
+			'The Wayback Machine section needs the FreeOSINT-UI Python backend; Common Crawl works without it. Start it with:',
+		'stats.title': 'Overview',
+		'stats.total': { one: 'unique archived URL', other: 'unique archived URLs' },
+		'stats.bySource': 'By source',
+		'stats.onlyCommoncrawl': 'Common Crawl only',
+		'stats.onlyWayback': 'Wayback only',
+		'stats.both': 'Both',
+		'stats.byStatus': 'HTTP status (latest capture)',
+		'stats.byMime': 'MIME type (latest capture)',
+		'stats.byYear': 'First seen, by year',
+		'stats.unknown': 'unknown',
+		'stats.other': 'other',
+		'stats.note':
+			'URLs are merged ignoring http/https and the port. Wayback returns only the first capture of each URL, so "first seen" is exact for Wayback and "last seen" mostly comes from Common Crawl.',
+		'group.all': 'All URLs',
+		'group.documents': 'Documents',
+		'group.archives': 'Archives and backups',
+		'group.config': 'Config and secret-looking files',
+		'group.scripts': 'Scripts',
+		'group.admin': 'Login, admin and API paths',
+		'group.params': 'URLs with parameters',
+		'groupHint.documents':
+			'PDF, Office, OpenDocument, CSV and text files. Open the archived copy, download it and look at its author, software and dates with the',
+		'groupHint.archives':
+			'Compressed archives, database dumps and backup copies (.bak, .old, .sql…). Often not archived in full: check the capture status.',
+		'groupHint.config':
+			'Files that may expose configuration or secrets (.env, .git/, wp-config, .ini, .yml, logs…). JSON and XML include harmless feeds and sitemaps.',
+		'groupHint.scripts':
+			'Server-side and client-side scripts (JavaScript, PHP, ASP, JSP…): old endpoints and JavaScript files can reveal hidden paths.',
+		'groupHint.admin': 'Paths with admin, login, dashboard, api, graphql and similar segments.',
+		'groupHint.params':
+			'URLs with a query string. Their parameter names are listed in the Parameters panel.',
+		'list.title': 'Archived URLs',
+		'list.hint':
+			'Each URL is shown as text to copy; the link opens the archived copy in the Wayback Machine (the closest capture if Wayback does not have that exact one).',
+		'list.typeLabel': 'Type',
+		'list.filterLabel': 'Filter',
+		'list.filterPlaceholder': 'e.g. .pdf, admin, 2019',
+		'list.shown': '{visible} of {total} URLs',
+		'list.copyAll': 'Copy all URLs of this list',
+		'list.export': 'export .txt',
+		'list.archived': 'archived ↗',
+		'list.copyUrl': 'Copy URL',
+		'list.seen': '{first} → {last}',
+		'list.empty': 'No URLs match.',
+		'list.pages': 'Pages',
+		'list.page': 'Page {page} of {pages}',
+		'list.previous': '← previous',
+		'list.next': 'next →',
+		'subdomains.title': 'Subdomains ({n})',
+		'subdomains.hint': 'Hosts found in archived URLs. Open one in the Domain Analyzer.',
+		'subdomains.empty':
+			'No subdomains in the archived URLs. Choose "Domain + subdomains" to search them.',
+		'subdomains.copyAll': 'Copy all subdomains',
+		'params.title': 'Parameters ({n})',
+		'params.hint': 'Unique query parameter names and how many URLs use each.',
+		'params.empty': 'No URLs with parameters.',
+		'params.copyAll': 'Copy all parameter names',
+		showAll: 'show all ({n})',
+		showLess: 'show less'
+	},
+	it: {
+		metaDescription:
+			'Mappa passiva di un sito dagli archivi web: URL archiviati da Common Crawl e Wayback Machine, sottodomini, documenti, backup, file di configurazione, percorsi di amministrazione e parametri URL. Il sito non viene mai contattato.',
+		description:
+			'Elenca tutti gli URL di un dominio visti dagli archivi web, senza mai contattare il sito: Common Crawl e Wayback Machine, uniti e divisi in documenti, backup, file di configurazione, script, percorsi di amministrazione e parametri.',
+		heading: 'Dominio da analizzare',
+		inputLabel: 'Dominio o URL',
+		placeholder: 'es. example.com o *.example.com',
+		analyze: 'Mappa',
+		'scope.label': 'Ambito',
+		'scope.domain': 'Solo dominio',
+		'scope.subdomains': 'Dominio + sottodomini',
+		passiveTitle: 'Solo passivo:',
+		passive:
+			"il sito non viene mai contattato. Vengono interrogati solo l'indice di Common Crawl e la Wayback Machine, e ogni link apre la copia archiviata, non il sito attuale.",
+		pivots: 'Continua con:',
+		empty: 'Nessun URL archiviato trovato per questo dominio.',
+		'source.commoncrawl': 'Common Crawl',
+		'source.wayback': 'Wayback Machine',
+		'sourceShort.commoncrawl': 'CC',
+		'sourceShort.wayback': 'Wayback',
+		captures: { one: '{n} acquisizione', other: '{n} acquisizioni' },
+		urls: { one: '{n} URL', other: '{n} URL' },
+		limitReached: '(limite raggiunto, risultati parziali)',
+		'cc.note':
+			"Ultime {count} scansioni mensili, interrogate una dopo l'altra dal tuo browser. Il server dell'indice è spesso lento o sovraccarico.",
+		'cc.loading': 'Interrogazione delle scansioni… {done}/{total} completate.',
+		'wayback.note':
+			'Prima acquisizione di ogni URL, tramite il backend di FreeOSINT-UI (la CDX API della Wayback Machine non si può chiamare dal browser).',
+		'wayback.loading': 'Interrogazione della Wayback Machine… può richiedere fino a 30 secondi.',
+		'wayback.backendNeeded':
+			'La sezione Wayback Machine richiede il backend Python di FreeOSINT-UI; Common Crawl funziona anche senza. Avvialo con:',
+		'stats.title': 'Panoramica',
+		'stats.total': { one: 'URL archiviato unico', other: 'URL archiviati unici' },
+		'stats.bySource': 'Per fonte',
+		'stats.onlyCommoncrawl': 'Solo Common Crawl',
+		'stats.onlyWayback': 'Solo Wayback',
+		'stats.both': 'Entrambe',
+		'stats.byStatus': 'Stato HTTP (ultima acquisizione)',
+		'stats.byMime': 'Tipo MIME (ultima acquisizione)',
+		'stats.byYear': 'Prima comparsa, per anno',
+		'stats.unknown': 'sconosciuto',
+		'stats.other': 'altro',
+		'stats.note':
+			'Gli URL vengono uniti ignorando http/https e la porta. Wayback restituisce solo la prima acquisizione di ogni URL, quindi la "prima comparsa" è esatta per Wayback e l\'"ultima comparsa" viene per lo più da Common Crawl.',
+		'group.all': 'Tutti gli URL',
+		'group.documents': 'Documenti',
+		'group.archives': 'Archivi e backup',
+		'group.config': 'Configurazioni e possibili segreti',
+		'group.scripts': 'Script',
+		'group.admin': 'Percorsi di login, amministrazione e API',
+		'group.params': 'URL con parametri',
+		'groupHint.documents':
+			'File PDF, Office, OpenDocument, CSV e di testo. Apri la copia archiviata, scaricala e controllane autore, software e date con il',
+		'groupHint.archives':
+			"Archivi compressi, dump di database e copie di backup (.bak, .old, .sql…). Spesso non sono archiviati per intero: controlla lo stato dell'acquisizione.",
+		'groupHint.config':
+			'File che possono esporre configurazioni o segreti (.env, .git/, wp-config, .ini, .yml, log…). JSON e XML includono anche feed e sitemap innocui.',
+		'groupHint.scripts':
+			'Script lato server e lato client (JavaScript, PHP, ASP, JSP…): vecchi endpoint e file JavaScript possono rivelare percorsi nascosti.',
+		'groupHint.admin': 'Percorsi con segmenti come admin, login, dashboard, api, graphql e simili.',
+		'groupHint.params':
+			'URL con una query string. I nomi dei loro parametri sono elencati nel pannello Parametri.',
+		'list.title': 'URL archiviati',
+		'list.hint':
+			"Ogni URL è mostrato come testo da copiare; il link apre la copia archiviata nella Wayback Machine (l'acquisizione più vicina se Wayback non ha proprio quella).",
+		'list.typeLabel': 'Tipo',
+		'list.filterLabel': 'Filtro',
+		'list.filterPlaceholder': 'es. .pdf, admin, 2019',
+		'list.shown': '{visible} di {total} URL',
+		'list.copyAll': 'Copia tutti gli URL di questo elenco',
+		'list.export': 'esporta .txt',
+		'list.archived': 'archiviato ↗',
+		'list.copyUrl': 'Copia URL',
+		'list.seen': '{first} → {last}',
+		'list.empty': 'Nessun URL corrisponde.',
+		'list.pages': 'Pagine',
+		'list.page': 'Pagina {page} di {pages}',
+		'list.previous': '← precedente',
+		'list.next': 'successiva →',
+		'subdomains.title': 'Sottodomini ({n})',
+		'subdomains.hint': 'Host trovati negli URL archiviati. Aprine uno nel Domain Analyzer.',
+		'subdomains.empty':
+			'Nessun sottodominio negli URL archiviati. Scegli "Dominio + sottodomini" per cercarli.',
+		'subdomains.copyAll': 'Copia tutti i sottodomini',
+		'params.title': 'Parametri ({n})',
+		'params.hint': 'Nomi unici dei parametri della query e quanti URL usano ciascuno.',
+		'params.empty': 'Nessun URL con parametri.',
+		'params.copyAll': 'Copia tutti i nomi dei parametri',
+		showAll: 'mostra tutti ({n})',
+		showLess: 'mostra meno'
+	},
+	fr: {
+		metaDescription:
+			"Carte passive d'un site à partir des archives web : URL archivées par Common Crawl et la Wayback Machine, sous-domaines, documents, sauvegardes, fichiers de configuration, chemins d'administration et paramètres d'URL. Le site n'est jamais contacté.",
+		description:
+			"Listez toutes les URL d'un domaine vues par les archives web, sans jamais contacter le site : Common Crawl et la Wayback Machine, fusionnées et classées en documents, sauvegardes, fichiers de configuration, scripts, chemins d'administration et paramètres.",
+		heading: 'Domaine cible',
+		inputLabel: 'Domaine ou URL',
+		placeholder: 'ex. example.com ou *.example.com',
+		analyze: 'Cartographier',
+		'scope.label': 'Portée',
+		'scope.domain': 'Domaine seul',
+		'scope.subdomains': 'Domaine + sous-domaines',
+		passiveTitle: 'Uniquement passif :',
+		passive:
+			"le site cible n'est jamais contacté. Seuls l'index de Common Crawl et la Wayback Machine sont interrogés, et chaque lien ouvre la copie archivée, pas le site en ligne.",
+		pivots: 'Poursuivre avec :',
+		empty: 'Aucune URL archivée trouvée pour ce domaine.',
+		'source.commoncrawl': 'Common Crawl',
+		'source.wayback': 'Wayback Machine',
+		'sourceShort.commoncrawl': 'CC',
+		'sourceShort.wayback': 'Wayback',
+		captures: { one: '{n} capture', other: '{n} captures' },
+		urls: { one: '{n} URL', other: '{n} URL' },
+		limitReached: '(limite atteinte, résultats partiels)',
+		'cc.note':
+			"{count} derniers crawls mensuels, interrogés l'un après l'autre depuis votre navigateur. Le serveur d'index est souvent lent ou surchargé.",
+		'cc.loading': 'Interrogation des crawls… {done}/{total} terminés.',
+		'wayback.note':
+			"Première capture de chaque URL, via le backend de FreeOSINT-UI (l'API CDX de la Wayback Machine ne peut pas être appelée depuis le navigateur).",
+		'wayback.loading':
+			"Interrogation de la Wayback Machine… cela peut prendre jusqu'à 30 secondes.",
+		'wayback.backendNeeded':
+			'La section Wayback Machine nécessite le backend Python de FreeOSINT-UI ; Common Crawl fonctionne sans. Démarrez-le avec :',
+		'stats.title': 'Vue d’ensemble',
+		'stats.total': { one: 'URL archivée unique', other: 'URL archivées uniques' },
+		'stats.bySource': 'Par source',
+		'stats.onlyCommoncrawl': 'Common Crawl seul',
+		'stats.onlyWayback': 'Wayback seul',
+		'stats.both': 'Les deux',
+		'stats.byStatus': 'Statut HTTP (dernière capture)',
+		'stats.byMime': 'Type MIME (dernière capture)',
+		'stats.byYear': 'Première apparition, par année',
+		'stats.unknown': 'inconnu',
+		'stats.other': 'autre',
+		'stats.note':
+			'Les URL sont fusionnées sans tenir compte de http/https ni du port. Wayback ne renvoie que la première capture de chaque URL : la « première apparition » est exacte pour Wayback et la « dernière apparition » vient surtout de Common Crawl.',
+		'group.all': 'Toutes les URL',
+		'group.documents': 'Documents',
+		'group.archives': 'Archives et sauvegardes',
+		'group.config': 'Configuration et secrets potentiels',
+		'group.scripts': 'Scripts',
+		'group.admin': "Chemins de connexion, d'administration et d'API",
+		'group.params': 'URL avec paramètres',
+		'groupHint.documents':
+			'Fichiers PDF, Office, OpenDocument, CSV et texte. Ouvrez la copie archivée, téléchargez-la et examinez son auteur, son logiciel et ses dates avec le',
+		'groupHint.archives':
+			'Archives compressées, dumps de bases de données et copies de sauvegarde (.bak, .old, .sql…). Souvent archivés partiellement : vérifiez le statut de la capture.',
+		'groupHint.config':
+			'Fichiers pouvant exposer une configuration ou des secrets (.env, .git/, wp-config, .ini, .yml, journaux…). JSON et XML incluent aussi des flux et sitemaps inoffensifs.',
+		'groupHint.scripts':
+			'Scripts côté serveur et côté client (JavaScript, PHP, ASP, JSP…) : les anciens endpoints et fichiers JavaScript peuvent révéler des chemins cachés.',
+		'groupHint.admin':
+			'Chemins contenant des segments comme admin, login, dashboard, api, graphql et similaires.',
+		'groupHint.params':
+			'URL avec une chaîne de requête. Les noms de leurs paramètres sont listés dans le panneau Paramètres.',
+		'list.title': 'URL archivées',
+		'list.hint':
+			"Chaque URL est affichée en texte à copier ; le lien ouvre la copie archivée dans la Wayback Machine (la capture la plus proche si Wayback n'a pas exactement celle-ci).",
+		'list.typeLabel': 'Type',
+		'list.filterLabel': 'Filtre',
+		'list.filterPlaceholder': 'ex. .pdf, admin, 2019',
+		'list.shown': '{visible} sur {total} URL',
+		'list.copyAll': 'Copier toutes les URL de cette liste',
+		'list.export': 'exporter .txt',
+		'list.archived': 'archive ↗',
+		'list.copyUrl': "Copier l'URL",
+		'list.seen': '{first} → {last}',
+		'list.empty': 'Aucune URL ne correspond.',
+		'list.pages': 'Pages',
+		'list.page': 'Page {page} sur {pages}',
+		'list.previous': '← précédente',
+		'list.next': 'suivante →',
+		'subdomains.title': 'Sous-domaines ({n})',
+		'subdomains.hint':
+			'Hôtes trouvés dans les URL archivées. Ouvrez-en un dans le Domain Analyzer.',
+		'subdomains.empty':
+			'Aucun sous-domaine dans les URL archivées. Choisissez « Domaine + sous-domaines » pour les rechercher.',
+		'subdomains.copyAll': 'Copier tous les sous-domaines',
+		'params.title': 'Paramètres ({n})',
+		'params.hint': "Noms uniques des paramètres de requête et nombre d'URL qui utilisent chacun.",
+		'params.empty': 'Aucune URL avec paramètres.',
+		'params.copyAll': 'Copier tous les noms de paramètres',
+		showAll: 'tout afficher ({n})',
+		showLess: 'afficher moins'
+	}
+};

@@ -53,7 +53,10 @@ export default {
 			'Compute the Shodan favicon hash (mmh3), MD5 and SHA-256 of a favicon file locally and search Shodan, FOFA, ZoomEye, Censys and urlscan.io for servers using the same icon.',
 		'headers.name': 'Email Header Analyzer',
 		'headers.description':
-			'Analyze raw email headers offline: Received path with hop delays, originating IP, SPF/DKIM/DMARC/ARC results and phishing triage findings such as Reply-To or Return-Path mismatches.'
+			'Analyze raw email headers offline: Received path with hop delays, originating IP, SPF/DKIM/DMARC/ARC results and phishing triage findings such as Reply-To or Return-Path mismatches.',
+		'footprint.name': 'Passive Site Footprint',
+		'footprint.description':
+			"Map a site's archived URLs from Common Crawl and the Wayback Machine without contacting it: subdomains, documents, backups, config files, admin paths and parameters. The Wayback part requires the Python backend."
 	},
 	it: {
 		'category.search': 'Ricerca',
@@ -108,7 +111,10 @@ export default {
 			'Calcola in locale l’hash favicon di Shodan (mmh3), MD5 e SHA-256 di un file favicon e cerca su Shodan, FOFA, ZoomEye, Censys e urlscan.io i server che usano la stessa icona.',
 		'headers.name': 'Analisi Header Email',
 		'headers.description':
-			"Analizza offline gli header grezzi di un'email: percorso Received con i ritardi tra i salti, IP di origine, risultati SPF/DKIM/DMARC/ARC e segnalazioni di triage del phishing, come Reply-To o Return-Path diversi."
+			"Analizza offline gli header grezzi di un'email: percorso Received con i ritardi tra i salti, IP di origine, risultati SPF/DKIM/DMARC/ARC e segnalazioni di triage del phishing, come Reply-To o Return-Path diversi.",
+		'footprint.name': 'Impronta Passiva del Sito',
+		'footprint.description':
+			'Mappa gli URL archiviati di un sito da Common Crawl e Wayback Machine senza contattarlo: sottodomini, documenti, backup, file di configurazione, percorsi admin e parametri. La parte Wayback richiede il backend Python.'
 	},
 	fr: {
 		'category.search': 'Recherche',
@@ -163,6 +169,9 @@ export default {
 			'Calculez localement le hash favicon de Shodan (mmh3), le MD5 et le SHA-256 d’un fichier favicon et cherchez sur Shodan, FOFA, ZoomEye, Censys et urlscan.io les serveurs utilisant la même icône.',
 		'headers.name': "Analyse d'En-têtes E-mail",
 		'headers.description':
-			"Analysez hors ligne les en-têtes bruts d'un e-mail : chemin Received avec les délais entre sauts, IP d'origine, résultats SPF/DKIM/DMARC/ARC et signalements de tri du phishing, comme un Reply-To ou un Return-Path différent."
+			"Analysez hors ligne les en-têtes bruts d'un e-mail : chemin Received avec les délais entre sauts, IP d'origine, résultats SPF/DKIM/DMARC/ARC et signalements de tri du phishing, comme un Reply-To ou un Return-Path différent.",
+		'footprint.name': 'Empreinte Passive du Site',
+		'footprint.description':
+			"Cartographiez les URL archivées d'un site via Common Crawl et la Wayback Machine sans le contacter : sous-domaines, documents, sauvegardes, fichiers de configuration, chemins admin et paramètres. La partie Wayback nécessite le backend Python."
 	}
 };
