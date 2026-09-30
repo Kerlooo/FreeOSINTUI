@@ -56,7 +56,10 @@ export default {
 			'Analyze raw email headers offline: Received path with hop delays, originating IP, SPF/DKIM/DMARC/ARC results and phishing triage findings such as Reply-To or Return-Path mismatches.',
 		'footprint.name': 'Passive Site Footprint',
 		'footprint.description':
-			"Map a site's archived URLs from Common Crawl and the Wayback Machine without contacting it: subdomains, documents, backups, config files, admin paths and parameters. The Wayback part requires the Python backend."
+			"Map a site's archived URLs from Common Crawl and the Wayback Machine without contacting it: subdomains, documents, backups, config files, admin paths and parameters. The Wayback part requires the Python backend.",
+		'url.name': 'URL Analyzer',
+		'url.description':
+			'Break down a suspicious link without opening it: look-alike hosts, user@host and numeric-IP tricks, tracking parameters, hidden redirects, short link expansion, urlscan.io and URLhaus. Requires the Python backend.'
 	},
 	it: {
 		'category.search': 'Ricerca',
@@ -114,7 +117,10 @@ export default {
 			"Analizza offline gli header grezzi di un'email: percorso Received con i ritardi tra i salti, IP di origine, risultati SPF/DKIM/DMARC/ARC e segnalazioni di triage del phishing, come Reply-To o Return-Path diversi.",
 		'footprint.name': 'Impronta Passiva del Sito',
 		'footprint.description':
-			'Mappa gli URL archiviati di un sito da Common Crawl e Wayback Machine senza contattarlo: sottodomini, documenti, backup, file di configurazione, percorsi admin e parametri. La parte Wayback richiede il backend Python.'
+			'Mappa gli URL archiviati di un sito da Common Crawl e Wayback Machine senza contattarlo: sottodomini, documenti, backup, file di configurazione, percorsi admin e parametri. La parte Wayback richiede il backend Python.',
+		'url.name': 'Analisi URL',
+		'url.description':
+			'Scomponi un link sospetto senza aprirlo: host somiglianti, trucchi user@host e IP numerici, parametri di tracciamento, redirect nascosti, espansione link brevi, urlscan.io e URLhaus. Richiede il backend Python.'
 	},
 	fr: {
 		'category.search': 'Recherche',
@@ -172,6 +178,9 @@ export default {
 			"Analysez hors ligne les en-têtes bruts d'un e-mail : chemin Received avec les délais entre sauts, IP d'origine, résultats SPF/DKIM/DMARC/ARC et signalements de tri du phishing, comme un Reply-To ou un Return-Path différent.",
 		'footprint.name': 'Empreinte Passive du Site',
 		'footprint.description':
-			"Cartographiez les URL archivées d'un site via Common Crawl et la Wayback Machine sans le contacter : sous-domaines, documents, sauvegardes, fichiers de configuration, chemins admin et paramètres. La partie Wayback nécessite le backend Python."
+			"Cartographiez les URL archivées d'un site via Common Crawl et la Wayback Machine sans le contacter : sous-domaines, documents, sauvegardes, fichiers de configuration, chemins admin et paramètres. La partie Wayback nécessite le backend Python.",
+		'url.name': "Analyse d'URL",
+		'url.description':
+			"Décortiquez un lien suspect sans l'ouvrir : hôtes sosies, astuces user@host et IP numériques, paramètres de suivi, redirections cachées, liens courts, urlscan.io et URLhaus. Nécessite le backend Python."
 	}
 };

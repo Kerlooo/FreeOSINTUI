@@ -101,6 +101,11 @@ export const TOOLS = /** @type {{ id: string, route: string, category: string }[
 		id: 'footprint',
 		route: '/footprint',
 		category: 'network'
+	},
+	{
+		id: 'url',
+		route: '/url',
+		category: 'threat'
 	}
 ]).map((tool) => ({
 	...tool,
