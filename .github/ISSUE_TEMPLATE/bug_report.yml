@@ -25,6 +25,14 @@ body:
         - Hash Checker
         - Metadata Extractor
         - Crypto Tracer
+        - Lookalike Domain Finder
+        - Passive Site Footprint
+        - Favicon Hash
+        - Reputation Checker
+        - URL Analyzer
+        - Email Header Analyzer
+        - ID and Timestamp Decoder
+        - MAC Address Vendor Lookup
         - Whole site (navbar, layout, language...)
     validations:
       required: true

@@ -17,7 +17,7 @@ Nessun account. Nessun paywall. Nessun limite mensile.
 ![SvelteKit](https://img.shields.io/badge/SvelteKit-static-ff3e00?logo=svelte&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.14-3776ab?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
-![Tools](https://img.shields.io/badge/tools-12-00ff41)
+![Tools](https://img.shields.io/badge/tools-20-00ff41)
 ![License](https://img.shields.io/badge/license-Apache%202.0%20%2B%20Commons%20Clause-blue)
 
 </div>
@@ -31,28 +31,36 @@ Nessun account. Nessun paywall. Nessun limite mensile.
 La maggior parte di quelle ricerche non ha affatto bisogno di un servizio a pagamento: servono solo le giuste **fonti pubbliche gratuite** e un'interfaccia pulita. FreeOSINT-UI le mette insieme:
 
 - 🆓 **Gratis per sempre.** Tutti gli strumenti, senza limiti oltre ai rate limit delle API pubbliche stesse.
-- 🔒 **Prima di tutto nel browser.** 10 strumenti su 12 funzionano interamente nel tuo browser. I file che analizzi non lasciano mai il tuo dispositivo e le password che controlli non vengono mai inviate da nessuna parte (solo 5 caratteri del loro hash).
+- 🔒 **Prima di tutto nel browser.** 15 strumenti su 20 funzionano interamente nel tuo browser. I file che analizzi non lasciano mai il tuo dispositivo e le password che controlli non vengono mai inviate da nessuna parte (solo 5 caratteri del loro hash).
 - 👁️ **Solo passivo.** Fonti pubbliche e dati pubblici. Nessuna scansione attiva, nessun login, nessun aggiramento dei controlli di accesso.
 - 🧩 **Collegati tra loro.** Gli strumenti si rimandano l'uno all'altro: passa da un'email ai suoi data breach, o da un numero di telefono a Google dork già pronti, con un clic.
 
 ## 🛠️ Strumenti
 
-| Categoria            | Strumento                     | Cosa fa                                                                                                                                                                       |
-| -------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🔎 Ricerca           | **Generatore di Google Dork** | Google dork già pronti per uno username, un'email, un nome, un telefono o un dominio, raggruppati per tipo (social, documenti, codice, paste, esposizione del sito) con link diretti alla ricerca |
-| 👤 Persone e account | **Analisi Username** \*       | Controlla uno username su centinaia di siti web usando le regole di rilevamento di [WhatsMyName](https://github.com/WebBreacher/WhatsMyName)                                  |
-|                      | **Analisi Email**             | Sintassi, provider gratuito o usa e getta, server MX, protezione SPF/DMARC, profilo Gravatar pubblico                                                                         |
-|                      | **Analisi Telefono**          | Verifica offline: paese, tipo di linea, formati standard, ricerche collegate su WhatsApp/Telegram/motori di ricerca                                                           |
-|                      | **Telegram OSINT** \*         | Tipo di account, nome, bio, iscritti o membri e ultimi post di un account pubblico                                                                                            |
-|                      | **GitHub OSINT**              | Profilo, repository e linguaggi, organizzazioni, email nei commit pubblici, chiavi SSH/GPG                                                                                    |
-| 🌐 Domini e rete     | **Analisi Dominio**           | Record DNS, sicurezza email, registrazione RDAP, sottodomini dalla certificate transparency, snapshot della Wayback Machine                                                    |
-|                      | **Analisi IP**                | Geolocalizzazione approssimativa, ASN, DNS inverso, proprietario della rete e contatto abuse, porte aperte e CVE (passivo, Shodan InternetDB)                                  |
-| 💥 Data breach       | **Controllo Leak**            | Data breach noti per un'email e controllo con k-anonymity per sapere se una password è stata esposta                                                                          |
-| 📁 File e hash       | **Verifica Hash**             | MD5, SHA-1/2/3, BLAKE, CRC32 e altri per testo o file, più identificazione e verifica degli hash                                                                              |
-|                      | **Estrattore di Metadati**    | EXIF/GPS/XMP dalle immagini e metadati da file PDF e Office, più link per la ricerca inversa delle immagini                                                                   |
-| ⛓️ Blockchain        | **Tracciamento Crypto**       | Verifica indirizzi BTC/LTC/ETH, mostra saldo e ultime transazioni, segue le controparti                                                                                       |
+| Categoria                  | Strumento                       | Cosa fa                                                                                                                                                                                           |
+| -------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🔎 Ricerca                 | **Generatore di Google Dork**   | Google dork già pronti per uno username, un'email, un nome, un telefono o un dominio, raggruppati per tipo (social, documenti, codice, paste, esposizione del sito) con link diretti alla ricerca |
+| 👤 Persone e account       | **Analisi Username** \*         | Controlla uno username su centinaia di siti web usando le regole di rilevamento di [WhatsMyName](https://github.com/WebBreacher/WhatsMyName)                                                      |
+|                            | **Analisi Email**               | Sintassi, provider gratuito o usa e getta, server MX, protezione SPF/DMARC, profilo Gravatar pubblico                                                                                             |
+|                            | **Analisi Telefono**            | Verifica offline: paese, tipo di linea, formati standard, ricerche collegate su WhatsApp/Telegram/motori di ricerca                                                                               |
+|                            | **Telegram OSINT** \*           | Tipo di account, nome, bio, iscritti o membri e ultimi post di un account pubblico                                                                                                                |
+|                            | **GitHub OSINT**                | Profilo, repository e linguaggi, organizzazioni, email nei commit pubblici, chiavi SSH/GPG                                                                                                        |
+| 🌐 Domini e rete           | **Analisi Dominio**             | Record DNS, sicurezza email, registrazione RDAP, sottodomini dalla certificate transparency, snapshot della Wayback Machine                                                                       |
+|                            | **Analisi IP**                  | Geolocalizzazione approssimativa, ASN, DNS inverso, proprietario della rete e contatto abuse, porte aperte e CVE (passivo, Shodan InternetDB)                                                     |
+|                            | **Ricerca Domini Simili**       | Errori di battitura, omoglifi, omografi IDN, bitsquatting e cambi di TLD di un dominio, verificati via DNS (registrazione e server di posta)                                                      |
+|                            | **Impronta Passiva del Sito †** | URL archiviati di un sito da Common Crawl e Wayback Machine, senza contattarlo: sottodomini, documenti, backup, file di configurazione, percorsi admin                                            |
+|                            | **Hash Favicon**                | Hash favicon di Shodan (mmh3), MD5 e SHA-256 di un file favicon, con link di ricerca Shodan/FOFA/ZoomEye/Censys                                                                                   |
+| 🛡️ Threat intel e phishing | **Verifica Reputazione †**      | IP, dominio, URL o email su OTX, StopForumSpam, uscite Tor, Spamhaus DROP, URLhaus e ThreatFox                                                                                                    |
+|                            | **Analisi URL †**               | Scompone un link sospetto senza aprirlo: host somiglianti, redirect nascosti, parametri di tracciamento, espansione link brevi, urlscan.io e URLhaus                                              |
+|                            | **Analisi Header Email**        | Percorso Received con i ritardi tra i salti, IP di origine, risultati SPF/DKIM/DMARC/ARC e segnalazioni di triage del phishing                                                                    |
+| 💥 Data breach             | **Controllo Leak**              | Data breach noti per un'email e controllo con k-anonymity per sapere se una password è stata esposta                                                                                              |
+| 📁 File e hash             | **Verifica Hash**               | MD5, SHA-1/2/3, BLAKE, CRC32 e altri per testo o file, più identificazione e verifica degli hash                                                                                                  |
+|                            | **Estrattore di Metadati**      | EXIF/GPS/XMP dalle immagini e metadati da file PDF e Office, più link per la ricerca inversa delle immagini                                                                                       |
+| ⛓️ Blockchain              | **Tracciamento Crypto**         | Verifica indirizzi BTC/LTC/ETH, mostra saldo e ultime transazioni, segue le controparti                                                                                                           |
+| 🧰 Decoder e utility       | **Decoder di ID e Timestamp**   | Data di creazione nascosta negli ID di X, Discord, Instagram, TikTok e Mastodon, UUID, ULID, ObjectId; timestamp Unix, FILETIME, Chrome, Cocoa ed Excel                                           |
+|                            | **Produttore Indirizzo MAC**    | Produttore dai registri IEEE, tutte le notazioni ed EUI-64, indirizzi casuali e amministrati localmente                                                                                           |
 
-\* Richiede il backend Python (vedi sotto). Tutti gli altri strumenti funzionano con il solo sito statico.
+\* Richiede il backend Python (vedi sotto). † Funziona con il solo sito statico; alcune sezioni richiedono il backend. Tutti gli altri strumenti funzionano interamente con il sito statico.
 
 ## 🚀 Per iniziare
 
@@ -70,7 +78,7 @@ npm install
 npm run dev
 ```
 
-Apri http://localhost:5173. Tutto qui: 10 strumenti sono già completamente funzionanti.
+Apri http://localhost:5173. Tutto qui: 15 strumenti sono già completamente funzionanti, e altri 3 in parte.
 
 ### Backend (Analisi Username e Telegram OSINT)
 
@@ -94,17 +102,17 @@ Avvia entrambi i server in un solo terminale, con log prefissati da `[web]` / `[
 
 ### Comandi utili
 
-| Comando                                             | Cosa fa                                               |
-| --------------------------------------------------- | ----------------------------------------------------- |
-| `npm run dev`                                       | Avvia il server di sviluppo                           |
-| `npm run dev:all`                                   | Avvia frontend e backend insieme                      |
-| `npm run build`                                     | Compila il sito statico in `build/`                   |
-| `npm run preview`                                   | Serve in locale la build di produzione                |
-| `npm test`                                          | Esegue i test unitari del frontend (Vitest)           |
-| `npm run lint`                                      | Controlla formattazione (Prettier) e codice (ESLint)  |
-| `npm run format`                                    | Formatta il codice con Prettier                       |
-| `cd backend && uv run pytest`                       | Esegue i test del backend                             |
-| `cd backend && uv run python scripts/update_wmn.py` | Aggiorna la lista di siti WhatsMyName inclusa         |
+| Comando                                             | Cosa fa                                              |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| `npm run dev`                                       | Avvia il server di sviluppo                          |
+| `npm run dev:all`                                   | Avvia frontend e backend insieme                     |
+| `npm run build`                                     | Compila il sito statico in `build/`                  |
+| `npm run preview`                                   | Serve in locale la build di produzione               |
+| `npm test`                                          | Esegue i test unitari del frontend (Vitest)          |
+| `npm run lint`                                      | Controlla formattazione (Prettier) e codice (ESLint) |
+| `npm run format`                                    | Formatta il codice con Prettier                      |
+| `cd backend && uv run pytest`                       | Esegue i test del backend                            |
+| `cd backend && uv run python scripts/update_wmn.py` | Aggiorna la lista di siti WhatsMyName inclusa        |
 
 ## 📦 Deploy
 
@@ -112,12 +120,16 @@ Il frontend è un **sito completamente statico**: carica la cartella `build/` su
 
 Il backend è facoltativo. Se lo ospiti su un'altra origine:
 
-| Variabile             | Dove                        | Scopo                                                                                                   |
-| --------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `VITE_API_BASE`       | frontend (in fase di build) | Origine del backend, ad es. `https://api.example.com`. Predefinito: stessa origine `/api`               |
-| `ALLOWED_ORIGINS`     | backend                     | Origini consentite da CORS, separate da virgole. Predefinito: `http://localhost:5173,http://localhost:4173` |
-| `USERNAME_RATE_LIMIT` | backend                     | Controlli di username al minuto per IP. Predefinito: `1200`                                             |
-| `TELEGRAM_RATE_LIMIT` | backend                     | Ricerche Telegram al minuto per IP. Predefinito: `30`                                                   |
+| Variabile               | Dove                        | Scopo                                                                                                                                            |
+| ----------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `VITE_API_BASE`         | frontend (in fase di build) | Origine del backend, ad es. `https://api.example.com`. Predefinito: stessa origine `/api`                                                        |
+| `ALLOWED_ORIGINS`       | backend                     | Origini consentite da CORS, separate da virgole. Predefinito: `http://localhost:5173,http://localhost:4173`                                      |
+| `USERNAME_RATE_LIMIT`   | backend                     | Controlli di username al minuto per IP. Predefinito: `1200`                                                                                      |
+| `TELEGRAM_RATE_LIMIT`   | backend                     | Ricerche Telegram al minuto per IP. Predefinito: `30`                                                                                            |
+| `ABUSECH_AUTH_KEY`      | backend                     | Auth-Key gratuita e facoltativa di [abuse.ch](https://auth.abuse.ch/) per URLhaus e ThreatFox. Senza, quelle sezioni risultano "non configurate" |
+| `REPUTATION_RATE_LIMIT` | backend                     | Ricerche di reputazione al minuto per IP. Predefinito: `30`                                                                                      |
+| `URL_RATE_LIMIT`        | backend                     | Ricerche backend di Analisi URL al minuto per IP. Predefinito: `30`                                                                              |
+| `FOOTPRINT_RATE_LIMIT`  | backend                     | Ricerche Wayback dell'impronta al minuto per IP. Predefinito: `20`                                                                               |
 
 > Il rate limiter è in memoria e basato sull'IP del client. Dietro un reverse proxy, tutti gli utenti condividerebbero un unico limite.
 
@@ -156,7 +168,7 @@ backend/
 
 FreeOSINT-UI poggia sulle spalle di questi servizi e progetti pubblici gratuiti:
 
-[WhatsMyName](https://github.com/WebBreacher/WhatsMyName) (CC BY-SA 4.0) · [XposedOrNot](https://xposedornot.com/) · [Have I Been Pwned – Pwned Passwords](https://haveibeenpwned.com/Passwords) · [Shodan InternetDB](https://internetdb.shodan.io/) · [rdap.org](https://rdap.org/) · [Google Public DNS](https://developers.google.com/speed/public-dns/docs/doh) · [crt.sh](https://crt.sh/) · [Cert Spotter](https://sslmate.com/certspotter/) · [Internet Archive](https://archive.org/) · [ipwho.is](https://ipwho.is/) · [Gravatar](https://gravatar.com/) · [disposable-email-domains](https://github.com/disposable-email-domains/disposable-email-domains) · [mempool.space](https://mempool.space/) · [litecoinspace.org](https://litecoinspace.org/) · [Blockscout](https://www.blockscout.com/) · [GitHub REST API](https://docs.github.com/rest)
+[WhatsMyName](https://github.com/WebBreacher/WhatsMyName) (CC BY-SA 4.0) · [XposedOrNot](https://xposedornot.com/) · [Have I Been Pwned – Pwned Passwords](https://haveibeenpwned.com/Passwords) · [Shodan InternetDB](https://internetdb.shodan.io/) · [rdap.org](https://rdap.org/) · [Google Public DNS](https://developers.google.com/speed/public-dns/docs/doh) · [crt.sh](https://crt.sh/) · [Cert Spotter](https://sslmate.com/certspotter/) · [Internet Archive](https://archive.org/) · [ipwho.is](https://ipwho.is/) · [Gravatar](https://gravatar.com/) · [disposable-email-domains](https://github.com/disposable-email-domains/disposable-email-domains) · [mempool.space](https://mempool.space/) · [litecoinspace.org](https://litecoinspace.org/) · [Blockscout](https://www.blockscout.com/) · [GitHub REST API](https://docs.github.com/rest) · [AlienVault OTX](https://otx.alienvault.com/) · [StopForumSpam](https://www.stopforumspam.com/) · [Tor Project](https://www.torproject.org/) · [Spamhaus DROP](https://www.spamhaus.org/blocklists/do-not-route-or-peer/) · [abuse.ch URLhaus & ThreatFox](https://abuse.ch/) · [urlscan.io](https://urlscan.io/) · [Common Crawl](https://commoncrawl.org/) · [IEEE Registration Authority](https://standards.ieee.org/products-programs/regauth/)
 
 Ispirato da [OSINT-UI](https://osint-ui.com/).
 
