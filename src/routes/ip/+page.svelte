@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
@@ -127,6 +128,15 @@
 
 	/** @param {any[] | null} list */
 	const isEmptyList = (list) => !list?.length;
+
+	// Other tools link here with ?q=...; the static page reads it in the browser.
+	onMount(() => {
+		const q = new URLSearchParams(window.location.search).get('q')?.trim();
+		if (q) {
+			input = q;
+			submit(q);
+		}
+	});
 </script>
 
 <svelte:head>

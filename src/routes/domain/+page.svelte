@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
 	import DomainSection from '$lib/components/DomainSection.svelte';
@@ -86,6 +87,15 @@
 				});
 		}
 	}
+
+	// Other tools link here with ?q=...; the static page reads it in the browser.
+	onMount(() => {
+		const q = new URLSearchParams(window.location.search).get('q')?.trim();
+		if (q) {
+			input = q;
+			analyze(q);
+		}
+	});
 </script>
 
 <svelte:head>
