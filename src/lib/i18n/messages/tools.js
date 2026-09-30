@@ -50,7 +50,10 @@ export default {
 			'Generate typos, homoglyphs, IDN homographs, bitsquatting and TLD swaps of a domain and check with DNS which ones are registered and have mail servers (phishing risk).',
 		'favicon.name': 'Favicon Hash',
 		'favicon.description':
-			'Compute the Shodan favicon hash (mmh3), MD5 and SHA-256 of a favicon file locally and search Shodan, FOFA, ZoomEye, Censys and urlscan.io for servers using the same icon.'
+			'Compute the Shodan favicon hash (mmh3), MD5 and SHA-256 of a favicon file locally and search Shodan, FOFA, ZoomEye, Censys and urlscan.io for servers using the same icon.',
+		'headers.name': 'Email Header Analyzer',
+		'headers.description':
+			'Analyze raw email headers offline: Received path with hop delays, originating IP, SPF/DKIM/DMARC/ARC results and phishing triage findings such as Reply-To or Return-Path mismatches.'
 	},
 	it: {
 		'category.search': 'Ricerca',
@@ -102,7 +105,10 @@ export default {
 			'Genera errori di battitura, omoglifi, omografi IDN, bitsquatting e cambi di TLD di un dominio e verifica via DNS quali sono registrati e hanno server di posta (rischio phishing).',
 		'favicon.name': 'Hash Favicon',
 		'favicon.description':
-			'Calcola in locale l’hash favicon di Shodan (mmh3), MD5 e SHA-256 di un file favicon e cerca su Shodan, FOFA, ZoomEye, Censys e urlscan.io i server che usano la stessa icona.'
+			'Calcola in locale l’hash favicon di Shodan (mmh3), MD5 e SHA-256 di un file favicon e cerca su Shodan, FOFA, ZoomEye, Censys e urlscan.io i server che usano la stessa icona.',
+		'headers.name': 'Analisi Header Email',
+		'headers.description':
+			"Analizza offline gli header grezzi di un'email: percorso Received con i ritardi tra i salti, IP di origine, risultati SPF/DKIM/DMARC/ARC e segnalazioni di triage del phishing, come Reply-To o Return-Path diversi."
 	},
 	fr: {
 		'category.search': 'Recherche',
@@ -154,6 +160,9 @@ export default {
 			'Générez fautes de frappe, homoglyphes, homographes IDN, bitsquatting et changements de TLD d’un domaine et vérifiez par DNS lesquels sont enregistrés et ont des serveurs de messagerie (risque de phishing).',
 		'favicon.name': 'Hash de Favicon',
 		'favicon.description':
-			'Calculez localement le hash favicon de Shodan (mmh3), le MD5 et le SHA-256 d’un fichier favicon et cherchez sur Shodan, FOFA, ZoomEye, Censys et urlscan.io les serveurs utilisant la même icône.'
+			'Calculez localement le hash favicon de Shodan (mmh3), le MD5 et le SHA-256 d’un fichier favicon et cherchez sur Shodan, FOFA, ZoomEye, Censys et urlscan.io les serveurs utilisant la même icône.',
+		'headers.name': "Analyse d'En-têtes E-mail",
+		'headers.description':
+			"Analysez hors ligne les en-têtes bruts d'un e-mail : chemin Received avec les délais entre sauts, IP d'origine, résultats SPF/DKIM/DMARC/ARC et signalements de tri du phishing, comme un Reply-To ou un Return-Path différent."
 	}
 };
