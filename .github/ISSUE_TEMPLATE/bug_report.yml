@@ -1,0 +1,67 @@
+name: Bug report
+description: Something doesn't work as expected
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please don't include personal data of real people (emails, phone numbers, usernames) unless they are yours or public test values.
+        To report a security vulnerability, don't open an issue: see [SECURITY.md](https://github.com/Kerlooo/FreeOSINTUI/blob/main/.github/SECURITY.md).
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Tool
+      options:
+        - Google Dork Generator
+        - Username Analyzer
+        - Email Analyzer
+        - Phone Analyzer
+        - Telegram OSINT
+        - GitHub OSINT
+        - Domain Analyzer
+        - IP Analyzer
+        - Leak Check
+        - Hash Checker
+        - Metadata Extractor
+        - Crypto Tracer
+        - Whole site (navbar, layout, language...)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to /domain
+        2. Search for example.com
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+      placeholder: e.g. Firefox 131 on Android, Chrome 129 on Windows
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where are you running it?
+      options:
+        - Public website
+        - Locally (npm run dev / dev:all)
+        - Self-hosted build
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console errors or screenshots
+      description: Browser console output, backend logs or screenshots, if any.

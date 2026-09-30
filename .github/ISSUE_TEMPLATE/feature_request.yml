@@ -1,0 +1,39 @@
+name: New tool or data source
+description: Propose a new tool, a new data source or an improvement
+title: '[Feature]: '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        FreeOSINT-UI only uses **free, public sources** and **passive** lookups: no active scanning, no logins, no paid APIs.
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: The tool or improvement, and what it helps find out.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Data sources
+      description: APIs or sites it would use, with links to their docs and terms of service. Do they need an API key? Are they free?
+  - type: dropdown
+    id: cors
+    attributes:
+      label: Does it work from the browser?
+      description: Whether the source allows cross-origin requests (CORS). If not, it needs a backend endpoint.
+      options:
+        - Yes, the source allows CORS
+        - No, it needs the backend
+        - I don't know
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Checks
+      options:
+        - label: The source is free and public
+          required: true
+        - label: The lookup is passive (no scanning, no login, no bypassing limits)
+          required: true
