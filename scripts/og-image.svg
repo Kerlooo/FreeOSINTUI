@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+	<!-- Source of static/og-image.png: rsvg-convert scripts/og-image.svg -o static/og-image.png -->
+	<rect width="1200" height="630" fill="#000"/>
+	<rect x="24" y="24" width="1152" height="582" fill="none" stroke="#0d3d1a" stroke-width="4" rx="8"/>
+	<g font-family="JetBrains Mono, monospace" fill="#00ff41">
+		<text x="96" y="250" font-size="96" font-weight="700">&gt; FreeOSINT-UI_</text>
+		<text x="100" y="340" font-size="40" fill="#00b32d">Free OSINT tools in your browser</text>
+		<text x="100" y="420" font-size="28" fill="#00b32d">dorks · username · email · phone · domain · IP</text>
+		<text x="100" y="465" font-size="28" fill="#00b32d">breaches · metadata · hashes · crypto · phishing</text>
+		<text x="100" y="550" font-size="28" fill="#0a7a26">freeosintui.vercel.app · no account, no paywall</text>
+	</g>
+</svg>

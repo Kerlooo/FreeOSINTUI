@@ -1,6 +1,7 @@
 // Strings shared by several tools: generic words, shared components and network errors.
 export default {
 	en: {
+		ogImageAlt: 'FreeOSINT-UI: free OSINT tools in your browser',
 		yes: 'yes',
 		no: 'no',
 		unknown: 'Unknown',
@@ -23,6 +24,7 @@ export default {
 		backendInvalid: 'The backend returned an invalid response.'
 	},
 	it: {
+		ogImageAlt: 'FreeOSINT-UI: strumenti OSINT gratuiti nel browser',
 		yes: 'sì',
 		no: 'no',
 		unknown: 'Sconosciuto',
@@ -46,6 +48,7 @@ export default {
 		backendInvalid: 'Il backend ha restituito una risposta non valida.'
 	},
 	fr: {
+		ogImageAlt: 'FreeOSINT-UI : outils OSINT gratuits dans votre navigateur',
 		yes: 'oui',
 		no: 'non',
 		unknown: 'Inconnu',

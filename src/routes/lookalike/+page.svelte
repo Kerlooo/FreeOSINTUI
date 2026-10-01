@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
@@ -117,10 +118,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.lookalike.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('lookalike.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.lookalike.name')} — FreeOSINT-UI"
+	description={t('lookalike.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.lookalike.name')} description={t('lookalike.description')} />
 

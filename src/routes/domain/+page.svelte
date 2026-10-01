@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
@@ -98,10 +99,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.domain.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('domain.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.domain.name')} — FreeOSINT-UI"
+	description={t('domain.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.domain.name')} description={t('domain.intro')} />
 

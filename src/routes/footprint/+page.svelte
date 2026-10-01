@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
@@ -118,10 +119,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.footprint.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('footprint.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.footprint.name')} — FreeOSINT-UI"
+	description={t('footprint.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.footprint.name')} description={t('footprint.description')} />
 

@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
@@ -98,10 +99,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.reputation.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('reputation.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.reputation.name')} — FreeOSINT-UI"
+	description={t('reputation.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.reputation.name')} description={t('reputation.description')} />
 

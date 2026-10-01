@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
@@ -104,10 +105,7 @@
 	const isEmptyList = (list) => !list?.length;
 </script>
 
-<svelte:head>
-	<title>{t('tools.url.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('url.metaDescription')} />
-</svelte:head>
+<PageMeta title="{t('tools.url.name')} — FreeOSINT-UI" description={t('url.metaDescription')} />
 
 <ToolHeader title={t('tools.url.name')} description={t('url.description')} />
 

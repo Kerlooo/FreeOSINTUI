@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
 	import TelegramProfileCard from '$lib/components/TelegramProfileCard.svelte';
@@ -45,10 +46,10 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{t('tools.telegram.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('telegram.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.telegram.name')} — FreeOSINT-UI"
+	description={t('telegram.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.telegram.name')} description={t('telegram.description')} />
 

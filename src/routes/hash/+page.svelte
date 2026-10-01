@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import FileDrop from '$lib/components/FileDrop.svelte';
 	import HashResults from '$lib/components/HashResults.svelte';
@@ -70,10 +71,7 @@
 	let hashingFile = $derived(mode === 'file' && file !== null && !fileDigests && !fileError);
 </script>
 
-<svelte:head>
-	<title>{t('tools.hash.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('hash.metaDescription')} />
-</svelte:head>
+<PageMeta title="{t('tools.hash.name')} — FreeOSINT-UI" description={t('hash.metaDescription')} />
 
 <ToolHeader title={t('tools.hash.name')} description={t('hash.intro')} />
 

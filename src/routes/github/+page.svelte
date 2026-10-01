@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
 	import GithubSection from '$lib/components/GithubSection.svelte';
@@ -120,10 +121,10 @@
 	);
 </script>
 
-<svelte:head>
-	<title>{t('tools.github.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('github.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.github.name')} — FreeOSINT-UI"
+	description={t('github.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.github.name')} description={t('github.intro')} />
 

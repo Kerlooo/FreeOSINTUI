@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
@@ -105,10 +106,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.email.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('email.metaDescription')} />
-</svelte:head>
+<PageMeta title="{t('tools.email.name')} — FreeOSINT-UI" description={t('email.metaDescription')} />
 
 <ToolHeader title={t('tools.email.name')} description={t('email.intro')} />
 

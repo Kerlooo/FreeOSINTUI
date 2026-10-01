@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import FileDrop from '$lib/components/FileDrop.svelte';
@@ -59,10 +60,10 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{t('tools.headers.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('headers.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.headers.name')} — FreeOSINT-UI"
+	description={t('headers.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.headers.name')} description={t('headers.description')} />
 

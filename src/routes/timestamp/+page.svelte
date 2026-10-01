@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import TimestampDate from '$lib/components/TimestampDate.svelte';
@@ -31,10 +32,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.timestamp.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('timestamp.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.timestamp.name')} — FreeOSINT-UI"
+	description={t('timestamp.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.timestamp.name')} description={t('timestamp.description')} />
 

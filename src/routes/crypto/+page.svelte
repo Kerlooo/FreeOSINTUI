@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import LookupForm from '$lib/components/LookupForm.svelte';
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
@@ -102,10 +103,10 @@
 	);
 </script>
 
-<svelte:head>
-	<title>{t('tools.crypto.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('crypto.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.crypto.name')} — FreeOSINT-UI"
+	description={t('crypto.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.crypto.name')} description={t('crypto.intro')} />
 

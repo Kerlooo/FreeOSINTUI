@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import KeyValueTable from '$lib/components/KeyValueTable.svelte';
 	import PhoneFormats from '$lib/components/PhoneFormats.svelte';
@@ -50,10 +51,7 @@
 	);
 </script>
 
-<svelte:head>
-	<title>{t('tools.phone.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('phone.metaDescription')} />
-</svelte:head>
+<PageMeta title="{t('tools.phone.name')} — FreeOSINT-UI" description={t('phone.metaDescription')} />
 
 <ToolHeader title={t('tools.phone.name')} description={t('phone.description')} />
 

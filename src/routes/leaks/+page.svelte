@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import ModeSwitch from '$lib/components/ModeSwitch.svelte';
@@ -103,10 +104,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.leaks.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('leaks.metaDescription')} />
-</svelte:head>
+<PageMeta title="{t('tools.leaks.name')} — FreeOSINT-UI" description={t('leaks.metaDescription')} />
 
 <ToolHeader title={t('tools.leaks.name')} description={t('leaks.intro')} />
 

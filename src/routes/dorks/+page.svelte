@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import DorkGroup from '$lib/components/DorkGroup.svelte';
@@ -25,10 +26,10 @@
 	let total = $derived(result.groups.reduce((sum, group) => sum + group.dorks.length, 0));
 </script>
 
-<svelte:head>
-	<title>{t('tools.dorks.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('tools.dorks.description')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.dorks.name')} — FreeOSINT-UI"
+	description={t('tools.dorks.description')}
+/>
 
 <ToolHeader title={t('tools.dorks.name')} description={t('dorks.intro')} />
 

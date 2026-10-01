@@ -1,0 +1,53 @@
+# FreeOSINT-UI
+
+> Free, source-available OSINT (open-source intelligence) toolkit that runs in the browser. No account, no paywall, no API key. A free alternative to osint-ui.com. Available in English, Italian and French.
+
+Most tools run entirely client-side: inputs and files stay in the user's browser. A few (Username Analyzer, Telegram OSINT, parts of Reputation Checker, URL Analyzer and Passive Site Footprint) use a small backend for sources that block browser requests. Lookup tools accept a prefilled value with `?q=<value>` (Google Dork Generator: `/dorks?type=<username|email|name|phone|domain>&q=<value>`; Leak Check: `/leaks?email=<email>`).
+
+## Search
+
+- [Google Dork Generator](https://freeosintui.vercel.app/dorks): Generate Google dorks for a username, email, name, phone number or domain, grouped by type (social, documents, code, pastes) with direct search links.
+
+## People & accounts
+
+- [Email Analyzer](https://freeosintui.vercel.app/email): Analyze an email address: syntax, free or disposable provider, role address, MX mail servers, SPF/DMARC protection and public Gravatar profile.
+- [Username Analyzer](https://freeosintui.vercel.app/username): Check whether a username exists on hundreds of websites and social networks (WhatsMyName list). Requires the Python backend.
+- [Phone Analyzer](https://freeosintui.vercel.app/phone): Validate a phone number offline: country, number type (mobile, fixed line, VoIP, toll free), standard formats and WhatsApp, Telegram and Google search links.
+- [Telegram OSINT](https://freeosintui.vercel.app/telegram): Look up a Telegram username: account type (channel, group, bot, user), name, bio, subscribers or members and latest channel posts. Requires the Python backend.
+- [GitHub OSINT](https://freeosintui.vercel.app/github): Investigate a GitHub user: profile, repositories and top languages, organizations, emails leaked in public commits, SSH and GPG keys.
+
+## Domains & network
+
+- [Domain Analyzer](https://freeosintui.vercel.app/domain): Analyze a domain: DNS records, SPF/DMARC email security, RDAP registration data, subdomains from certificate transparency and Wayback Machine snapshots.
+- [IP Analyzer](https://freeosintui.vercel.app/ip): Analyze an IPv4/IPv6 address or hostname: approximate geolocation, ASN and ISP, reverse DNS, RDAP network owner and abuse contact, and open ports and CVEs from Shodan InternetDB (passive).
+- [Lookalike Domain Finder](https://freeosintui.vercel.app/lookalike): Generate typos, homoglyphs, IDN homographs, bitsquatting and TLD swaps of a domain and check with DNS which ones are registered and have mail servers (phishing risk).
+- [Favicon Hash](https://freeosintui.vercel.app/favicon): Compute the Shodan favicon hash (mmh3), MD5 and SHA-256 of a favicon file locally and search Shodan, FOFA, ZoomEye, Censys and urlscan.io for servers using the same icon.
+- [Passive Site Footprint](https://freeosintui.vercel.app/footprint): Map a site's archived URLs from Common Crawl and the Wayback Machine without contacting it: subdomains, documents, backups, config files, admin paths and parameters. The Wayback part requires the Python backend.
+
+## Threat intel & phishing
+
+- [Email Header Analyzer](https://freeosintui.vercel.app/headers): Analyze raw email headers offline: Received path with hop delays, originating IP, SPF/DKIM/DMARC/ARC results and phishing triage findings such as Reply-To or Return-Path mismatches.
+- [URL Analyzer](https://freeosintui.vercel.app/url): Break down a suspicious link without opening it: look-alike hosts, user@host and numeric-IP tricks, tracking parameters, hidden redirects, short link expansion, urlscan.io and URLhaus. Requires the Python backend.
+- [Reputation Checker](https://freeosintui.vercel.app/reputation): Check an IP, domain, URL or email against public blocklists and threat feeds: OTX, StopForumSpam, Tor exits, Spamhaus DROP, URLhaus, ThreatFox. A listing is a lead, not proof. Partly requires the Python backend.
+
+## Breaches
+
+- [Leak Check](https://freeosintui.vercel.app/leaks): Check which known data breaches include an email address, and whether a password has been exposed (k-anonymity: the password never leaves your browser).
+
+## Files & hashes
+
+- [Hash Checker](https://freeosintui.vercel.app/hash): Compute MD5, SHA-1, SHA-2, SHA-3, BLAKE and CRC32 hashes of text or files, identify an unknown hash and verify it.
+- [Metadata Extractor](https://freeosintui.vercel.app/metadata): Read hidden metadata from images (EXIF, GPS with map links, XMP, IPTC), PDFs and Office documents: camera, location, author, software and dates. The file never leaves your browser.
+
+## Blockchain
+
+- [Crypto Tracer](https://freeosintui.vercel.app/crypto): Detect and validate a Bitcoin, Litecoin or Ethereum address, then trace its balance, totals and latest transactions, following counterparties with one click.
+
+## Decoders & utilities
+
+- [ID and Timestamp Decoder](https://freeosintui.vercel.app/timestamp): Decode the creation date hidden in X, Discord, Instagram, TikTok, Mastodon and LinkedIn IDs, UUIDs, ULIDs and ObjectIds, read Unix, FILETIME, Chrome, Cocoa and Excel timestamps, or convert a date into all of them.
+- [MAC Address Vendor Lookup](https://freeosintui.vercel.app/mac): Find the vendor of a MAC address from the IEEE registries, convert it to every notation and EUI-64, and spot multicast, locally administered and randomized private addresses. Works offline.
+
+## Optional
+
+- [Source code](https://github.com/Kerlooo/FreeOSINTUI): SvelteKit frontend and FastAPI backend.

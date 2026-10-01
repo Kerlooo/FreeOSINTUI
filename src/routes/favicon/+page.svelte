@@ -1,4 +1,5 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import { onMount } from 'svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import FileDrop from '$lib/components/FileDrop.svelte';
@@ -76,10 +77,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{t('tools.favicon.name')} — FreeOSINT-UI</title>
-	<meta name="description" content={t('favicon.metaDescription')} />
-</svelte:head>
+<PageMeta
+	title="{t('tools.favicon.name')} — FreeOSINT-UI"
+	description={t('favicon.metaDescription')}
+/>
 
 <ToolHeader title={t('tools.favicon.name')} description={t('favicon.description')} />
 

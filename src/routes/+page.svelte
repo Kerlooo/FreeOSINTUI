@@ -1,14 +1,18 @@
 <script>
+	import PageMeta from '$lib/components/PageMeta.svelte';
 	import ToolCard from '$lib/components/ToolCard.svelte';
 	import { TOOLS, toolsByCategory } from '$lib/tools.js';
 	import { t } from '$lib/i18n/i18n.svelte.js';
+	import { structuredDataTag } from '$lib/site.js';
 
 	const groups = toolsByCategory();
 </script>
 
+<PageMeta title={t('home.title')} description={t('home.metaDescription')} />
+
 <svelte:head>
-	<title>{t('home.title')}</title>
-	<meta name="description" content={t('home.metaDescription')} />
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- built from our own data, `<` escaped -->
+	{@html structuredDataTag({ description: t('home.metaDescription'), tools: TOOLS })}
 </svelte:head>
 
 <section class="hero">
