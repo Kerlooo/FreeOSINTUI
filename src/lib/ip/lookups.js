@@ -48,7 +48,9 @@ export async function lookupPtr(ip, options = {}) {
  */
 export function parseIpWhois(data) {
 	if (!data?.success) {
-		throw new FetchError(`ipwho.is: ${data?.message ?? t('ip.error.ipwhois')}.`);
+		throw new FetchError(
+			`ipwho.is: ${data?.message ?? t('ip.error.ipwhois')}${t('common.period')}`
+		);
 	}
 	const hasCoordinates = typeof data.latitude === 'number' && typeof data.longitude === 'number';
 	const connection = data.connection ?? {};

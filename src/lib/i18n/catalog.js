@@ -2,7 +2,8 @@
 export const LOCALES = [
 	{ code: 'en', label: 'English', short: 'EN' },
 	{ code: 'it', label: 'Italiano', short: 'IT' },
-	{ code: 'fr', label: 'Français', short: 'FR' }
+	{ code: 'fr', label: 'Français', short: 'FR' },
+	{ code: 'ja', label: '日本語', short: 'JA' }
 ];
 
 export const DEFAULT_LOCALE = 'en';
@@ -15,7 +16,7 @@ export const DEFAULT_LOCALE = 'en';
 
 /**
  * Every file in `messages/` is one namespace: `messages/phone.js` exports
- * `{ en: { title: '...' }, it: {...}, fr: {...} }` and its keys are read as `phone.title`.
+ * `{ en: { title: '...' }, it: {...}, fr: {...}, ja: {...} }` and its keys are read as `phone.title`.
  * @type {Record<string, { default: Record<string, Record<string, Message>> }>}
  */
 const modules = import.meta.glob('./messages/*.js', { eager: true });

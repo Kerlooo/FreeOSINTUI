@@ -14,5 +14,11 @@ export default {
 		down: 'Backend non démarré.',
 		needed: 'Cet outil nécessite le backend Python de FreeOSINT-UI. Démarrez-le avec :',
 		retry: 'Réessayer'
+	},
+	ja: {
+		down: 'バックエンドが起動していません。',
+		needed:
+			'このツールには FreeOSINT-UI の Python バックエンドが必要です。次のコマンドで起動してください:',
+		retry: '再試行'
 	}
 };

@@ -268,5 +268,91 @@ export default {
 		'threatfox.count': 'IOC correspondants',
 		'threatfox.recent': 'IOC correspondants',
 		'threatfox.confidence': 'confiance {value} %'
+	},
+	ja: {
+		metaDescription:
+			'IP アドレス、ドメイン、URL、メールアドレスのレピュテーションを公開ブロックリストと脅威インテリジェンスフィードで確認: AlienVault OTX、StopForumSpam、Tor 出口ノード、Spamhaus DROP、URLhaus、ThreatFox。',
+		description:
+			'IP アドレス、ドメイン、URL、メールアドレスを公開ブロックリストと脅威インテリジェンスフィードで確認します。各ソースは個別に応答します。掲載は検証すべき手がかりであり、悪意ある活動の証拠ではありません。',
+		heading: 'インジケーター',
+		inputLabel: 'IP アドレス、ドメイン、URL、メールアドレス',
+		placeholder: '例: 8.8.8.8、example.com、https://example.com/login、name@example.com',
+		check: '確認',
+		hint: '種類は自動で判別されます。メールアドレスは MD5 ハッシュとしてのみ送信されます。',
+		checking: '確認中:',
+		'kind.ip': 'IP アドレス',
+		'kind.domain': 'ドメイン',
+		'kind.url': 'URL',
+		'kind.email': 'メールアドレス',
+		'error.empty': 'IP アドレス、ドメイン、URL、またはメールアドレスを入力してください。',
+		'error.invalid': '有効な IP アドレス、ドメイン、URL、メールアドレスではありません。',
+		'error.url': '有効な URL ではありません。',
+		'error.scheme': '確認できるのは http:// と https:// の URL だけです。',
+		'error.urlTooLong': 'URL が長すぎます (最大 {max} 文字)。',
+		'special.title': '{label} アドレス',
+		'special.skipped':
+			'公開インターネットのアドレスではないため、どのブロックリストにも掲載されることはありません。リモートの検索はスキップしました。',
+		'summary.title': '概要',
+		'summary.listed': {
+			other: '確認した {total} 件のソースのうち {count} 件に掲載されています。'
+		},
+		'summary.none': '確認した {total} 件のソースのいずれにも掲載されていません。',
+		'summary.pending': {
+			other: '{count} 件のソースを読み込み中…'
+		},
+		'summary.unavailable': {
+			other: '{count} 件のソースが利用できません。'
+		},
+		'summary.caution':
+			'掲載は手がかりであり、証拠ではありません。共有ホスティング、VPN、動的アドレス、古い報告は誤検知の原因になります。結論を出す前にソースのページと日付を確認してください。',
+		'status.listed': '掲載あり',
+		'status.notListed': '掲載なし',
+		'status.unavailable': '利用不可',
+		'status.loading': '読み込み中…',
+		checked: '確認対象',
+		open: '{source} で表示',
+		notConfigured:
+			'未設定: このソースには、バックエンドで ABUSECH_AUTH_KEY として設定された無料の abuse.ch Auth-Key が必要です。',
+		backendUnavailable: 'Python バックエンドが必要ですが、起動していません。',
+		backendPartial:
+			'ブラウザ側のソースは引き続き動作します。Tor、Spamhaus DROP、URLhaus、ThreatFox にはバックエンドが必要です。次のコマンドで起動してください:',
+		pivots: 'このインジケーターをさらに調べる:',
+		'pivot.ip': 'IP 分析',
+		'pivot.domain': 'ドメイン分析',
+		tags: 'タグ',
+		'date.otx': '最新の Pulse',
+		'date.sfs': '最終確認',
+		'date.tor': 'リスト更新日',
+		'date.drop': 'リスト更新日',
+		'date.urlhaus': '最新の活動',
+		'date.threatfox': '最新の観測',
+		'otx.note':
+			'このインジケーターに言及しているコミュニティの脅威インテリジェンス Pulse です。Pulse は誰でも公開できます。',
+		'otx.pulses': 'Pulse',
+		'otx.whitelisted': 'ホワイトリスト登録元',
+		'otx.recent': '最近の Pulse',
+		'sfs.note': 'サイト運営者から送信された、フォーラムやコメントのスパム報告です。',
+		'sfs.frequency': '報告数',
+		'sfs.confidence': '信頼度',
+		'sfs.torexit': 'Tor 出口ノード',
+		'tor.note': 'Tor Project が公開している現在の Tor 出口ノードのアドレスです。',
+		'tor.exitNodes': 'リスト内の出口ノード',
+		'drop.note':
+			"「Don't Route Or Peer」: 乗っ取られた、または犯罪組織が運用しているアドレスブロックです。ネットワーク範囲で照合します。",
+		'drop.cidr': '掲載範囲',
+		'drop.sblid': 'SBL ID',
+		'drop.rir': 'レジストリ',
+		'urlhaus.note': 'マルウェアの配布に使われている URL と、それを配信しているホストです。',
+		'urlhaus.urlCount': 'マルウェア URL',
+		'urlhaus.online': 'オンラインのまま',
+		'urlhaus.urlStatus': 'URL のステータス',
+		'urlhaus.threat': '脅威',
+		'urlhaus.firstSeen': '初回確認',
+		'urlhaus.blacklists': 'その他のブロックリスト',
+		'threatfox.note':
+			'研究者が共有している侵害の痕跡 (IOC: C2 サーバー、ペイロードのホスト) です。',
+		'threatfox.count': '一致した IOC',
+		'threatfox.recent': '一致した IOC',
+		'threatfox.confidence': '信頼度 {value}%'
 	}
 };

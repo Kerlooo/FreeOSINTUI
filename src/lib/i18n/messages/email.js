@@ -307,5 +307,106 @@ export default {
 		'links.title': 'Étapes suivantes',
 		'links.leaks': '— voir quelles fuites de données connues incluent cette adresse.',
 		'links.dorks': "— recherches Google prêtes à l'emploi pour cette adresse."
+	},
+	ja: {
+		metaDescription:
+			'メールアドレスを分析します: 構文、フリーメールまたは使い捨てのプロバイダー、役割アドレス、MX メールサーバー、SPF と DMARC、公開 Gravatar プロフィール。',
+		intro:
+			'メールアドレスを入力すると、構文、プロバイダーの種類、使い捨てドメイン、メールサーバー、SPF/DMARC による保護、公開 Gravatar プロフィールを確認できます。',
+		inputHeading: 'メールアドレス',
+		inputLabel: 'メールアドレス',
+		placeholder: '例: john.doe@example.com',
+		analyze: '分析',
+		privacyNote:
+			'照会するのは公開ソースのみです: DNS over HTTPS (Google)、公開されている使い捨てドメインのリスト、Gravatar。アドレス本人やそのメールサーバーには何も送信しません。',
+		unexpectedError: '予期しないエラーです。',
+		lookingUp: '検索中…',
+
+		'error.empty': 'メールアドレスを入力してください。',
+		'error.shape': 'メールアドレスは name@example.com のような形式です。',
+		'error.localTooLong': '@ より前の部分が 64 文字を超えています。',
+		'error.localInvalid': '@ より前の部分に無効な文字が含まれています。',
+		'error.domainInvalid': 'ドメインが無効です。',
+		'error.domainExample': 'ドメインが無効です (例: example.com)。',
+
+		'address.title': 'アドレス',
+		'address.normalized': '正規化',
+		'address.local': 'ローカル部',
+		'address.tag': 'プラスタグ',
+		'address.domain': 'ドメイン',
+		'address.syntax': '構文',
+		'address.valid': '有効',
+		'address.freeProvider': 'フリーメール',
+		'address.freeYes': 'はい — {provider}',
+		'address.freeNo': 'いいえ (独自ドメイン)',
+		'address.role': '役割アドレス',
+		'address.roleYes': 'はい — 個人ではなく共有またはチームのメールボックスと思われます',
+		'address.roleNo': 'いいえ — 個人のアドレスと思われます',
+
+		'disposable.title': '使い捨てドメイン',
+		'disposable.yes': '使い捨て:',
+		'disposable.yesDetail': 'は使い捨てメールサービスです。',
+		'disposable.no': '使い捨てとしては登録されていません。',
+		'disposable.checkedBefore': '{count} 件のドメインを含む',
+		'disposable.checkedAfter':
+			' リストと照合しました。新しい使い捨てサービスは含まれていない場合があります。',
+
+		'mail.title': 'メールサーバー',
+		'mail.receiving': '受信',
+		'mail.note':
+			'有効なメールサーバーがあることは、ドメインがメールを受け付けることを示すだけで、このメールボックスが実在することの証明にはなりません。',
+		'mail.priority': '優先度',
+		'mail.server': 'メールサーバー',
+		'mail.nullMx': '(null MX)',
+
+		'badge.good': 'OK',
+		'badge.warn': '弱い',
+		'badge.bad': '危険',
+
+		'verdict.mx.null': 'Null MX: このドメインはメールを受け付けないことを明示しています。',
+		'verdict.mx.good': {
+			other: 'このドメインはメールを受信できます (メールサーバー {count} 台)。'
+		},
+		'verdict.mx.fallback':
+			'MX レコードがありません。ドメイン自体のアドレスにメールが配送される可能性はありますが (A/AAAA フォールバック)、一般的ではありません。',
+		'verdict.mx.none': 'MX もアドレスレコードもありません。このドメインはメールを受信できません。',
+		'verdict.spf.none':
+			'SPF レコードがありません。どのサーバーでもこのドメインを名乗ってメールを送信できます。',
+		'verdict.spf.fail': '厳格 (-all): 記載のないサーバーからのメールは拒否されるべきです。',
+		'verdict.spf.softfail':
+			'緩やか (~all): 記載のないサーバーからのメールは疑わしいとマークされますが、通常は受け入れられます。',
+		'verdict.spf.neutral': '中立 (?all): このレコードは有用な情報を示していません。',
+		'verdict.spf.pass': '許容 (+all): どのサーバーでもこのドメインとして送信できます。',
+		'verdict.spf.redirect':
+			'redirect で {target} に委任されています。実際のポリシーはそちらで定義されています。',
+		'verdict.spf.noAll':
+			'「all」ルールがありません。記載のないサーバーに対するポリシーが不明確です (中立として扱います)。',
+		'verdict.dmarc.none':
+			'DMARC レコードがありません。このドメインを詐称したメールについて、受信側は何の指示も受けません。',
+		'verdict.dmarc.partial': ' (メールの {percent}% に適用)',
+		'verdict.dmarc.reject': 'Reject: 詐称メールは拒否されるべきです{partial}。',
+		'verdict.dmarc.quarantine':
+			'Quarantine: 詐称メールは迷惑メールに振り分けられるべきです{partial}。',
+		'verdict.dmarc.monitor': '監視のみ (p=none): 詐称メールは報告されますが、配送はされます。',
+		'verdict.dmarc.invalid': 'DMARC レコードに有効なポリシー (p=) がありません。',
+
+		'gravatar.note':
+			'Gravatar に送信されるのはアドレスの SHA-256 ハッシュのみです。プロフィールは公開されており、本人の自己申告です。',
+		'gravatar.avatarAlt': 'Gravatar アバター',
+		'gravatar.noAvatar': 'このアドレスの Gravatar アバターはありません。',
+		'gravatar.loadingAvatar': 'アバターを読み込み中…',
+		'gravatar.name': '名前',
+		'gravatar.profile': 'プロフィール',
+		'gravatar.location': '所在地',
+		'gravatar.jobTitle': '役職',
+		'gravatar.company': '会社',
+		'gravatar.pronouns': '代名詞',
+		'gravatar.about': '自己紹介',
+		'gravatar.accounts': '確認済みアカウント',
+		'gravatar.noProfile': 'このアドレスの公開 Gravatar プロフィールはありません。',
+
+		'links.title': '次のステップ',
+		'links.leaks': '— このアドレスが含まれる既知のデータ漏えいを確認します。',
+		'links.dorks': '— このアドレス用のすぐに使える Google 検索です。'
 	}
 };

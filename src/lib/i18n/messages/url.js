@@ -502,5 +502,168 @@ export default {
 		'wayback.date': 'Date',
 		'wayback.status': 'Statut HTTP',
 		'wayback.history': 'Toutes les captures'
+	},
+	ja: {
+		metaDescription:
+			'不審な URL を開かずに分析: リファング/デファング、IDN と紛らわしい文字、難読化された IP、トラッキングパラメータ、隠れたリダイレクト、短縮リンク、urlscan.io、URLhaus、Wayback。',
+		description:
+			'不審なリンクを開かずに分解します: ホストの偽装 (紛らわしい文字、user@host、数値形式の IP)、トラッキングパラメータ、クエリ内に隠されたリダイレクト先、短縮リンクの展開、既存のレピュテーションデータ。',
+		heading: 'URL',
+		inputLabel: '分析する URL',
+		placeholder: '例: hxxps://login-paypal[.]example[.]com/?next=…',
+		analyze: '分析',
+		hint: 'URL はブラウザ内で分析され、開かれることはありません。デファングされた URL (hxxp、[.]、[at]) も入力できます。',
+		loading: '読み込み中…',
+		'error.empty': 'URL を入力してください。',
+		'error.invalid': '有効な URL ではありません。',
+		'error.scheme':
+			'分析できるのは http と https の URL のみです ({scheme}: の URL はコードを実行したりコンテンツを直接埋め込んだりできます。開かないでください)。',
+
+		'overview.title': '分解',
+		'row.scheme': 'スキーム',
+		'row.user': 'ユーザー情報',
+		'row.password': 'パスワード',
+		'row.passwordPresent': 'あり (非表示)',
+		'row.host': 'ホスト',
+		'row.rawHost': '入力どおりのホスト',
+		'row.hostUnicode': 'ホスト (Unicode)',
+		'row.hostAscii': 'ホスト (Punycode)',
+		'row.registrable': '登録ドメイン',
+		'row.subdomain': 'サブドメイン',
+		'row.suffix': 'パブリックサフィックス',
+		'row.scripts': '文字体系',
+		'row.ip': 'IP アドレス',
+		'row.port': 'ポート',
+		'row.path': 'パス',
+		'row.fragment': 'フラグメント',
+		'row.defanged': 'デファング済み',
+		'row.cleaned': 'トラッキング除去後',
+		copyUrl: 'URL をコピー',
+		copyDefanged: 'デファングした URL をコピー',
+		copyCleaned: 'トラッキングを除去した URL をコピー',
+		'pivot.domain': 'ドメイン分析 →',
+		'pivot.ip': 'IP 分析 →',
+		'pivot.analyze': '分析 →',
+
+		'findings.title': '検出事項',
+		'findings.note':
+			'確認すべき兆候であり、判定ではありません。正規のリンクにも見られることがあります。',
+		'findings.none': 'URL 自体に不審な点は見つかりませんでした。',
+		'severity.warning': '警告',
+		'severity.notice': '注意',
+		'severity.info': '情報',
+		'finding.userinfo':
+			'URL にユーザー情報 (「{user}@」) が含まれています。ブラウザはこれを無視して {host} に移動します。リンクを別のサイトに見せかけるためのよくある手口です。',
+		'finding.ipObfuscated':
+			'ホスト「{raw}」は通常とは異なる形式 (10 進数、8 進数、16 進数) で書かれた IPv4 アドレスです。ブラウザはこれを {ip} として解釈します。',
+		'finding.ipLiteral': 'ホストがドメイン名ではなく IP アドレス ({ip}) です。',
+		'finding.ipSpecial': '{ip} は特殊用途の範囲に含まれます: {label}。',
+		'finding.lookalike':
+			'ホスト {host} はラテン文字に似た文字を使用しています。「{skeleton}」と読めます。',
+		'finding.mixedScript': '異なる文字体系が混在するラベル: {labels}。',
+		'finding.idn': '国際化ドメイン名: {ascii} は {unicode} として表示されます。',
+		'finding.brand':
+			'ホストに {brands} という名前が含まれていますが、登録ドメインは {domain} です。本当にそのブランドのものか確認してください。',
+		'finding.deepSubdomain': {
+			other:
+				'サブドメインの階層が深くなっています ({count} 階層)。本物のドメインを見えにくくするために使われることがあります。'
+		},
+		'finding.longHost': '非常に長いホスト名です ({length} 文字)。',
+		'finding.hosting':
+			'{suffix} 配下でホストされています。これは無料ホスティングまたはダイナミック DNS のサービスで、誰でもサブドメインを作成できます。',
+		'finding.dotless': 'ホスト「{host}」にドットがありません (内部名または通常とは異なる形式)。',
+		'finding.embedded': {
+			other: 'URL のリダイレクトパラメータに別の URL が {count} 件含まれています。'
+		},
+		'finding.embeddedOther': {
+			other: '{count} 件のクエリパラメータに URL が含まれています。'
+		},
+		'finding.nested': 'リダイレクト先が {count} 階層にわたって入れ子になっています。',
+		'finding.redirector': '既知のリダイレクターまたはリンクラッパー: {name}。',
+		'finding.shortener':
+			'{host} は短縮 URL サービスです。リンクを展開するまで本当のリンク先はわかりません。',
+		'finding.http': '平文の HTTP です。接続は暗号化されません。',
+		'finding.port': 'デフォルト以外のポート {port} です。',
+		'finding.tracking': {
+			other: '{count} 件のトラッキングパラメータを削除できます。'
+		},
+		'finding.refanged': '入力はデファングされていたため、元に戻しました。',
+		'finding.schemeAdded': 'スキームが指定されていないため、https:// とみなしました。',
+
+		'redirector.google': 'Google リダイレクト',
+		'redirector.facebook': 'Facebook リンクシム',
+		'redirector.instagram': 'Instagram リンクシム',
+		'redirector.safelinks': 'Microsoft Safe Links',
+		'redirector.urldefense': 'Proofpoint URL Defense',
+		'redirector.youtube': 'YouTube リダイレクト',
+		'redirector.vk': 'VK 離脱ページ',
+		'redirector.linkedin': 'LinkedIn リダイレクト',
+		'redirector.slack': 'Slack リダイレクト',
+		'redirector.steam': 'Steam リンクフィルター',
+
+		'params.title': 'クエリパラメータ',
+		'params.name': '名前',
+		'params.value': '値',
+		'params.tracking': 'トラッキング',
+		'params.embedded': 'URL',
+		'params.empty': 'クエリパラメータはありません。',
+
+		'embedded.title': '埋め込まれた URL',
+		'embedded.note':
+			'この URL 内で見つかった URL を、オフラインでデコードしています。いずれも開かれません。',
+		'embedded.query': 'パラメータ「{param}」',
+		'embedded.fragment': 'フラグメントのパラメータ「{param}」',
+		'embedded.wrapper': 'リンクラッパーの転送先',
+		'embedded.redirect': 'リダイレクト',
+		'encoding.plain': 'プレーン',
+		'encoding.percent': 'URL エンコード',
+		'encoding.base64': 'base64',
+		'encoding.urldefense': 'URL Defense',
+		'embedded.chain': '入れ子のリダイレクト後の最終的なリンク先',
+
+		'expand.title': '短縮リンクの展開',
+		'expand.source': 'バックエンド',
+		'expand.note':
+			'リンクをたどらずに、短縮 URL サービスにリンク先を問い合わせます。既知の短縮 URL サービスのホストにのみ接続します。',
+		'expand.hop': 'HTTP {status}',
+		'expand.final': 'リンク先',
+		'expand.noLocation': '短縮 URL サービスがリンク先を返しませんでした (不明または無効なリンク)。',
+		'expand.truncated': '{count} 件の短縮リンクで停止しました。',
+
+		'urlscan.title': '既存の urlscan.io スキャン',
+		'urlscan.note':
+			'このホストについて他のユーザーがすでに実行した公開スキャンです。新しいスキャンは送信しません。',
+		'urlscan.empty': 'このホストの公開スキャンはありません。',
+		'urlscan.total': {
+			other: '公開スキャン {count} 件 (最新のものを表示)。'
+		},
+		'urlscan.malicious': '悪意あり',
+		'urlscan.noVerdict': '判定なし',
+		'urlscan.result': '結果 ↗',
+		'urlscan.screenshot': 'スクリーンショット ↗',
+		'urlscan.searchAll': 'urlscan.io で検索 ↗',
+
+		'urlhaus.title': 'URLhaus',
+		'urlhaus.note': 'マルウェアの拡散に使われた URL を集めた abuse.ch のデータベースです。',
+		'urlhaus.notConfigured':
+			'未設定: 有効にするには、バックエンドに ABUSECH_AUTH_KEY (abuse.ch の無料キー) を設定してください。',
+		'urlhaus.notListed': 'この URL は URLhaus に登録されていません。',
+		'urlhaus.listed': 'URLhaus に登録されています。',
+		'urlhaus.row.status': 'ステータス',
+		'urlhaus.row.threat': '脅威',
+		'urlhaus.row.tags': 'タグ',
+		'urlhaus.row.added': '登録日',
+		'urlhaus.row.lastOnline': '最終オンライン',
+		'urlhaus.row.payloads': 'ペイロード',
+		'urlhaus.row.blacklists': 'ブロックリスト',
+		'urlhaus.row.reference': 'エントリ',
+
+		'wayback.title': 'Wayback Machine',
+		'wayback.note': 'この URL と完全に一致する、最も近いアーカイブです。',
+		'wayback.none': 'この URL と完全に一致するアーカイブはありません。',
+		'wayback.snapshot': '最も近いスナップショット',
+		'wayback.date': '日付',
+		'wayback.status': 'HTTP ステータス',
+		'wayback.history': 'すべてのキャプチャ'
 	}
 };

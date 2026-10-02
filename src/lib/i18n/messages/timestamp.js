@@ -399,5 +399,137 @@ export default {
 			'Le nœud est généralement l’adresse MAC de la machine qui a généré l’UUID : il peut identifier l’appareil et son fabricant.',
 		'note.uuidNoTime':
 			'Cette version d’UUID est aléatoire ou un hash : elle ne contient pas de date.'
+	},
+	ja: {
+		metaDescription:
+			'SNS の ID (X/Twitter、Discord、Instagram、TikTok、Mastodon、LinkedIn)、UUID、ULID、MongoDB ObjectId、数値タイムスタンプ (Unix、FILETIME、Chrome、Cocoa、Excel、GPS) に隠された日時をデコードします。日付をこれらすべての形式に変換することもできます。',
+		description:
+			'ID、投稿の URL、数値を貼り付けると、それが表しうるすべての日時を、もっとも妥当なものから順に、各形式が持つフィールドとともに表示します。ISO 形式の日付を貼り付けると、すべてのタイムスタンプ形式に変換します。処理はすべてローカルで行われ、データがブラウザの外に送られることはありません。',
+		inputHeading: '入力',
+		inputLabel: 'ID、URL、数値または日付',
+		now: '現在時刻',
+		accepted:
+			'snowflake ID、投稿の URL (X、Discord、Instagram、TikTok、Mastodon、LinkedIn)、UUID、ULID、ObjectId、KSUID、数値 (10 進数または 0x 付き 16 進数) と ISO 8601 形式の日付に対応しています。タイムゾーンのない日付は UTC として扱います。',
+		statusIdle: '入力に合わせて結果が更新されます。',
+		resultsHeading: '解釈',
+		empty: 'デコードする ID、数値または日付を入力してください。',
+		fromLink: '{platform} のリンクから見つかりました。この解釈を先頭に表示します。',
+		noPlausible: '妥当な日時になる解釈はありません。すべての解釈を以下に表示します。',
+		showUnlikely: {
+			other: '可能性の低い解釈 {count} 件を表示'
+		},
+		hideUnlikely: '可能性の低い解釈を隠す',
+		unlikely: '可能性低',
+		approximate: '概算',
+		noDate: 'この ID には日時が含まれていません。',
+		'row.utc': 'UTC (ISO 8601)',
+		'row.local': 'ローカル時刻',
+		'row.relative': '相対時間',
+		copyValue: '{format} をコピー',
+		dateHeading: '日付',
+		numericHeading: 'すべてのタイムスタンプ形式',
+		idsHeading: 'この時刻に生成される最小の ID',
+		idsHint:
+			'この時刻より後に生成された ID はすべてこれらの値より大きくなります。検索範囲の指定 (例: since_id や max_id) に便利です。',
+		pivotMac: 'この MAC アドレスを検索',
+		'error.unrecognized': '既知の ID、タイムスタンプ、日付の形式ではありません。',
+		'error.noIdInUrl': 'この URL に ID が見つかりませんでした。',
+		'error.outOfRange': 'この日付はブラウザで表現できる範囲を超えています。',
+		'platform.twitter': 'X / Twitter',
+		'platform.discord': 'Discord',
+		'platform.instagram': 'Instagram',
+		'platform.tiktok': 'TikTok',
+		'platform.mastodon': 'Mastodon',
+		'platform.linkedin': 'LinkedIn',
+		'format.twitter': 'X / Twitter snowflake',
+		'format.discord': 'Discord snowflake',
+		'format.instagram': 'Instagram メディア ID',
+		'format.tiktok': 'TikTok 動画またはユーザー ID',
+		'format.mastodon': 'Mastodon ID',
+		'format.linkedin': 'LinkedIn 投稿 ID',
+		'format.uuid': 'UUID',
+		'format.uuid7': 'UUID v7',
+		'format.ulid': 'ULID',
+		'format.objectId': 'MongoDB ObjectId',
+		'format.ksuid': 'KSUID',
+		'format.unixSeconds': 'Unix 時間 (秒)',
+		'format.unixMilliseconds': 'Unix 時間 (ミリ秒)',
+		'format.unixMicroseconds': 'Unix 時間 (マイクロ秒)',
+		'format.unixNanoseconds': 'Unix 時間 (ナノ秒)',
+		'format.filetime': 'Windows FILETIME / LDAP',
+		'format.webkit': 'Chrome / WebKit 時間',
+		'format.dotnetTicks': '.NET ticks',
+		'format.cocoa': 'Apple Cocoa / Core Data (秒)',
+		'format.cocoaNanoseconds': 'Apple Cocoa (ナノ秒)',
+		'format.excel': 'Excel / OLE Automation 日付',
+		'format.gps': 'GPS 時間 (秒)',
+		'format.hfs': 'HFS+ 時間 (秒)',
+		'field.datacenter': 'データセンター',
+		'field.worker': 'ワーカー',
+		'field.process': 'プロセス',
+		'field.increment': 'インクリメント',
+		'field.sequence': 'シーケンス',
+		'field.shard': 'シャード',
+		'field.shortcode': 'ショートコード',
+		'field.ownerId': '所有者のユーザー ID',
+		'field.mediaId': 'メディア ID',
+		'field.canonical': '正規形',
+		'field.variant': 'バリアント',
+		'field.version': 'バージョン',
+		'field.clockSequence': 'クロックシーケンス',
+		'field.localDomain': 'ローカルドメイン',
+		'field.localId': 'ローカル ID (UID/GID)',
+		'field.node': 'ノード',
+		'field.randomness': 'ランダム部分',
+		'field.processRandom': 'マシン / プロセス部分',
+		'field.counter': 'カウンター',
+		'field.payload': 'ランダムペイロード',
+		'value.variant.ncs': 'NCS (旧式)',
+		'value.variant.rfc': 'RFC 9562 (標準)',
+		'value.variant.microsoft': 'Microsoft (旧式 GUID)',
+		'value.variant.reserved': '予約済み',
+		'value.uuid.timeBased': '{value} (時刻とノード)',
+		'value.uuid.dceSecurity': '{value} (DCE security)',
+		'value.uuid.md5': '{value} (名前ベース、MD5)',
+		'value.uuid.random': '{value} (ランダム)',
+		'value.uuid.sha1': '{value} (名前ベース、SHA-1)',
+		'value.uuid.reorderedTime': '{value} (並べ替えた時刻とノード)',
+		'value.uuid.unixTime': '{value} (Unix 時間とランダム)',
+		'value.uuid.custom': '{value} (カスタム)',
+		'value.randomNode': '{value} (ランダム、MAC アドレスではありません)',
+		'link.tweet': 'X で投稿を開く',
+		'link.instagramPost': 'Instagram で投稿を開く',
+		'note.filetime':
+			'1601-01-01 UTC からの 100 ナノ秒単位の間隔です。NTFS、Windows レジストリ、イベントログ、Active Directory (lastLogonTimestamp、pwdLastSet) で使われます。',
+		'note.webkit':
+			'1601-01-01 UTC からのマイクロ秒です。Chrome、Edge などの Chromium 系ブラウザの履歴、Cookie、ダウンロードのデータベースで使われます。',
+		'note.dotnet':
+			'0001-01-01 からの 100 ナノ秒単位の間隔です。.NET の DateTime.Ticks で使われます。',
+		'note.cocoa':
+			'2001-01-01 UTC からの経過時間です。Apple Core Data や iOS/macOS のデータベースで使われます (最近のバージョンのメッセージはナノ秒を使用)。',
+		'note.excel':
+			'1899-12-30 からの日数で、小数部分が時刻を表します。Excel は存在しない 1900-02-29 を数えるため、1900 年 3 月より前の日付は 1 日ずれます。',
+		'note.gps':
+			'1980-01-06 からの秒数で、うるう秒を含みません。その日付時点のずれ (2017 年以降は 18 秒) はすでに差し引かれています。',
+		'note.hfs':
+			'1904-01-01 からの秒数です。HFS+ ボリュームは UTC で保存し、従来の HFS や古い Mac アプリはローカル時刻で保存していました。',
+		'note.instagram':
+			'ショートコードは instagram.com/p/<shortcode> の部分です。時刻はメディア ID が生成された時点で、通常はアップロード時です。',
+		'note.linkedin': '投稿、コメント、アクティビティ: ID の先頭 41 ビットが Unix ミリ秒です。',
+		'note.twitterLegacy':
+			'2010 年 11 月より前の投稿は日時を含まない小さな連番 ID のため、この解釈には意味がありません。',
+		'note.objectId':
+			'秒数はドキュメントを作成したクライアントまたはサーバーの時計に基づくため、正しくない可能性があります。',
+		'note.uuidNil': 'Nil UUID: すべてのビットが 0 です。',
+		'note.uuidMax': 'Max UUID: すべてのビットが 1 です。',
+		'note.uuidUnknown':
+			'標準外のバリアントまたはバージョンです。フィールドを確実に読み取ることはできません。',
+		'note.uuidV2':
+			'DCE security UUID は時刻の下位 32 ビットをローカル ID で置き換えるため、日時の精度は約 7 分です。',
+		'note.uuidRandomNode':
+			'ノードのマルチキャストビットが立っています。これはランダムな値で、マシンの MAC アドレスではありません。',
+		'note.uuidMac':
+			'ノードは通常、UUID を生成したマシンの MAC アドレスです。デバイスとそのベンダーを特定できる場合があります。',
+		'note.uuidNoTime': 'この UUID バージョンはランダムまたはハッシュのため、日時を含みません。'
 	}
 };

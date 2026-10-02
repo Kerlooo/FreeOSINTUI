@@ -539,5 +539,181 @@ export default {
 		'finding.suspiciousMailer.title': "Logiciel d'envoi en masse",
 		'finding.suspiciousMailer.detail':
 			"Le X-Mailer ou le User-Agent ({mailer}) est un script ou un outil d'envoi en masse. Il a des usages légitimes, mais apparaît aussi souvent dans le spam et le phishing."
+	},
+	ja: {
+		metaDescription:
+			'メールの生ヘッダーをオフラインで解析: 送信者と返信先アドレス、ホップごとの遅延を含む Received 配送経路、送信元 IP、SPF・DKIM・DMARC・ARC の結果、フィッシングのトリアージ用の検出事項。',
+		description:
+			'メールの生ヘッダー (またはメッセージのソース全体) を貼り付けると、誰が送信したか、どの経路をたどったか、各ホップにかかった時間、SPF・DKIM・DMARC に合格したか、詳しく確認すべき点がわかります。すべてローカルで解析され、データがブラウザの外に送られることはありません。',
+		inputHeading: 'ヘッダー',
+		inputLabel: 'メールの生ヘッダー',
+		placeholder:
+			'生ヘッダーまたはメッセージのソース全体 (.eml) を貼り付けてください。多くのメールクライアントでは「原文を表示」または「ソースを表示」から確認できます。',
+		loadExample: 'サンプルを読み込む',
+		clear: 'クリア',
+		fileHint:
+			'または .eml / .txt ファイルを開きます。ファイルはローカルで読み込まれ、アップロードされることはありません。',
+		fileError: 'ファイルを読み込めませんでした: {error}',
+		statusIdle: '貼り付けると結果が更新されます。データがブラウザの外に送られることはありません。',
+		statusParsed: {
+			other: '{count} 件のヘッダーフィールドを解析しました。'
+		},
+		statusIgnored: {
+			other: '{count} 行はヘッダーフィールドではないため無視しました。'
+		},
+		statusNone:
+			'ヘッダーフィールドが見つかりませんでした。各フィールドは「名前: 値」のような行で始まります。',
+		exampleNote:
+			'架空のデータを使ったサンプルです (予約済みのサンプルドメインとドキュメント用 IP アドレス)。',
+		empty: 'メールヘッダーを貼り付けるか、ファイルを開くか、サンプルを読み込んで解析してください。',
+
+		findingsHeading: '検出事項',
+		findingsNone: 'ヘッダーに注目すべき点は見つかりませんでした。',
+		findingsNote:
+			'トリアージ用のヒューリスティックです。どの検出事項にも正当な理由がある場合があります。メッセージがあなたのプロバイダーに届く前に追加されたヘッダーは、送信者が偽造できます。',
+		'severity.high': '高',
+		'severity.medium': '中',
+		'severity.low': '低',
+		'severity.info': '情報',
+
+		summaryHeading: '概要',
+
+		originHeading: '送信元 IP',
+		originLikely: '推定される送信元 IP',
+		originHop: '検出箇所',
+		originHopValue: 'ホップ {number} ({host})',
+		originNone: 'Received チェーンに公開 IP アドレスが見つかりませんでした。',
+		originNote:
+			'チェーン内で最初の外部ホップです (プライベートアドレスとループバックアドレスは除外)。Web メールや中継サーバーは実際のクライアントを隠すことが多く、プロバイダーより前のホップは偽造される可能性があります。',
+		sourceIpHeading: '送信サービスが追加した IP ヘッダー',
+		internal: '内部',
+
+		chainHeading: '配送経路',
+		chainOrder: '古いホップから順に表示: 送信元から受信者まで。',
+		chainCount: { other: '{count} ホップ' },
+		chainTotal: '合計配送時間: {duration}',
+		chainEmpty: 'Received ヘッダーがありません。',
+		hop: 'ホップ {number}',
+		'hop.from': '送信元',
+		'hop.rdns': '逆引き DNS',
+		'hop.helo': 'HELO',
+		'hop.ips': 'IP',
+		'hop.by': '受信サーバー',
+		'hop.with': 'プロトコル',
+		'hop.id': 'ID',
+		'hop.for': '宛先',
+		'hop.date': '時刻',
+		'hop.raw': '生ヘッダー',
+		delay: '+{duration}',
+		delaySlow: '低速',
+		delayNegative: '時刻のずれ',
+		noDate: 'タイムスタンプなし',
+
+		authHeading: '認証',
+		authNotReported: '報告なし',
+		authVerdictNote: '受信サーバーが追加した、最上位の Authentication-Results ヘッダーの結果です。',
+		authResultsHeading: 'Authentication-Results',
+		authServer: 'サーバー: {server}',
+		authServerUnknown: 'サーバーの記載なし',
+		authTopmost: '受信サーバーが追加',
+		authLower: 'それ以前に追加 (偽造の可能性あり)',
+		authArcResultsHeading: 'ARC-Authentication-Results',
+		authInstance: 'インスタンス {number}',
+		receivedSpfHeading: 'Received-SPF',
+		dkimHeading: 'DKIM 署名',
+		'dkim.domain': 'ドメイン (d=)',
+		'dkim.selector': 'セレクター (s=)',
+		'dkim.algorithm': 'アルゴリズム (a=)',
+		'dkim.canonicalization': '正規化 (c=)',
+		'dkim.headers': '署名対象ヘッダー (h=)',
+		'dkim.identity': '識別子 (i=)',
+		'dkim.timestamp': '署名日時 (t=)',
+		'dkim.expiration': '有効期限 (x=)',
+		arcHeading: 'ARC チェーン',
+		'arc.instance': 'インスタンス (i=)',
+		'arc.domain': 'ドメイン (d=)',
+		'arc.selector': 'セレクター (s=)',
+		'arc.cv': 'チェーン検証 (cv=)',
+		comment: 'コメント',
+		authNone: '認証ヘッダーが見つかりませんでした。',
+
+		otherHeading: 'その他の X- ヘッダー ({count})',
+		allHeading: 'すべてのヘッダー ({count})',
+
+		pivotHeading: 'ピボット',
+		pivotIps: 'IP アドレス',
+		pivotDomains: 'ドメイン',
+		pivotEmails: 'メールアドレス',
+		pivotHint:
+			'これらのリンクは、値を入力した状態でこのサイトの他のツールを開きます。検索はその時点で初めて、ブラウザから各ツールが使う公開ソースに送信されます。',
+		pivotDorks: 'Dork',
+
+		'finding.missingFrom.title': 'From ヘッダーなし',
+		'finding.missingFrom.detail':
+			'メッセージに From アドレスがありません。正規のメールにはほぼ必ず存在するため、欠落は不正な形式のメッセージや意図的に作られたメッセージを示している可能性があります。',
+		'finding.multipleFrom.title': '複数の From アドレス',
+		'finding.multipleFrom.detail':
+			'From ヘッダーに {count} 個のアドレスが含まれています。これはまれで、メールクライアントに送信者を誤認させる目的で使われることがあります。',
+		'finding.returnPathMismatch.title': '別ドメインの Return-Path',
+		'finding.returnPathMismatch.detail':
+			'バウンスメールは {returnPath} に送られますが、表示上の送信者は {from} です。ニュースレターや配信サービスではよくありますが、なりすましを示している可能性もあります。',
+		'finding.replyToDiffers.title': 'Reply-To が From と異なる',
+		'finding.replyToDiffers.detail':
+			'返信は {from} ではなく {replyTo} に送られます。正当な場合も多いですが (ヘルプデスク、メーリングリスト)、返信を別の宛先に誘導しようとしている可能性があります。',
+		'finding.displayNameEmail.title': '表示名に別のアドレスが含まれる',
+		'finding.displayNameEmail.detail':
+			'表示名に {name} が含まれていますが、実際の送信者は {address} です。名前だけを表示するメールクライアントでは、別の人から届いたように見える場合があります。',
+		'finding.dmarcFail.title': 'DMARC 不合格',
+		'finding.dmarcFail.detail':
+			'受信サーバーは、From ドメインが DMARC に合格しなかったと報告しています。メッセージは主張どおりの送信元から送られていない可能性があります。',
+		'finding.dmarcNone.title': 'DMARC の判定なし',
+		'finding.dmarcNone.detail':
+			'From ドメインが DMARC ポリシーを公開していないか、ポリシーが適用されなかったため、表示上の送信者ドメインは検証されていません。',
+		'finding.spfFail.title': 'SPF {result}',
+		'finding.spfFail.detail':
+			'送信サーバーは、エンベロープドメインの SPF レコードで許可されていません ({result})。なりすまし、または単なる転送を示している可能性があります。',
+		'finding.spfNone.title': 'SPF {result}',
+		'finding.spfNone.detail':
+			'エンベロープドメインの SPF レコードは、送信サーバーに対する判定を示していません ({result})。',
+		'finding.dkimFail.title': 'DKIM {result}',
+		'finding.dkimFail.detail':
+			'DKIM 署名を検証できませんでした ({result})。メッセージが転送中に改変されたか、署名が本物でない可能性があります。',
+		'finding.dkimNone.title': 'DKIM 署名なし',
+		'finding.dkimNone.detail':
+			'メッセージは DKIM で署名されていないため、内容と送信者ドメインを暗号学的に検証できません。',
+		'finding.authError.title': '{method} {result}',
+		'finding.authError.detail':
+			'{method} のチェックを完了できませんでした ({result})。通常は一時的な問題か DNS 設定の問題です。',
+		'finding.noAuthResults.title': '認証結果なし',
+		'finding.noAuthResults.detail':
+			'Authentication-Results または Received-SPF ヘッダーが見つかりませんでした。メールクライアントに表示されるヘッダー全体を貼り付けてください (「原文を表示」または「ソースを表示」)。',
+		'finding.dkimNotAligned.title': 'DKIM ドメインが From と一致しない',
+		'finding.dkimNotAligned.detail':
+			'メッセージは {from} ではなく {domains} によって署名されています。外部サービス経由で送信されたメールでは普通のことですが、この署名は From ドメインを保証するものではありません。',
+		'finding.authPass.title': 'SPF・DKIM・DMARC に合格',
+		'finding.authPass.detail':
+			'受信サーバーは送信者ドメインを検証しました。ただし、これでメッセージが安全とは限りません。類似ドメインも認証に合格します。',
+		'finding.messageIdUnrelated.title': '別ドメインの Message-ID',
+		'finding.messageIdUnrelated.detail':
+			'Message-ID は {from} と無関係の {domain} で生成されています。配信サービスであることが多いですが、From ドメインのサーバーから送信されていないことを示している可能性があります。',
+		'finding.dateDrift.title': 'Date が最初の Received の時刻と異なる',
+		'finding.dateDrift.detail':
+			'最初の Received のタイムスタンプは Date ヘッダーと {duration} ずれています。送信者側の時計の誤り、送信の遅延、または日付の偽造を示している可能性があります。',
+		'finding.clockSkew.title': 'ホップ間の負の遅延',
+		'finding.clockSkew.detail': {
+			other:
+				'{count} 個のホップのタイムスタンプが直前のホップより前になっています。サーバーの時計がずれているか、Received ヘッダーが改変された可能性があります。'
+		},
+		'finding.slowHop.title': '配送が遅いホップ',
+		'finding.slowHop.detail': {
+			other:
+				'{count} 個のホップで 10 分以上かかりました。遅延の原因は通常、キュー、グレイリスティング、スパムフィルタリングです。'
+		},
+		'finding.noReceived.title': 'Received ヘッダーなし',
+		'finding.noReceived.detail':
+			'配送経路を確認できません。表示されているフィールドだけでなく、ヘッダー全体を貼り付けてください。',
+		'finding.suspiciousMailer.title': '大量送信ソフトウェア',
+		'finding.suspiciousMailer.detail':
+			'X-Mailer または User-Agent ({mailer}) はスクリプトまたは一斉送信ツールです。正当な用途もありますが、スパムやフィッシングでもよく見られます。'
 	}
 };

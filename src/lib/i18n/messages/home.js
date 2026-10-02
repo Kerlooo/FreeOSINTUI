@@ -29,5 +29,15 @@ export default {
 		tools: 'Outils',
 		toolCount: { one: '{count} outil', other: '{count} outils' },
 		open: 'ouvrir'
+	},
+	ja: {
+		title: 'FreeOSINT-UI — 無料の OSINT ツール',
+		metaDescription:
+			'無料の OSINT ツール: Google dork、ユーザー名・メールアドレス・電話番号・ドメイン・IP の分析、データ漏えいチェック、メタデータ抽出、ハッシュチェッカーなど。',
+		intro:
+			'シンプルなものから高度なものまで、無料の OSINT ツールを集めました。アカウント登録も有料プランも不要です。すべてブラウザ内で動作し、サーバーには何も送信されません。',
+		tools: 'ツール',
+		toolCount: { other: '{count} 件のツール' },
+		open: '開く'
 	}
 };

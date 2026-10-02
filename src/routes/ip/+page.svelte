@@ -183,7 +183,8 @@
 		<h2>{t('ip.special.title', { label: special.label })}</h2>
 		<p>
 			<strong>{target.address}</strong>
-			{t('ip.special.isIn')} <code>{special.cidr}</code>. {special.description}
+			{t('ip.special.isIn')} <code>{special.cidr}</code>{t('common.period')}
+			{special.description}
 		</p>
 		<p>
 			{t('ip.special.skipped')}

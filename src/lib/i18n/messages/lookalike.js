@@ -238,5 +238,83 @@ export default {
 		'type.insertion.description': 'Une touche QWERTY voisine tapée à côté d’un caractère.',
 		'type.bitsquatting.label': 'Bitsquatting',
 		'type.bitsquatting.description': 'Un bit inversé dans un caractère (erreurs mémoire).'
+	},
+	ja: {
+		metaDescription:
+			'ブランドのタイポスクワッティングや類似ドメインを見つけます: タイポ、ホモグリフ、IDN ホモグラフ、ビットスクワッティング、TLD の置き換え、単語の追加を、DNS で A、MX、NS レコードを確認します。',
+		description:
+			'dnstwist と同様の方法で、ドメインのタイポ、ホモグリフなどの類似ドメインを生成し、どれが登録済みかを確認します。メールサーバーを持つドメインは、ブランドから送られたように見えるフィッシングメールを送信できます。パターンの生成はブラウザ内で行われ、外部に送信されるのは Google DNS-over-HTTPS への DNS クエリだけです。',
+		target: 'ドメイン',
+		inputLabel: '確認するドメイン',
+		placeholder: 'example.com',
+		run: '生成',
+		inputHint:
+			'ドメインまたは URL を入力してください。スキーム、パス、www、サブドメインは取り除かれ、IDN は punycode に変換されます。',
+		'error.empty': 'ドメインを入力してください。',
+		'error.invalid': '有効なドメイン名ではありません。',
+		'error.ip': 'IP アドレスではなく、ドメイン名を入力してください。',
+		'error.suffixOnly': 'パブリックサフィックスだけでなく、完全なドメインを入力してください。',
+		generated: {
+			other: '{domain} の類似ドメイン {count} 件'
+		},
+		typesHeading: 'パターンの種類',
+		selectAll: 'すべて',
+		selectNone: 'なし',
+		selectedCount: {
+			other: '{count} 件の名前を選択中'
+		},
+		capNote:
+			'DNS の負荷を抑えるため、1 回の実行で解決する名前は最大 {limit} 件で、選択した種類から順番に取り出します。',
+		resolve: '解決',
+		stop: '停止',
+		progressLabel: '解決の進捗',
+		progress: '{done} / {total} 件解決 · 登録済み {registered} 件 · 失敗 {errors} 件',
+		stopped: '停止しました。',
+		resultsHeading: '結果',
+		showAll: '未登録の名前も表示',
+		copyRegistered: '登録済みドメイン',
+		copyLabel: '登録済みドメインをコピー',
+		noneRegistered: '解決した名前に DNS レコードを持つものはありません。',
+		noResults: 'パターンの種類を選んで解決してください。',
+		dnsNote:
+			'「登録済み」とは、その名前に A または NS レコードがあることを意味します。DNS のない登録済みドメイン (保留中など) は未登録として表示され、ワイルドカード DNS によりサブドメイン型のパターンが登録済みに見えることがあります。',
+		'col.domain': 'ドメイン',
+		'col.type': '種類',
+		'col.a': 'A / AAAA',
+		'col.mx': 'MX',
+		'col.ns': 'NS',
+		hasMx: 'MX あり',
+		hasMxTitle:
+			'メールサーバーがあります: メールを受信でき、送信もできる可能性が高いです (フィッシングのリスク)。',
+		unregistered: 'DNS レコードなし',
+		pending: '待機中…',
+		lookupError: '検索に失敗しました: {message}',
+		punycode: 'punycode {domain}',
+		'type.tld.label': 'TLD の置き換え',
+		'type.tld.description': '同じ名前で別のトップレベルドメインを使用。',
+		'type.homoglyph.label': 'ホモグリフ',
+		'type.homoglyph.description': '見た目の似た ASCII 文字 (rn → m、l → 1、o → 0)。',
+		'type.omission.label': '脱字',
+		'type.omission.description': '1 文字が抜けている。',
+		'type.repetition.label': '重複',
+		'type.repetition.description': '1 文字を 2 回入力。',
+		'type.transposition.label': '入れ替え',
+		'type.transposition.description': '隣り合う 2 文字を入れ替え。',
+		'type.replacement.label': '置換',
+		'type.replacement.description': '1 文字を QWERTY 配列で隣のキーに置き換え。',
+		'type.hyphenation.label': 'ハイフン挿入',
+		'type.hyphenation.description': '2 文字の間にハイフンを挿入。',
+		'type.addition.label': '単語の追加',
+		'type.addition.description': 'login、secure、account、support などの単語を追加。',
+		'type.vowel.label': '母音の置き換え',
+		'type.vowel.description': '母音を別の母音に置き換え。',
+		'type.idn.label': 'IDN ホモグラフ',
+		'type.idn.description': 'ラテン文字を見た目の似たキリル文字やギリシャ文字に置き換え。',
+		'type.subdomain.label': 'サブドメイン',
+		'type.subdomain.description': '名前の途中にドットを挿入 (ex.ample.com)。',
+		'type.insertion.label': '挿入',
+		'type.insertion.description': '文字の隣に QWERTY 配列で隣のキーを入力。',
+		'type.bitsquatting.label': 'ビットスクワッティング',
+		'type.bitsquatting.description': '文字の 1 ビットが反転 (メモリエラー)。'
 	}
 };

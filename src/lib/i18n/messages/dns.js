@@ -113,5 +113,43 @@ export default {
 		'value.missing': 'absente',
 		'spf.noRecord': 'Aucun enregistrement SPF (TXT "v=spf1").',
 		'dmarc.noRecord': 'Aucun enregistrement DMARC (TXT sur _dmarc).'
+	},
+	ja: {
+		lookupFailed: 'DNS 検索に失敗しました (ステータス {status})。',
+		'finding.good': 'OK',
+		'finding.warn': '弱い',
+		'finding.bad': 'リスク',
+		'finding.info': '注記',
+		'spf.missing':
+			'SPF レコードがありません: 受信側は、このドメインのメールを送信できるサーバーを判別できません。',
+		'spf.fail': 'SPF は、リストにないサーバーからのメールを拒否します (-all)。',
+		'spf.softfail':
+			'SPF は、リストにないサーバーをソフトフェイルにするだけです (~all): そのメールは拒否されず、疑わしいものとしてマークされます。',
+		'spf.open':
+			'SPF が {all} で終わっています: どのサーバーも許可されるため、SPF による保護はありません。',
+		'spf.redirect': 'SPF はポリシーを別のドメインに委任しています (redirect=)。',
+		'spf.noAll':
+			'SPF に "all" メカニズムがありません: リストにないサーバーからのメールは neutral 判定になります。',
+		'dmarc.missing':
+			'DMARC がありません: ドメインがなりすましに使われやすく、受信側は認証に失敗したメールへのポリシーを得られません。',
+		'dmarc.reject': 'DMARC は、認証に失敗したメールを拒否します (p=reject)。',
+		'dmarc.quarantine': 'DMARC は、認証に失敗したメールを迷惑メールに振り分けます (p=quarantine)。',
+		'dmarc.none': 'DMARC は監視モードのみです (p=none): なりすましメールはブロックされません。',
+		'dmarc.invalid': 'DMARC レコードに有効なポリシー (p=) がありません。',
+		'dmarc.partial':
+			'DMARC ポリシーは、認証に失敗したメールの {percent}% にのみ適用されます (pct={percent})。',
+		'dmarc.noReports':
+			'集約レポートの送信先 (rua=) がありません: 所有者は DMARC レポートを受け取れません。',
+		'label.record': 'レコード',
+		'label.allPolicy': '"all" ポリシー',
+		'label.includes': 'Include',
+		'label.policy': 'ポリシー (p)',
+		'label.subdomainPolicy': 'サブドメインのポリシー (sp)',
+		'label.percent': '適用率 (pct)',
+		'label.reports': 'レポート (rua)',
+		'value.none': 'なし',
+		'value.missing': '未設定',
+		'spf.noRecord': 'SPF レコードがありません (TXT "v=spf1")。',
+		'dmarc.noRecord': 'DMARC レコードがありません (_dmarc の TXT)。'
 	}
 };

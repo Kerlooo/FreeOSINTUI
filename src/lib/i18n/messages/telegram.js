@@ -121,5 +121,46 @@ export default {
 		media: '[média]',
 		openPost: 'ouvrir ↗',
 		mediaOnly: 'Pas de texte (média uniquement).'
+	},
+	ja: {
+		metaDescription:
+			'公開されている Telegram のユーザー名を検索します: アカウント種別 (チャンネル、グループ、ボット、ユーザー)、名前、自己紹介、購読者数、チャンネルの最新投稿。',
+		description:
+			'Telegram のユーザー名または t.me リンクを検索し、公開プレビューから分かる情報を確認します: アカウント種別、名前、自己紹介、写真、購読者数またはメンバー数、チャンネルの場合は最新の投稿。',
+		heading: 'ユーザー名',
+		inputLabel: 'Telegram のユーザー名または t.me リンク',
+		placeholder: '例: durov または https://t.me/telegram',
+		intro:
+			't.me の公開情報のみを表示します。非公開アカウントではほとんど、またはまったく情報が表示されません。',
+		noPosts: 'このチャンネルには公開投稿のプレビューがありません。',
+		notFound: 'は Telegram で見つかりませんでした。または公開ページがありません。',
+		open: '{url} を開く ↗',
+		'error.empty': 'Telegram のユーザー名を入力してください。',
+		'error.invalid':
+			"Telegram のユーザー名は 5-32 文字で、英字、数字、'_' を使い、英字で始まる必要があります。",
+		'type.channel': 'チャンネル',
+		'type.group': 'グループ',
+		'type.bot': 'ボット',
+		'type.user': 'ユーザー',
+		'type.unknown': '不明',
+		'row.type': '種別',
+		'row.username': 'ユーザー名',
+		'row.link': 'リンク',
+		'row.info': '情報',
+		'row.infoN': '情報 {n}',
+		'counter.subscriber': '購読者',
+		'counter.member': 'メンバー',
+		'counter.online': 'オンライン',
+		'counter.photo': '写真',
+		'counter.video': '動画',
+		'counter.file': 'ファイル',
+		'counter.link': 'リンク',
+		verified: 'Telegram 認証済み',
+		copyUsername: 'ユーザー名をコピー',
+		postsHeading: '最新の投稿 ({count})',
+		views: '{views} 回表示',
+		media: '[メディア]',
+		openPost: '開く ↗',
+		mediaOnly: 'テキストなし (メディアのみ)。'
 	}
 };

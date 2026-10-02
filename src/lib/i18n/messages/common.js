@@ -1,6 +1,8 @@
 // Strings shared by several tools: generic words, shared components and network errors.
 export default {
 	en: {
+		// Sentence-final full stop, for text joined around markup.
+		period: '.',
 		ogImageAlt: 'FreeOSINT-UI: free OSINT tools in your browser',
 		yes: 'yes',
 		no: 'no',
@@ -24,6 +26,8 @@ export default {
 		backendInvalid: 'The backend returned an invalid response.'
 	},
 	it: {
+		// Sentence-final full stop, for text joined around markup.
+		period: '.',
 		ogImageAlt: 'FreeOSINT-UI: strumenti OSINT gratuiti nel browser',
 		yes: 'sì',
 		no: 'no',
@@ -48,6 +52,8 @@ export default {
 		backendInvalid: 'Il backend ha restituito una risposta non valida.'
 	},
 	fr: {
+		// Sentence-final full stop, for text joined around markup.
+		period: '.',
 		ogImageAlt: 'FreeOSINT-UI : outils OSINT gratuits dans votre navigateur',
 		yes: 'oui',
 		no: 'non',
@@ -70,5 +76,32 @@ export default {
 		backendTimeout: "Le backend n'a pas répondu à temps.",
 		backendDown: 'Backend non démarré.',
 		backendInvalid: 'Le backend a renvoyé une réponse invalide.'
+	},
+	ja: {
+		// Sentence-final full stop, for text joined around markup.
+		period: '。',
+		ogImageAlt: 'FreeOSINT-UI: ブラウザで使える無料の OSINT ツール',
+		yes: 'はい',
+		no: 'いいえ',
+		unknown: '不明',
+		noData: 'データがありません。',
+		lookUp: '検索',
+		working: '処理中…',
+		copy: 'コピー',
+		copied: 'コピーしました',
+		copyLabel: 'コピー',
+		fileDropEmpty: 'ここにファイルをドロップするか、クリックして選択してください',
+		fileDropEmptyHint:
+			'種類・サイズは問いません。ファイルはローカルで読み込まれ、アップロードされることはありません。',
+		fileDropChosenHint: '{size} — クリックまたはドロップで別のファイルを選択',
+		timeout: '{host} から時間内に応答がありませんでした。',
+		networkError:
+			'{host} に接続できませんでした (ネットワークエラー、またはブラウザによるブロック)。',
+		rateLimited: '{host} がリクエストをレート制限しています。1 分後にもう一度お試しください。',
+		httpError: '{host} が HTTP {status} を返しました。',
+		invalidResponse: '{host} から無効な応答が返されました。',
+		backendTimeout: 'バックエンドから時間内に応答がありませんでした。',
+		backendDown: 'バックエンドが起動していません。',
+		backendInvalid: 'バックエンドから無効な応答が返されました。'
 	}
 };

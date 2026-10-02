@@ -209,5 +209,75 @@ export default {
 		'reputation.name': 'Vérification de Réputation',
 		'reputation.description':
 			'Vérifiez une IP, un domaine, une URL ou un e-mail sur des listes de blocage et flux de menaces publics : OTX, StopForumSpam, sorties Tor, Spamhaus DROP, URLhaus, ThreatFox. Un signalement est une piste, pas une preuve. Nécessite en partie le backend Python.'
+	},
+	ja: {
+		'category.search': '検索',
+		'category.people': '人物・アカウント',
+		'category.network': 'ドメイン・ネットワーク',
+		'category.breaches': '漏えい',
+		'category.files': 'ファイル・ハッシュ',
+		'category.blockchain': 'ブロックチェーン',
+		'dorks.name': 'Google Dork ジェネレーター',
+		'dorks.description':
+			'ユーザー名、メールアドレス、氏名、電話番号、ドメインから Google dork を生成し、種類別 (SNS、ドキュメント、コード、ペースト) にまとめて検索リンクを表示します。',
+		'hash.name': 'ハッシュチェッカー',
+		'hash.description':
+			'テキストやファイルの MD5、SHA-1、SHA-2、SHA-3、BLAKE、CRC32 ハッシュを計算し、不明なハッシュの種類を特定して照合します。',
+		'domain.name': 'ドメイン分析',
+		'domain.description':
+			'ドメインを分析します: DNS レコード、SPF/DMARC によるメールセキュリティ、RDAP 登録情報、Certificate Transparency から得たサブドメイン、Wayback Machine のスナップショット。',
+		'ip.name': 'IP 分析',
+		'ip.description':
+			'IPv4/IPv6 アドレスまたはホスト名を分析します: おおよその位置情報、ASN と ISP、逆引き DNS、RDAP によるネットワーク所有者と abuse 連絡先、Shodan InternetDB の開いているポートと CVE (パッシブ)。',
+		'email.name': 'メールアドレス分析',
+		'email.description':
+			'メールアドレスを分析します: 構文、フリーメールまたは使い捨てのプロバイダー、役割アドレス、MX メールサーバー、SPF/DMARC による保護、公開 Gravatar プロフィール。',
+		'leaks.name': '漏えいチェック',
+		'leaks.description':
+			'メールアドレスが既知のデータ漏えいに含まれているか、パスワードが流出していないかを確認します (k-匿名性: パスワードがブラウザの外に送られることはありません)。',
+		'username.name': 'ユーザー名分析',
+		'username.description':
+			'ユーザー名が数百の Web サイトや SNS に存在するかを確認します (WhatsMyName リスト)。Python バックエンドが必要です。',
+		'phone.name': '電話番号分析',
+		'phone.description':
+			'電話番号をオフラインで検証します: 国、番号種別 (携帯、固定、VoIP、フリーダイヤル)、標準形式、WhatsApp・Telegram・Google の検索リンク。',
+		'telegram.name': 'Telegram OSINT',
+		'telegram.description':
+			'Telegram のユーザー名を検索します: アカウント種別 (チャンネル、グループ、ボット、ユーザー)、名前、自己紹介、購読者数またはメンバー数、チャンネルの最新投稿。Python バックエンドが必要です。',
+		'crypto.name': '暗号資産トレーサー',
+		'crypto.description':
+			'Bitcoin、Litecoin、Ethereum のアドレスを検出・検証し、残高、合計、最新のトランザクションを追跡します。取引相手もワンクリックでたどれます。',
+		'github.name': 'GitHub OSINT',
+		'github.description':
+			'GitHub ユーザーを調査します: プロフィール、リポジトリと主な言語、Organization、公開コミットで漏えいしたメールアドレス、SSH・GPG 鍵。',
+		'metadata.name': 'メタデータ抽出',
+		'metadata.description':
+			'画像 (EXIF、地図リンク付き GPS、XMP、IPTC)、PDF、Office ドキュメントに隠れたメタデータを読み取ります: カメラ、位置、作成者、ソフトウェア、日付。ファイルがブラウザの外に送られることはありません。',
+		'category.threat': '脅威インテリジェンス・フィッシング',
+		'category.utilities': 'デコーダー・ユーティリティ',
+		'lookalike.name': '類似ドメイン検索',
+		'lookalike.description':
+			'ドメインのタイポ、ホモグリフ、IDN ホモグラフ、ビットスクワッティング、TLD の置き換えを生成し、DNS で登録済みのものとメールサーバーを持つものを確認します (フィッシングのリスク)。',
+		'favicon.name': 'Favicon ハッシュ',
+		'favicon.description':
+			'favicon ファイルの Shodan favicon ハッシュ (mmh3)、MD5、SHA-256 をローカルで計算し、同じアイコンを使うサーバーを Shodan、FOFA、ZoomEye、Censys、urlscan.io で検索します。',
+		'headers.name': 'メールヘッダー分析',
+		'headers.description':
+			'メールの生ヘッダーをオフラインで分析します: ホップごとの遅延付きの Received 経路、送信元 IP、SPF/DKIM/DMARC/ARC の結果、Reply-To や Return-Path の不一致などのフィッシング判定の所見。',
+		'footprint.name': 'パッシブ サイトフットプリント',
+		'footprint.description':
+			'サイトに接続せずに、Common Crawl と Wayback Machine からアーカイブ済み URL を洗い出します: サブドメイン、ドキュメント、バックアップ、設定ファイル、管理画面のパス、パラメータ。Wayback 部分には Python バックエンドが必要です。',
+		'url.name': 'URL 分析',
+		'url.description':
+			'怪しいリンクを開かずに分解します: 類似ホスト、user@host や数値 IP のトリック、トラッキングパラメータ、隠れたリダイレクト、短縮 URL の展開、urlscan.io と URLhaus。Python バックエンドが必要です。',
+		'timestamp.name': 'ID・タイムスタンプデコーダー',
+		'timestamp.description':
+			'X、Discord、Instagram、TikTok、Mastodon、LinkedIn の ID や UUID、ULID、ObjectId に隠れた作成日時をデコードし、Unix、FILETIME、Chrome、Cocoa、Excel のタイムスタンプを読み取ります。日付からすべての形式への変換も可能です。',
+		'mac.name': 'MAC アドレス ベンダー検索',
+		'mac.description':
+			'IEEE の登録情報から MAC アドレスのベンダーを調べ、すべての表記と EUI-64 に変換し、マルチキャスト、ローカル管理、ランダム化されたプライベートアドレスを見分けます。オフラインで動作します。',
+		'reputation.name': 'レピュテーションチェック',
+		'reputation.description':
+			'IP、ドメイン、URL、メールアドレスを公開ブロックリストや脅威フィードと照合します: OTX、StopForumSpam、Tor 出口ノード、Spamhaus DROP、URLhaus、ThreatFox。掲載は手がかりであり、証拠ではありません。一部 Python バックエンドが必要です。'
 	}
 };

@@ -278,5 +278,98 @@ export default {
 		'params.copyAll': 'Copier tous les noms de paramètres',
 		showAll: 'tout afficher ({n})',
 		showLess: 'afficher moins'
+	},
+	ja: {
+		metaDescription:
+			'Web アーカイブからサイトをパッシブにマッピング: Common Crawl と Wayback Machine のアーカイブ済み URL、サブドメイン、ドキュメント、バックアップ、設定ファイル、管理用パス、URL パラメータ。対象サイトには一切アクセスしません。',
+		description:
+			'Web アーカイブが記録したドメインの URL を、サイトに一切アクセスせずに一覧表示します。Common Crawl と Wayback Machine の結果を統合し、ドキュメント、バックアップ、設定ファイル、スクリプト、管理用パス、パラメータに分類します。',
+		heading: '対象ドメイン',
+		inputLabel: 'ドメインまたは URL',
+		placeholder: '例: example.com または *.example.com',
+		analyze: 'マッピング',
+		'scope.label': '範囲',
+		'scope.domain': 'ドメインのみ',
+		'scope.subdomains': 'ドメイン + サブドメイン',
+		passiveTitle: 'パッシブのみ:',
+		passive:
+			'対象サイトには一切アクセスしません。照会するのは Common Crawl のインデックスと Wayback Machine だけで、各リンクは稼働中のサイトではなくアーカイブ済みのコピーを開きます。',
+		pivots: '関連ツール:',
+		empty: 'このドメインのアーカイブ済み URL は見つかりませんでした。',
+		'source.commoncrawl': 'Common Crawl',
+		'source.wayback': 'Wayback Machine',
+		'sourceShort.commoncrawl': 'CC',
+		'sourceShort.wayback': 'Wayback',
+		captures: { other: 'キャプチャ {n} 件' },
+		urls: { other: 'URL {n} 件' },
+		limitReached: '(上限に達したため、結果は一部のみです)',
+		'cc.note':
+			'直近 {count} 回の月次クロールを、ブラウザから順番に照会します。インデックスサーバーは遅いか過負荷になっていることがよくあります。',
+		'cc.loading': 'クロールを照会中… {done}/{total} 完了。',
+		'wayback.note':
+			'各 URL の最初のキャプチャです。FreeOSINT-UI のバックエンド経由で取得します (Wayback CDX API はブラウザから呼び出せません)。',
+		'wayback.loading': 'Wayback Machine を照会中… 最大 30 秒かかることがあります。',
+		'wayback.backendNeeded':
+			'Wayback Machine のセクションには FreeOSINT-UI の Python バックエンドが必要です。Common Crawl はバックエンドなしで動作します。次のコマンドで起動してください:',
+		'stats.title': '概要',
+		'stats.total': { other: '件の一意なアーカイブ済み URL' },
+		'stats.bySource': 'ソース別',
+		'stats.onlyCommoncrawl': 'Common Crawl のみ',
+		'stats.onlyWayback': 'Wayback のみ',
+		'stats.both': '両方',
+		'stats.byStatus': 'HTTP ステータス (最新のキャプチャ)',
+		'stats.byMime': 'MIME タイプ (最新のキャプチャ)',
+		'stats.byYear': '初回確認 (年別)',
+		'stats.unknown': '不明',
+		'stats.other': 'その他',
+		'stats.note':
+			'URL は http/https とポートを区別せずに統合されます。Wayback は各 URL の最初のキャプチャしか返さないため、「初回確認」は Wayback では正確で、「最終確認」は主に Common Crawl に由来します。',
+		'group.all': 'すべての URL',
+		'group.documents': 'ドキュメント',
+		'group.archives': 'アーカイブとバックアップ',
+		'group.config': '設定ファイルと機密情報らしきファイル',
+		'group.scripts': 'スクリプト',
+		'group.admin': 'ログイン、管理、API のパス',
+		'group.params': 'パラメータ付き URL',
+		'groupHint.documents':
+			'PDF、Office、OpenDocument、CSV、テキストファイル。アーカイブ済みのコピーを開いてダウンロードし、作成者、ソフトウェア、日付を次のツールで確認できます:',
+		'groupHint.archives':
+			'圧縮アーカイブ、データベースのダンプ、バックアップコピー (.bak、.old、.sql…)。完全にはアーカイブされていないことが多いため、キャプチャのステータスを確認してください。',
+		'groupHint.config':
+			'設定や機密情報を露出している可能性のあるファイル (.env、.git/、wp-config、.ini、.yml、ログ…)。JSON と XML には無害なフィードやサイトマップも含まれます。',
+		'groupHint.scripts':
+			'サーバーサイドとクライアントサイドのスクリプト (JavaScript、PHP、ASP、JSP…)。古いエンドポイントや JavaScript ファイルから隠しパスが判明することがあります。',
+		'groupHint.admin': 'admin、login、dashboard、api、graphql などのセグメントを含むパス。',
+		'groupHint.params':
+			'クエリ文字列を含む URL。パラメータ名は「パラメータ」パネルに一覧表示されます。',
+		'list.title': 'アーカイブ済み URL',
+		'list.hint':
+			'各 URL はコピー用のテキストとして表示されます。リンクは Wayback Machine のアーカイブ済みコピーを開きます (Wayback にそのキャプチャがない場合は最も近いキャプチャ)。',
+		'list.typeLabel': '種類',
+		'list.filterLabel': 'フィルター',
+		'list.filterPlaceholder': '例: .pdf、admin、2019',
+		'list.shown': '{total} 件中 {visible} 件の URL',
+		'list.copyAll': 'このリストの URL をすべてコピー',
+		'list.export': '.txt をエクスポート',
+		'list.archived': 'アーカイブ ↗',
+		'list.copyUrl': 'URL をコピー',
+		'list.seen': '{first} → {last}',
+		'list.empty': '一致する URL はありません。',
+		'list.pages': 'ページ',
+		'list.page': '{pages} ページ中 {page} ページ目',
+		'list.previous': '← 前へ',
+		'list.next': '次へ →',
+		'subdomains.title': 'サブドメイン ({n})',
+		'subdomains.hint':
+			'アーカイブ済み URL で見つかったホストです。ドメイン分析で開くことができます。',
+		'subdomains.empty':
+			'アーカイブ済み URL にサブドメインはありません。検索するには「ドメイン + サブドメイン」を選択してください。',
+		'subdomains.copyAll': 'サブドメインをすべてコピー',
+		'params.title': 'パラメータ ({n})',
+		'params.hint': '一意のクエリパラメータ名と、それぞれを使用している URL の数。',
+		'params.empty': 'パラメータ付きの URL はありません。',
+		'params.copyAll': 'パラメータ名をすべてコピー',
+		showAll: 'すべて表示 ({n})',
+		showLess: '折りたたむ'
 	}
 };

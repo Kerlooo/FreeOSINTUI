@@ -26,5 +26,13 @@ export default {
 		footerAbout:
 			'FreeOSINT-UI — outils OSINT gratuits qui fonctionnent entièrement dans votre navigateur. Créé par kerlo.',
 		inspiredBy: 'Inspiré de'
+	},
+	ja: {
+		main: 'メイン',
+		home: 'ホーム',
+		tools: 'ツール',
+		language: '言語',
+		footerAbout: 'FreeOSINT-UI — すべてブラウザ内で動作する無料の OSINT ツール。制作: kerlo。',
+		inspiredBy: 'インスピレーション元:'
 	}
 };

@@ -127,5 +127,48 @@ export default {
 		searchBy: 'par {hash}',
 		urlscanNote: 'trouve toute ressource chargée par une page scannée, pas seulement les favicons',
 		copyQuery: 'Copier la requête'
+	},
+	ja: {
+		metaDescription:
+			'favicon ファイルの Shodan favicon ハッシュ (MurmurHash3)、MD5、SHA-256 をローカルで計算し、同じアイコンを使うサイトを Shodan、FOFA、ZoomEye、Censys、urlscan.io で検索します。',
+		description:
+			'インターネットスキャナーと同じ方法で favicon をハッシュ化し、同じアイコンを表示している他のサーバーを見つけます: フィッシングキット、CDN の背後に隠れたオリジン、同じ製品の管理画面など。ファイルはブラウザ内でハッシュ化され、アップロードされることはありません。',
+		fileHeading: 'favicon ファイル',
+		whyUpload:
+			'FreeOSINT-UI は favicon を代わりにダウンロードしません。任意のホストへアクセスするには、悪用される恐れのあるプロキシが必要になるためです。ブラウザで favicon を開いて保存し、そのファイルをここにドロップしてください。',
+		siteLabel: 'サイト (任意)',
+		sitePlaceholder: 'example.com',
+		siteInvalid: 'ドメインまたは http(s) の URL を入力してください。',
+		openFavicon: '{url} を開く',
+		siteHint:
+			'すべてのサイトが /favicon.ico を提供しているわけではありません。開けない場合は、ページのソースで <link rel="icon"> を探してください。',
+		exactBytes:
+			'配信されたままのファイルを使ってください。画像を変換したり保存し直したりすると、すべてのハッシュが変わります。',
+		tooLarge:
+			'ファイルサイズが {size} です。favicon は通常数 KB です。もっと小さいファイルを選択してください。',
+		readError: 'ファイルを読み込めませんでした: {message}',
+		notImage:
+			'画像ではないようです (favicon.ico として保存された HTML のエラーページかもしれません)。ハッシュは計算されますが、実際のアイコンとは一致しません。',
+		chooseFile: 'ハッシュを計算する favicon ファイルを選択してください。',
+		computing: 'ハッシュを計算中…',
+		'row.format': '検出された形式',
+		'row.mime': 'ブラウザが報告した種類',
+		'row.size': 'サイズ',
+		'row.bytes': { other: '{count} バイト' },
+		'preview.alt': '{name} のプレビュー',
+		'preview.dimensions': '{size} px',
+		'preview.unsupported': 'お使いのブラウザではこの画像を表示できません。',
+		hashesHeading: 'ハッシュ',
+		'hash.mmh3': 'Shodan favicon ハッシュ (mmh3)',
+		'hash.md5': 'MD5',
+		'hash.sha256': 'SHA-256',
+		mmh3Note:
+			'ファイルの base64 を 76 文字ごとに改行したものの MurmurHash3 (32 ビット、符号付き) で、Shodan と FOFA がインデックスしている値です。ZoomEye と Censys は MD5、urlscan.io は SHA-256 を使います。',
+		searchHeading: '検索',
+		searchNote:
+			'これらのフィルターを使うには、ほとんどの検索エンジンで無料アカウントが必要です。また、各エンジンは自分がスキャンしたホストしかインデックスしていないため、結果がなくてもアイコンが唯一とは限りません。',
+		searchBy: '{hash} で検索',
+		urlscanNote: 'favicon だけでなく、スキャンされたページが読み込んだあらゆるリソースに一致します',
+		copyQuery: 'クエリをコピー'
 	}
 };

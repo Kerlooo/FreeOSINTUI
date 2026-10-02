@@ -99,5 +99,39 @@ export default {
 		'verifier.needInput':
 			'Saisissez du texte ou choisissez un fichier pour le vérifier avec ce hash.',
 		'candidate.mysqlNoStar': 'MySQL 4.1+ (sans *)'
+	},
+	ja: {
+		metaDescription:
+			'テキストやファイルの MD5、SHA-1、SHA-256、SHA-512、SHA-3、BLAKE、CRC32 ハッシュを計算し、ハッシュの種類を特定して照合します。ブラウザ内で動作します。',
+		intro:
+			'テキストやファイルの主要なハッシュを計算し、不明なハッシュの種類を特定して一致するかを確認します。すべてローカルで処理され、ブラウザの外には何も送られません。',
+		inputHeading: '入力',
+		inputType: '入力の種類',
+		'mode.text': 'テキスト',
+		'mode.file': 'ファイル',
+		textLabel: 'ハッシュ化するテキスト',
+		textPlaceholder: 'ハッシュ化するテキストを入力または貼り付け…',
+		textHint: 'テキストは UTF-8 でエンコードされます。入力に合わせてハッシュが更新されます。',
+		hashingFile: 'ファイルをハッシュ化中',
+		fileError: 'ファイルを読み込めませんでした: {error}',
+		resultsHeading: '結果',
+		hashing: 'ハッシュ化中…',
+		emptyText: 'ハッシュを計算するテキストを入力してください。',
+		emptyFile: 'ハッシュを計算するファイルを選択してください。',
+		'results.algorithm': 'アルゴリズム',
+		'results.digest': 'ダイジェスト',
+		'results.actions': '操作',
+		'verifier.label': '照合または特定するハッシュ',
+		'verifier.optional': '(任意)',
+		'verifier.placeholder': 'ハッシュを貼り付け (例: {example})',
+		'verifier.possibleType': '考えられる種類:',
+		'verifier.unknownFormat': '不明な形式',
+		'verifier.match': '✔ 一致: {names}',
+		'verifier.notComputed':
+			'この種類のハッシュはここでは計算されません (ソルト付きハッシュやパスワードハッシュは、入力を再計算しても照合できません)。',
+		'verifier.noMatch': '✘ 一致なし: 入力からこのハッシュは得られません。',
+		'verifier.needInput':
+			'このハッシュと照合するテキストを入力するか、ファイルを選択してください。',
+		'candidate.mysqlNoStar': 'MySQL 4.1+ (* なし)'
 	}
 };

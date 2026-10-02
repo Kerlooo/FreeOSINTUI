@@ -19,7 +19,7 @@
 - [ ] `npm run build` succeeds
 - [ ] `cd backend && uv run pytest` passes (only if the backend changed)
 - [ ] Tool logic is in `src/lib/<tool>/` with `*.spec.js` tests
-- [ ] Visible text goes through `t()` and is in English, Italian and French
+- [ ] Visible text goes through `t()` and is in English, Italian, French and Japanese
 - [ ] Colors use the CSS variables from `src/app.css`
 - [ ] Works on mobile (about 360px wide)
 - [ ] Only public sources and passive lookups; no paid APIs; no generic proxy endpoint

@@ -191,5 +191,66 @@ export default {
 		'credits.emailBreaches': "(fuites d'e-mails) et",
 		'credits.passwords':
 			'(mots de passe). Merci aux deux projets pour leurs API publiques gratuites.'
+	},
+	ja: {
+		metaDescription:
+			'メールアドレスが既知のデータ漏えいに含まれているか、パスワードが流出していないかを確認します。k-匿名性を使うため、パスワードがブラウザの外に送信されることはありません。',
+		intro:
+			'メールアドレスがどの既知のデータ漏えいに含まれているか、またはパスワードが漏えいしたパスワードのリストに含まれているかを確認します。',
+		inputHeading: '確認する対象',
+		modeLabel: '確認の種類',
+		'mode.email': 'メールアドレス',
+		'mode.password': 'パスワード',
+		check: '確認',
+		unexpectedError: '予期しないエラーが発生しました。',
+
+		'email.label': 'メールアドレス',
+		'email.placeholder': '例: john.doe@example.com',
+		'email.note':
+			'アドレスは XposedOrNot に送信されます。表示されるのは漏えいのメタデータ (名前、日付、データの種類) のみで、漏えいしたデータそのものは表示されません。',
+		'email.heading': 'データ漏えい',
+		'email.checking': '既知のデータ漏えいを確認中…',
+		'email.found': {
+			other: 'は {total} 件の既知のデータ漏えいに含まれています。'
+		},
+		'email.advice':
+			'これらのサービスと、同じパスワードを使い回しているすべての場所でパスワードを変更し、2 要素認証を有効にしてください。',
+		'email.notFound': 'は XposedOrNot のデータ漏えいデータベースに見つかりませんでした。',
+		'email.notFoundNote':
+			'漏えいしたことがないという証明にはなりません。登録されているのは公に知られているデータ漏えいのみです。',
+		'email.empty': 'メールアドレスを入力すると、それが含まれるデータ漏えいを表示します。',
+		'email.rateLimited':
+			'XposedOrNot に接続できませんでした。このブラウザがレート制限されている可能性があります。1 分ほど待ってから再試行してください。',
+
+		'password.label': 'パスワード',
+		'password.placeholder': '確認するパスワード',
+		'password.show': '表示',
+		'password.hide': '非表示',
+		'password.note':
+			'パスワードがブラウザの外に送信されることはありません。ローカルで SHA-1 ハッシュを計算し、ハッシュの先頭 5 文字だけを送信します (k-匿名性)。API は一致する数百件のハッシュを返し、照合はここで行われます。それでも、現在使っているパスワードを必要のない場所で入力するのは避けてください。',
+		'password.heading': '結果',
+		'password.checking': '確認中…',
+		'password.stale': 'パスワードが変更されました。もう一度「確認」を押してください。',
+		'password.exposed': {
+			other:
+				'流出: このパスワードはデータ漏えいで {total} 回確認されています。使用しないでください。'
+		},
+		'password.notFound': '既知のデータ漏えいには見つかりませんでした。',
+		'password.notFoundNote':
+			'だからといって強力なパスワードとは限りません。アカウントごとに長く一意のパスワードを使ってください (パスワードマネージャーが便利です)。',
+		'password.sent': 'API に送信したのはハッシュの先頭部分のみ:',
+		'password.clear': 'パスワードをクリア',
+		'password.empty': 'パスワードを入力すると、Have I Been Pwned で確認します。',
+
+		'breach.records': {
+			other: '{total} 件のレコード'
+		},
+		'breach.unverified': '未検証',
+		'breach.exposedData': '流出したデータの種類',
+		'breach.noDetails': 'データ漏えいカタログに詳細情報はありません。',
+
+		'credits.sources': 'ソース:',
+		'credits.emailBreaches': '(メールアドレスのデータ漏えい) および',
+		'credits.passwords': '(パスワード)。無料の公開 API を提供している両プロジェクトに感謝します。'
 	}
 };

@@ -12,7 +12,9 @@
 	<p>
 		<strong>{hostname}</strong>
 		{t('ip.choices.resolvesTo', { count: addresses.length })}
-		<strong>{selected}</strong>{addresses.length > 1 ? t('ip.choices.pickAnother') : '.'}
+		<strong>{selected}</strong>{addresses.length > 1
+			? t('ip.choices.pickAnother')
+			: t('common.period')}
 	</p>
 	{#if addresses.length > 1}
 		<ul>

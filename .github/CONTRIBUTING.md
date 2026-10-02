@@ -48,11 +48,11 @@ cd backend && uv run pytest   # only if you touched the backend
 
 ## Translations
 
-The site is in English, Italian and French. No visible text is hard-coded:
+The site is in English, Italian, French and Japanese. No visible text is hard-coded:
 
 - Every string goes through `t('namespace.key')`, with the messages in `src/lib/i18n/messages/<namespace>.js`.
-- A new string must be added in **all three languages**. `catalog.spec.js` fails if a key or a `{placeholder}` is missing in one of them.
-- If you don't speak Italian or French, add the English text and say so in the pull request: a maintainer will translate it.
+- A new string must be added in **all four languages**. `catalog.spec.js` fails if a key or a `{placeholder}` is missing in one of them.
+- If you don't speak Italian, French or Japanese, add the English text and say so in the pull request: a maintainer will translate it.
 
 Code, comments, identifiers and backend messages are in English.
 

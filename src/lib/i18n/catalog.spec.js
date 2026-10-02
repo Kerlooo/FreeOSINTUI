@@ -47,6 +47,7 @@ describe('translate', () => {
 	it('translates into the requested language', () => {
 		expect(translate('it', 'nav.home')).toBe('Home');
 		expect(translate('fr', 'nav.tools')).toBe('Outils');
+		expect(translate('ja', 'nav.tools')).toBe('ツール');
 	});
 
 	it('selects plural forms by count', () => {
@@ -63,6 +64,7 @@ describe('matchLocale', () => {
 	it('picks the first supported browser language', () => {
 		expect(matchLocale(['de-DE', 'fr-CA', 'en'])).toBe('fr');
 		expect(matchLocale(['it'])).toBe('it');
+		expect(matchLocale(['ja-JP', 'en'])).toBe('ja');
 	});
 
 	it('defaults to English', () => {

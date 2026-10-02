@@ -187,5 +187,66 @@ export default {
 		'flag.local': 'locale',
 		'flag.multicast': 'multicast',
 		'flag.broadcast': 'broadcast'
+	},
+	ja: {
+		metaDescription:
+			'IEEE レジストリ (MA-L、MA-M、MA-S) から MAC アドレスのベンダーを調べ、すべての表記と EUI-64 に変換し、マルチキャスト、ローカル管理、ランダム化アドレスかどうかを確認します。ブラウザ内でオフラインで動作します。',
+		description:
+			'任意の表記で 1 つ以上の MAC アドレス (または OUI プレフィックス) を貼り付けると、IEEE レジストリによる製造元、すべての標準表記、EUI-64 IPv6 インターフェース ID が得られ、ランダム化されたプライベートアドレスも見分けられます。処理はすべてローカルで行われ、ブラウザの外には何も送信されません。',
+		inputHeading: 'MAC アドレス',
+		inputLabel: 'MAC アドレス (1 行に 1 つ)',
+		accepted:
+			'aa:bb:cc:dd:ee:ff、aa-bb-cc-dd-ee-ff、aabb.ccdd.eeff、区切りなしの 16 進数 12 桁、または 6 桁の OUI プレフィックスに対応しています。1 行に 1 アドレスです。',
+		statusIdle: '入力に合わせて結果が更新されます。',
+		statusCount: {
+			other: '有効なアドレス {count} 件'
+		},
+		resultsHeading: '結果',
+		empty: '検索する MAC アドレスを入力してください。',
+		invalid: '有効な MAC アドレスまたは OUI プレフィックスではありません。',
+		loadingVendors: 'IEEE ベンダー一覧を読み込み中…',
+		vendorError: 'ベンダー一覧を読み込めませんでした: {message}',
+		source:
+			'ベンダー情報は IEEE Registration Authority の公開リスト (MA-L、MA-M、MA-S) に基づき、サイトに同梱されています。ベンダーとはブロックを購入した組織のことで、機器が別の企業によって製造されている場合や、アドレスが変更されている場合があります。',
+		updated: 'ベンダー一覧の日付: {date}。',
+		'row.vendor': 'ベンダー',
+		'row.assignment': 'IEEE 割り当て',
+		'row.country': '登録国',
+		'row.cast': 'アドレスの種類',
+		'row.administration': '管理',
+		assignment: '{registry} · {prefix} ({bits} ビットブロック)',
+		notFound: 'IEEE レジストリにありません (未割り当てまたは非公開)。',
+		noVendorLocal: 'なし: ローカル管理アドレスは IEEE によって割り当てられません。',
+		private: '非公開 (所有者が IEEE に公開しないよう依頼しています)',
+		unicast: 'ユニキャスト',
+		multicast: 'マルチキャスト (グループアドレス)',
+		broadcast: 'ブロードキャスト',
+		universal: 'グローバル管理 (ベンダーが書き込んだもの)',
+		local: 'ローカル管理',
+		localNote:
+			'ローカル管理: このアドレスはベンダーではなくソフトウェアによって設定されています。スマートフォンやノートパソコンでは、通常ランダム化されたプライベート MAC (iOS、Android、Windows、macOS の Wi-Fi プライバシー機能) を意味し、ネットワークごとに変わるため、機器やそのベンダーを特定できません。仮想マシン、コンテナ、VPN アダプターもこのようなアドレスを使用します。',
+		multicastNote:
+			'マルチキャストアドレスは機器のグループ宛ての宛先です (例: IPv4 マルチキャストは 01:00:5E、IPv6 は 33:33)。単一の機器に属することはありません。',
+		prefixNote: 'OUI プレフィックスのみが指定されたため、MA-L レジストリだけを検索します。',
+		formatsHeading: '表記',
+		'format.colon': 'コロン区切り (IEEE)',
+		'format.colonLower': 'コロン区切り、小文字',
+		'format.hyphen': 'ハイフン区切り (Windows)',
+		'format.cisco': 'ドット区切り (Cisco)',
+		'format.bare': '区切りなし',
+		'format.eui64': 'EUI-64 インターフェース ID',
+		'format.linkLocal': 'IPv6 リンクローカル (SLAAC)',
+		eui64Note:
+			'プライバシー拡張なしの SLAAC で使われるインターフェース ID です。IPv6 アドレスにこれが含まれていれば、この MAC が判明します。',
+		copyFormat: '{format} をコピー',
+		pivotHeading: 'ピボット',
+		googleSearch: 'このアドレスを Google で検索',
+		googleVendor: 'ベンダーを Google で検索',
+		'table.mac': 'アドレス',
+		'table.vendor': 'ベンダー',
+		'table.flags': 'フラグ',
+		'flag.local': 'ローカル',
+		'flag.multicast': 'マルチキャスト',
+		'flag.broadcast': 'ブロードキャスト'
 	}
 };

@@ -1,6 +1,6 @@
 # FreeOSINT-UI
 
-> Free, source-available OSINT (open-source intelligence) toolkit that runs in the browser. No account, no paywall, no API key. A free alternative to osint-ui.com. Available in English, Italian and French.
+> Free, source-available OSINT (open-source intelligence) toolkit that runs in the browser. No account, no paywall, no API key. A free alternative to osint-ui.com. Available in English, Italian, French and Japanese.
 
 Most tools run entirely client-side: inputs and files stay in the user's browser. A few (Username Analyzer, Telegram OSINT, parts of Reputation Checker, URL Analyzer and Passive Site Footprint) use a small backend for sources that block browser requests. Lookup tools accept a prefilled value with `?q=<value>` (Google Dork Generator: `/dorks?type=<username|email|name|phone|domain>&q=<value>`; Leak Check: `/leaks?email=<email>`).
 

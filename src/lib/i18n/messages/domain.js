@@ -224,5 +224,79 @@ export default {
 		'archive.none':
 			"L'API de disponibilité de la Wayback Machine n'a renvoyé aucune capture. Elle ne trouve parfois rien même pour des sites très archivés : consultez la liste complète ci-dessous.",
 		'archive.all': 'toutes les URL archivées ↗'
+	},
+	ja: {
+		metaDescription:
+			'ドメインを分析: DNS レコード、SPF と DMARC によるメールセキュリティ、RDAP 登録情報、Certificate Transparency から得たサブドメイン、Wayback Machine のスナップショット。',
+		intro:
+			'ドメインを入力すると、DNS レコード、メールセキュリティ (SPF/DMARC)、登録情報、Certificate Transparency ログから得たサブドメイン、Wayback Machine での履歴を取得できます。すべての検索はブラウザ内で公開ソースに対して実行されます。',
+		domain: 'ドメイン',
+		placeholder: 'example.com または https://www.example.com/page',
+		analyze: '分析',
+		resultsFor: '結果:',
+		inputHint: 'スキーム、パス、「www.」は自動で取り除かれます。',
+		passiveNote:
+			'パッシブな検索のみ: ドメインのサーバーに直接アクセスすることはありません。クエリの送信先は Google DNS、rdap.org、crt.sh / Cert Spotter、archive.org です。データはキャッシュされていたり、古かったりする場合があります。',
+		lookupFailed: '検索に失敗しました。',
+		loading: '読み込み中…',
+		'dns.title': 'DNS レコード',
+		'dns.subtitle': 'Google DNS-over-HTTPS 経由',
+		'dns.loading': 'A、AAAA、MX、NS、TXT、CAA、SOA を解決中…',
+		'dns.noRecords':
+			'DNS レコードが見つかりませんでした。ドメインが存在しないか、委任されていない可能性があります。',
+		'dns.noRecordsOfType': '{type} レコードはありません。',
+		'dns.ttlTitle': 'TTL (Time to live)',
+		'dns.nullMx': '(null MX: このドメインはメールを受け付けません)',
+		'email.title': 'メールセキュリティ',
+		'email.subtitle': 'SPF と DMARC',
+		'email.loading': 'SPF と DMARC のレコードを確認中…',
+		'rdap.title': '登録情報',
+		'rdap.subtitle': 'RDAP (rdap.org) 経由',
+		'rdap.loading': 'レジストリに照会中…',
+		'rdap.domain': 'ドメイン',
+		'rdap.registrar': 'レジストラ',
+		'rdap.registered': '登録日',
+		'rdap.expires': '有効期限',
+		'rdap.updated': '最終更新',
+		'rdap.status': 'ステータス',
+		'rdap.nameservers': 'ネームサーバー',
+		'rdap.dnssec': 'DNSSEC',
+		'rdap.signed': '署名あり',
+		'rdap.notSigned': '署名なし',
+		'rdap.contact': '連絡先 {n}',
+		'rdap.contacts': '連絡先',
+		'rdap.redacted': 'ほとんどのレジストリは個人の連絡先情報を非公開にしています (GDPR)。',
+		'rdap.notFoundBefore': 'RDAP レコードが見つかりませんでした:',
+		'rdap.notFoundAfter':
+			'。この TLD が RDAP を提供していない (.it など多くの国別ドメインは未対応)、ドメインが未登録、またはサブドメインである可能性があります。サブドメインの場合は親ドメインで試してください。',
+		'subdomains.title': 'サブドメイン',
+		'subdomains.subtitle': 'Certificate Transparency',
+		'subdomains.loading':
+			'Certificate Transparency ログを検索中 (crt.sh は最大 30 秒かかることがあります)…',
+		'subdomains.countFrom': {
+			other: '件の一意なサブドメイン、ソース:'
+		},
+		'subdomains.partial': '(結果の最初のページのみ。リストは不完全な場合があります)',
+		'subdomains.fallback':
+			'crt.sh が失敗したため ({reason})、代わりに Cert Spotter を使用しました。',
+		'subdomains.filterLabel': 'サブドメインを絞り込む',
+		'subdomains.filterPlaceholder': '絞り込み (例: mail)',
+		'subdomains.copyAll': '表示中のサブドメインをすべてコピー',
+		'subdomains.shown': '{total} 件中 {visible} 件を表示。',
+		'subdomains.noMatch': 'フィルターに一致するサブドメインはありません。',
+		'subdomains.none': 'Certificate Transparency ログにサブドメインは見つかりませんでした。',
+		'subdomains.note':
+			'名前は公開 TLS 証明書から取得しています。すでに名前解決できないものもあり、公開証明書のないホストは表示されません。',
+		'subdomains.unexpected': '{source} から予期しない応答が返されました。',
+		'subdomains.crtFailed': 'crt.sh が失敗しました。',
+		'archive.title': 'Web アーカイブ',
+		'archive.subtitle': 'Wayback Machine',
+		'archive.loading': 'アーカイブ済みのスナップショットを検索中…',
+		'archive.closest': '最も近いスナップショット:',
+		'archive.unknownDate': '日付不明',
+		'archive.open': 'スナップショットを開く ↗',
+		'archive.none':
+			'Wayback の可用性 API はスナップショットを返しませんでした。頻繁にアーカイブされているサイトでも見つからないことがあるため、下の完全なリストを確認してください。',
+		'archive.all': 'アーカイブ済み URL をすべて表示 ↗'
 	}
 };

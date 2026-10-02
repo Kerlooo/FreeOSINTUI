@@ -213,7 +213,7 @@
 			href="https://creativecommons.org/licenses/by-sa/4.0/"
 			target="_blank"
 			rel="noopener noreferrer">CC BY-SA 4.0</a
-		>.
+		>{t('common.period')}
 	</p>
 </section>
 

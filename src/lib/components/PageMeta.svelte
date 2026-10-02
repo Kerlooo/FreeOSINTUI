@@ -6,7 +6,7 @@
 	/** @type {{ title: string, description: string }} */
 	let { title, description } = $props();
 
-	const OG_LOCALES = { en: 'en_US', it: 'it_IT', fr: 'fr_FR' };
+	const OG_LOCALES = { en: 'en_US', it: 'it_IT', fr: 'fr_FR', ja: 'ja_JP' };
 
 	// Only the path: query strings (prefilled lookups) must not become separate pages.
 	const url = $derived(absoluteUrl(page.url.pathname));

@@ -4,7 +4,7 @@ const STORAGE_KEY = 'locale';
 
 const current = $state({ locale: DEFAULT_LOCALE });
 
-/** Current language code (`en`, `it`, `fr`), also usable with Intl APIs. */
+/** Current language code (`en`, `it`, `fr`, `ja`), also usable with Intl APIs. */
 export function getLocale() {
 	return current.locale;
 }
