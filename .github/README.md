@@ -11,7 +11,7 @@
 **Free, source-available OSINT tools that run in your browser.**
 No account. No paywall. No monthly limits.
 
-**English** · [Italiano](README.it.md) · [Français](README.fr.md)
+**English** · [Italiano](README.it.md) · [Français](README.fr.md) · [日本語](README.ja.md)
 
 ![Svelte 5](https://img.shields.io/badge/Svelte-5-ff3e00?logo=svelte&logoColor=white)
 ![SvelteKit](https://img.shields.io/badge/SvelteKit-static-ff3e00?logo=svelte&logoColor=white)
